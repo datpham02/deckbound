@@ -7,7 +7,7 @@
 | Asset class | card_art |
 | Owner | game-artist |
 | Priority | medium (slice piece 3) |
-| Status | planned |
+| Status | art-ready (802,249 bytes, within the 900 KB budget); not production-accepted until SOU-73 |
 | Approval state | not approved (approver: director, then Board) |
 
 ## Use
@@ -39,20 +39,23 @@
 - Reason and integration cost: none beyond the texture; effects belong to `gameplay-programmer`.
 
 ## Files
-- Editable source: `art_src/cards/card_art_sample.kra`
+- Source: generated; reproducible from the provenance block (model, seed, prompt, settings) and the workflow JSON kept in `~/game-studio-workspace/staging/art/card_art_sample/`
 - Export: `assets/slice/cards/card_art_sample.png`
 - Godot resource path: set by `gameplay-programmer`.
 - Import notes: confirm with `gameplay-programmer`.
 
 ## Provenance (fill when made)
-- Origin: generated draft + paintover (human paintover and cleanup in Krita per pipeline §3)
-- Tool and version: _pending_
-- Model file name and licence: _pending_
-- Generation settings: _pending_
-- Prompt text: _pending_
+- Origin: generated + scripted cleanup (deckbound PR #20); no paintover
+- Tool and version: ComfyUI 0.46.0 via comfy-draft.py
+- Model file name and licence: sd_xl_base_1.0.safetensors, CreativeML Open RAIL++-M
+- Generation settings: seed 402, 25 steps, euler, normal, cfg 7.0, 896x1152; workflow `card_art_sample_sdxl_20261122-042027_s402.workflow.json`
+- Prompt text: "dark fantasy painted illustration, close view of one single torn sheet of old parchment with ragged edges, bound to a thick frayed cord that loops across it, resting on wet dark stone, black water behind, warm amber glow from upper left, cool blue-grey shadows, a small copper tag on the cord, a small teal knot, muted painterly, empty page, no text, no letters, no lamp, no book"
+- Negative prompt: "text, letters, writing, lamp, lantern, candle, book, watermark, frame, border, people"
 - Reference images used as generator input: none
-- Editing steps: _pending_
-- Licence notes: _pending_
+- Editing steps: `art-ops.py resize <s402 png> <tmp> --size 700 900` (Lanczos, 7:9); refine round 2 (size and background fix): `resize <700x900> <tmp> --size 420 540 --fit stretch`, `resize <tmp> <tmp2> --size 700 900 --fit stretch` (softens noise so the PNG compresses), then `grade <tmp2> assets/slice/cards/card_art_sample.png --saturation 0.7 --brightness 0.85` (darker, less saturated teal wash). Previews: `grade --contrast 0.6`, then `resize --size 280 360`.
+- Images generated: 11 of 32 (7 first round, 4 refine round 1)
+- Licence notes: output of an allowed model, no input images.
+- File size: 802,249 bytes after refine round 2 (was 1,161,980); budget 921,600. Cost: slightly softer fine texture.
 - Originality check: _pending (director)_
 
 ## Acceptance checklist
