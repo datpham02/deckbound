@@ -25,7 +25,7 @@
 
 ### Image generation
 
-Use an image-generation model/service for original concept exploration and draft illustrations, then refine/approve in Krita. The selected provider is **TBD** and must be chosen based on licensing, commercial-use terms, privacy, consistency, cost and the user's available subscriptions.
+**Board decision 2026-11-22: AI makes the final art.** The local ComfyUI (D1: FLUX.1 schnell and SDXL, text-to-image only) produces final illustrations as well as concepts. A generated image becomes final art through selection, regeneration for consistency and scripted operations (colour-key, trim, resize, grade, sprite sheets: `art-ops`), not through a required human paintover in Krita. Krita stays available for optional hand fixes. Every asset still passes the review stages its Task names (at least `qa`, and Director review for originality and the Art Bible) and Board approval by eye. Known trade-off accepted by the Board: purely AI-generated images may get no copyright protection in some jurisdictions.
 
 Do not assume Claude Code itself is the image generator. Claude Code should orchestrate prompts, files, validation and integration around a separately selected image-generation tool.
 
@@ -84,8 +84,8 @@ Each moodboard/reference sheet records its sources (URL or "own capture, legally
 | Player character | Original layered illustration; selective 2D rig | Idle, attack, hit, defend, death/defeat as required |
 | Common enemies | Original illustration; rig only for recurring/high-visibility enemies | Idle, intent/telegraph, attack, hit, death |
 | Bosses | Higher-detail original illustration; selective rig or limited frame animation | Telegraph, major attack, hit, phase transition, defeat |
-| Card illustrations | Original generated concept + human paintover/cleanup | Static; use Godot for hover, play and combat feedback |
-| Relics, potions, icons | Consistent icon family, paintover and cleanup | Static with lightweight UI feedback |
+| Card illustrations | Original generated illustration, selected and cleaned up by script (Board 2026-11-22) | Static; use Godot for hover, play and combat feedback |
+| Relics, potions, icons | Consistent icon family, generated or drawn, cleaned up by script | Static with lightweight UI feedback |
 | Environments | Layered painted backgrounds and props | Parallax only where it adds value |
 | VFX | Godot particles, shaders, procedural effects, small hand-authored sprites | Runtime effects |
 | UI frames and panels | Godot Control nodes + original decorative textures | Runtime layout and state transitions |
@@ -180,7 +180,7 @@ For each asset:
 2. Prepare a prompt using original design details, not copied game content.
 3. Generate concept candidates using the selected image tool.
 4. Compare candidates against silhouette, palette, composition and readability requirements.
-5. Refine in Krita or the chosen art tool.
+5. Refine: regenerate for consistency and clean up with `art-ops` (optional hand fixes in Krita).
 6. Separate layers and prepare rigging only if needed.
 7. Export to a staging directory.
 8. Run validation scripts.

@@ -90,6 +90,24 @@ This tool must run in a normal windowed session. Do not use `--headless` for cap
 - `project.godot` (project identity, startup scene, viewport/stretch settings)
 - `scenes/main/main.tscn` (entry scene wiring)
 
+## Assets and licensing (Board decision 2026-11-22)
+
+- **Allowed:** original work; output of the registered checkpoints
+  `sd-xl-base-1-0` (CreativeML Open RAIL++-M; its use restrictions apply) and
+  `flux1-schnell-fp8` (Apache-2.0), made through `comfy-draft.py`. PixelFX
+  effects only with a Board approval for this project.
+- **Not allowed:** third-party art, fonts or textures; any reference image fed
+  to a generator; prompts naming another game, studio, artist or character.
+- **Provenance:** recorded for every asset in its spec under
+  `design/assets/specs/` (model file and licence, seed, prompt, art-ops steps).
+- **Review evidence folder:** `assets/slice/review/` (contact sheets,
+  target-background previews, before/after, direction sheets). It replaces the
+  company default `art_src/review/<TASK-KEY>/` for this project.
+- **Direction records:** `docs/art/directions/<asset_family>.md`, one per L2
+  direction decision, naming the chosen direction, who decided it and why.
+- **Art-direction authority:** `director` decides L2 art-direction choices for
+  this project (Board decision 2026-11-22; `docs/art/ART-PIPELINE.md` section 6).
+
 ## Art pipeline settings guardrail
 
 Per `docs/art/ART-PIPELINE.md` section 5, project-wide import/render settings

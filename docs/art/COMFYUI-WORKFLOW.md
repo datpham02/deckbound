@@ -3,7 +3,7 @@
 Status: **proposed** (SOU-56). Applies decision D1 from the M1 plan: local ComfyUI with FLUX.1 schnell and SDXL, installed on the studio machine 2026-11-21 (Board decision). This document describes use; it installs and changes nothing.
 
 ## Rules (non-negotiable)
-1. **Drafts only.** Generator output is a concept draft. Nothing generated ships unrefined: every shipped piece is painted over, cleaned up or replaced in Krita (pipeline §3, §5 Step 4).
+1. **Final art allowed (Board 2026-11-22).** Generated images may ship as final art after selection, consistency checks and scripted cleanup with `art-ops`, then the Task's review stages (`qa`, Director) and Board approval. Krita paintover is optional.
 2. **Never a reference image as input.** No img2img, ControlNet, IP-Adapter, style reference, LoRA or fine-tune built from any game's screenshots, captures, moodboard or other reference material (pipeline §2.1). Text prompts only. An empty latent is the only image-shaped input. The one later exception to consider is our own approved original art, and that needs separate approval and is not used in this PR.
 3. **Original design words only** in prompts. No game, character, card or artist names from other works.
 4. **Local only.** Prompts and outputs stay on the studio machine.
@@ -28,20 +28,20 @@ Either may be used for any piece; record which.
 3. Generate at a working size at or above the final size (never print resolution), 4 to 8 seeds per round. Use an empty latent and a fixed seed per candidate.
 4. Save the ComfyUI workflow JSON and the output PNG into a staging folder outside the repository (for example `~/game-studio-workspace/staging/art/<asset_id>/`). Candidates are not committed.
 5. Compare candidates against the spec: silhouette at 25% screen height as solid black, palette roles, composition. Pick at most one or two.
-6. Move the chosen draft into Krita as a bottom reference layer for paintover. Paint over, separate layers, simplify details under 3 px. Save the `.kra` to `art_src/<class>/`.
+6. Clean up the chosen image with `art-ops`: generate on a flat plain backdrop, `key` it to transparency, `trim`, `resize` to the spec's size, place it on the spec's `canvas`, build `sheet`s for frames, and make a `contact` sheet for review. Optional: hand fixes in Krita.
 7. Export to `assets/slice/` per the spec. Run the validators `gameplay-programmer` provides, when they exist.
 8. Fill the provenance block in the spec: tool and version, model file and licence, seed, steps, sampler, size, workflow file name, prompt, "reference images as input: none", Krita steps.
 
 ## Provenance record (copy into the spec)
 ```
-Origin: generated draft + paintover
-Tool: ComfyUI <version>, Krita <version>
+Origin: generated (+ scripted cleanup; + paintover if any)
+Tool: ComfyUI <version>, art-ops (Krita <version> if used)
 Model: <FLUX.1 schnell | SDXL base> <file name>, licence <name and link>, checked <date>
 Settings: seed <n>, steps <n>, sampler <name>, size <W x H>, workflow <file>
 Prompt: <text>
 Negative prompt: <text or n/a>
 Reference images used as input: none
-Editing: <Krita steps>
+Editing: <art-ops commands, and Krita steps if any>
 ```
 
 ## What this workflow does not cover
