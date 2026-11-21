@@ -1,0 +1,113 @@
+[gd_resource type="Theme" format=3]
+
+[sub_resource type="StyleBoxFlat" id="panel"]
+bg_color = Color(0.13, 0.15, 0.2, 0.92)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(0.45, 0.5, 0.62, 1)
+corner_radius_top_left = 14
+corner_radius_top_right = 14
+corner_radius_bottom_right = 14
+corner_radius_bottom_left = 14
+
+[sub_resource type="StyleBoxFlat" id="btn_normal"]
+bg_color = Color(0.2, 0.23, 0.32, 1)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(0.6, 0.66, 0.8, 1)
+corner_radius_top_left = 14
+corner_radius_top_right = 14
+corner_radius_bottom_right = 14
+corner_radius_bottom_left = 14
+
+[sub_resource type="StyleBoxFlat" id="btn_pressed"]
+bg_color = Color(0.3, 0.34, 0.48, 1)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(0.95, 0.85, 0.5, 1)
+corner_radius_top_left = 14
+corner_radius_top_right = 14
+corner_radius_bottom_right = 14
+corner_radius_bottom_left = 14
+
+[sub_resource type="StyleBoxFlat" id="card"]
+bg_color = Color(0.9, 0.86, 0.74, 1)
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 4
+border_color = Color(0.35, 0.27, 0.18, 1)
+corner_radius_top_left = 16
+corner_radius_top_right = 16
+corner_radius_bottom_right = 16
+corner_radius_bottom_left = 16
+
+[sub_resource type="StyleBoxFlat" id="card_pressed"]
+bg_color = Color(0.97, 0.93, 0.8, 1)
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 4
+border_color = Color(0.85, 0.6, 0.15, 1)
+corner_radius_top_left = 16
+corner_radius_top_right = 16
+corner_radius_bottom_right = 16
+corner_radius_bottom_left = 16
+
+[sub_resource type="StyleBoxFlat" id="end_turn"]
+bg_color = Color(0.62, 0.34, 0.16, 1)
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 4
+border_color = Color(0.98, 0.8, 0.5, 1)
+corner_radius_top_left = 20
+corner_radius_top_right = 20
+corner_radius_bottom_right = 20
+corner_radius_bottom_left = 20
+
+[sub_resource type="StyleBoxFlat" id="dim"]
+bg_color = Color(0, 0, 0, 0.6)
+
+[resource]
+default_font_size = 36
+Button/colors/font_color = Color(0.95, 0.95, 0.98, 1)
+Button/colors/font_pressed_color = Color(1, 1, 1, 1)
+Button/font_sizes/font_size = 34
+Button/styles/disabled = SubResource("btn_normal")
+Button/styles/focus = SubResource("btn_pressed")
+Button/styles/hover = SubResource("btn_normal")
+Button/styles/normal = SubResource("btn_normal")
+Button/styles/pressed = SubResource("btn_pressed")
+CardButton/base_type = &"Button"
+CardButton/colors/font_color = Color(0.15, 0.1, 0.05, 1)
+CardButton/styles/focus = SubResource("card_pressed")
+CardButton/styles/hover = SubResource("card")
+CardButton/styles/normal = SubResource("card")
+CardButton/styles/pressed = SubResource("card_pressed")
+CardLabel/base_type = &"Label"
+CardLabel/colors/font_color = Color(0.15, 0.1, 0.05, 1)
+CardLabel/font_sizes/font_size = 32
+CardNameLabel/base_type = &"Label"
+CardNameLabel/colors/font_color = Color(0.1, 0.06, 0.02, 1)
+CardNameLabel/font_sizes/font_size = 38
+DimPanel/base_type = &"Panel"
+DimPanel/styles/panel = SubResource("dim")
+EndTurnButton/base_type = &"Button"
+EndTurnButton/font_sizes/font_size = 44
+EndTurnButton/styles/focus = SubResource("end_turn")
+EndTurnButton/styles/hover = SubResource("end_turn")
+EndTurnButton/styles/normal = SubResource("end_turn")
+EndTurnButton/styles/pressed = SubResource("btn_pressed")
+Label/colors/font_color = Color(0.95, 0.95, 0.98, 1)
+Label/font_sizes/font_size = 34
+NumeralLabel/base_type = &"Label"
+NumeralLabel/font_sizes/font_size = 64
+Panel/styles/panel = SubResource("panel")
+PanelContainer/styles/panel = SubResource("panel")

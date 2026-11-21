@@ -1,0 +1,114 @@
+[gd_scene format=3]
+
+[ext_resource type="Theme" path="res://themes/placeholder_theme.tres" id="1_theme"]
+
+[node name="CardSpread" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_theme")
+
+[node name="Dim" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_type_variation = &"DimPanel"
+
+[node name="Book" type="HBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -560.0
+offset_top = -400.0
+offset_right = 560.0
+offset_bottom = 400.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 0
+
+[node name="PlayPage" type="PanelContainer" parent="Book"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Rows" type="VBoxContainer" parent="Book/PlayPage"]
+layout_mode = 2
+
+[node name="Heading" type="Label" parent="Book/PlayPage/Rows"]
+layout_mode = 2
+text = "PLAY"
+horizontal_alignment = 1
+
+[node name="Art" type="ColorRect" parent="Book/PlayPage/Rows"]
+custom_minimum_size = Vector2(0, 280)
+layout_mode = 2
+color = Color(0.3, 0.36, 0.5, 1)
+
+[node name="Text" type="Label" parent="Book/PlayPage/Rows"]
+layout_mode = 2
+size_flags_vertical = 3
+text = "Deal 6 damage to one enemy. Draw 1 page."
+autowrap_mode = 3
+
+[node name="Spine" type="VBoxContainer" parent="Book"]
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 2
+alignment = 1
+
+[node name="Cost" type="Label" parent="Book/Spine"]
+layout_mode = 2
+theme_type_variation = &"NumeralLabel"
+text = "2"
+horizontal_alignment = 1
+
+[node name="InkLabel" type="Label" parent="Book/Spine"]
+layout_mode = 2
+text = "Ink"
+horizontal_alignment = 1
+
+[node name="BindPage" type="PanelContainer" parent="Book"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Rows" type="VBoxContainer" parent="Book/BindPage"]
+layout_mode = 2
+
+[node name="Heading" type="Label" parent="Book/BindPage/Rows"]
+layout_mode = 2
+text = "BIND"
+horizontal_alignment = 1
+
+[node name="Art" type="ColorRect" parent="Book/BindPage/Rows"]
+custom_minimum_size = Vector2(0, 280)
+layout_mode = 2
+color = Color(0.5, 0.36, 0.3, 1)
+
+[node name="Text" type="Label" parent="Book/BindPage/Rows"]
+layout_mode = 2
+size_flags_vertical = 3
+text = "While bound: deal 2 damage to any enemy that hits you."
+autowrap_mode = 3
+
+[node name="Hint" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -500.0
+offset_top = -140.0
+offset_right = 500.0
+offset_bottom = -70.0
+grow_horizontal = 2
+grow_vertical = 0
+text = "Tap outside to close"
+horizontal_alignment = 1

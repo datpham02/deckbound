@@ -1,0 +1,285 @@
+[gd_scene format=3]
+
+[ext_resource type="Theme" path="res://themes/placeholder_theme.tres" id="1_theme"]
+[ext_resource type="Script" path="res://scenes/combat/safe_area_margin.gd" id="2_safe"]
+[ext_resource type="PackedScene" path="res://scenes/card/card_compact.tscn" id="3_card"]
+
+[node name="Combat" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_theme")
+
+[node name="Background" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0.08, 0.1, 0.15, 1)
+
+[node name="SafeArea" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("2_safe")
+
+[node name="Content" type="Control" parent="SafeArea"]
+layout_mode = 2
+mouse_filter = 2
+
+[node name="PlayArea" type="Panel" parent="SafeArea/Content"]
+modulate = Color(1, 1, 1, 0.45)
+layout_mode = 1
+anchor_left = 0.3
+anchor_top = 0.04
+anchor_right = 0.42
+anchor_bottom = 0.66
+mouse_filter = 2
+
+[node name="PlayAreaLabel" type="Label" parent="SafeArea/Content/PlayArea"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -80.0
+offset_top = -25.0
+offset_right = 80.0
+offset_bottom = 25.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Play"
+horizontal_alignment = 1
+
+[node name="Scrivener" type="Control" parent="SafeArea/Content"]
+layout_mode = 1
+anchor_right = 0.3
+anchor_bottom = 0.66
+mouse_filter = 2
+
+[node name="SlotColumn" type="VBoxContainer" parent="SafeArea/Content/Scrivener"]
+layout_mode = 1
+anchor_bottom = 0.8
+offset_right = 170.0
+theme_override_constants/separation = 20
+alignment = 1
+
+[node name="Slot1" type="Button" parent="SafeArea/Content/Scrivener/SlotColumn"]
+custom_minimum_size = Vector2(170, 150)
+layout_mode = 2
+text = "Slot 1
+intact"
+
+[node name="Slot2" type="Button" parent="SafeArea/Content/Scrivener/SlotColumn"]
+custom_minimum_size = Vector2(170, 150)
+layout_mode = 2
+text = "Slot 2
+frayed"
+
+[node name="Slot3" type="Button" parent="SafeArea/Content/Scrivener/SlotColumn"]
+custom_minimum_size = Vector2(170, 150)
+layout_mode = 2
+text = "Slot 3
+empty"
+
+[node name="Figure" type="ColorRect" parent="SafeArea/Content/Scrivener"]
+layout_mode = 1
+anchor_left = 0.4
+anchor_right = 1.0
+anchor_bottom = 0.82
+mouse_filter = 2
+color = Color(0.4, 0.55, 0.7, 1)
+
+[node name="FigureLabel" type="Label" parent="SafeArea/Content/Scrivener/Figure"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -120.0
+offset_top = -25.0
+offset_right = 120.0
+offset_bottom = 25.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Scrivener"
+horizontal_alignment = 1
+
+[node name="Stats" type="Label" parent="SafeArea/Content/Scrivener"]
+layout_mode = 1
+anchor_left = 0.4
+anchor_top = 0.84
+anchor_right = 1.0
+anchor_bottom = 1.0
+text = "HP 40/40   Guard 0"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
+
+[node name="Enemies" type="HBoxContainer" parent="SafeArea/Content"]
+layout_mode = 1
+anchor_left = 0.44
+anchor_right = 1.0
+anchor_bottom = 0.66
+offset_right = -340.0
+theme_override_constants/separation = 24
+alignment = 2
+
+[node name="Enemy1" type="Button" parent="SafeArea/Content/Enemies"]
+custom_minimum_size = Vector2(250, 420)
+layout_mode = 2
+
+[node name="Rows" type="VBoxContainer" parent="SafeArea/Content/Enemies/Enemy1"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="Telegraph" type="Label" parent="SafeArea/Content/Enemies/Enemy1/Rows"]
+layout_mode = 2
+text = "Attack 8"
+horizontal_alignment = 1
+
+[node name="Figure" type="ColorRect" parent="SafeArea/Content/Enemies/Enemy1/Rows"]
+layout_mode = 2
+size_flags_vertical = 3
+mouse_filter = 2
+color = Color(0.7, 0.4, 0.4, 1)
+
+[node name="Health" type="Label" parent="SafeArea/Content/Enemies/Enemy1/Rows"]
+layout_mode = 2
+text = "HP 18"
+horizontal_alignment = 1
+
+[node name="Enemy2" type="Button" parent="SafeArea/Content/Enemies"]
+custom_minimum_size = Vector2(250, 420)
+layout_mode = 2
+
+[node name="Rows" type="VBoxContainer" parent="SafeArea/Content/Enemies/Enemy2"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="Telegraph" type="Label" parent="SafeArea/Content/Enemies/Enemy2/Rows"]
+layout_mode = 2
+text = "Fray 1"
+horizontal_alignment = 1
+
+[node name="Figure" type="ColorRect" parent="SafeArea/Content/Enemies/Enemy2/Rows"]
+layout_mode = 2
+size_flags_vertical = 3
+mouse_filter = 2
+color = Color(0.6, 0.45, 0.65, 1)
+
+[node name="Health" type="Label" parent="SafeArea/Content/Enemies/Enemy2/Rows"]
+layout_mode = 2
+text = "HP 14"
+horizontal_alignment = 1
+
+[node name="EndTurn" type="Button" parent="SafeArea/Content"]
+custom_minimum_size = Vector2(300, 140)
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -300.0
+offset_top = -10.0
+offset_bottom = 130.0
+grow_horizontal = 0
+theme_type_variation = &"EndTurnButton"
+text = "End turn"
+
+[node name="HandBand" type="HBoxContainer" parent="SafeArea/Content"]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -300.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_constants/separation = 20
+
+[node name="InkAndDeck" type="HBoxContainer" parent="SafeArea/Content/HandBand"]
+layout_mode = 2
+theme_override_constants/separation = 16
+
+[node name="Ink" type="PanelContainer" parent="SafeArea/Content/HandBand/InkAndDeck"]
+custom_minimum_size = Vector2(190, 0)
+layout_mode = 2
+size_flags_vertical = 4
+
+[node name="Rows" type="VBoxContainer" parent="SafeArea/Content/HandBand/InkAndDeck/Ink"]
+layout_mode = 2
+
+[node name="Value" type="Label" parent="SafeArea/Content/HandBand/InkAndDeck/Ink/Rows"]
+layout_mode = 2
+theme_type_variation = &"NumeralLabel"
+text = "3/3"
+horizontal_alignment = 1
+
+[node name="Caption" type="Label" parent="SafeArea/Content/HandBand/InkAndDeck/Ink/Rows"]
+layout_mode = 2
+text = "Ink"
+horizontal_alignment = 1
+
+[node name="Deck" type="Button" parent="SafeArea/Content/HandBand/InkAndDeck"]
+custom_minimum_size = Vector2(170, 200)
+layout_mode = 2
+size_flags_vertical = 4
+text = "Deck
+12"
+
+[node name="Hand" type="HBoxContainer" parent="SafeArea/Content/HandBand"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = -60
+alignment = 1
+
+[node name="Card1" parent="SafeArea/Content/HandBand/Hand" instance=ExtResource("3_card")]
+layout_mode = 2
+size_flags_vertical = 4
+
+[node name="Card2" parent="SafeArea/Content/HandBand/Hand" instance=ExtResource("3_card")]
+layout_mode = 2
+size_flags_vertical = 4
+
+[node name="Card3" parent="SafeArea/Content/HandBand/Hand" instance=ExtResource("3_card")]
+layout_mode = 2
+size_flags_vertical = 4
+
+[node name="Card4" parent="SafeArea/Content/HandBand/Hand" instance=ExtResource("3_card")]
+layout_mode = 2
+size_flags_vertical = 4
+
+[node name="Card5" parent="SafeArea/Content/HandBand/Hand" instance=ExtResource("3_card")]
+layout_mode = 2
+size_flags_vertical = 4
+
+[node name="Discard" type="Button" parent="SafeArea/Content/HandBand"]
+custom_minimum_size = Vector2(170, 200)
+layout_mode = 2
+size_flags_vertical = 4
+text = "Discard
+4"
