@@ -19,6 +19,7 @@ var removed_from_run: Array[Variant] = []
 var enemies: Array[Variant] = []
 var binding_slots: Array[Dictionary] = []
 var page_library: Dictionary = {}
+var stain_page_ids: PackedStringArray = PackedStringArray()
 var rng: RandomNumberGenerator = RandomNumberGenerator.new()
 var logs: Array[String] = []
 var errors: Array[String] = []
@@ -29,6 +30,7 @@ static func create(
 	deck_pages: Array,
 	enemy_data_list: Array,
 	page_library_override: Dictionary = {},
+	stain_page_ids_override: PackedStringArray = PackedStringArray(),
 	seed: int = 1
 ) -> Variant:
 	var state: Variant = new()
@@ -40,6 +42,7 @@ static func create(
 	state.turn_number = 0
 	state.result = "ongoing"
 	state.rng.seed = seed
+	state.stain_page_ids = stain_page_ids_override.duplicate()
 
 	if page_library_override.is_empty():
 		for deck_page_variant: Variant in deck_pages:
@@ -68,11 +71,19 @@ static func create(
 	for _slot in range(bind_slot_count):
 		state.binding_slots.append({})
 
-	for enemy_variant: Variant in state.enemies:
-		var enemy: Variant = enemy_variant
-		enemy.set_initial_telegraph(state)
-
 	return state
+
+func set_initial_enemy_telegraphs() -> void:
+	var reserved_fray_slots: Array[int] = []
+	for enemy_variant: Variant in enemies:
+		var enemy: Variant = enemy_variant
+		if not enemy.is_alive():
+			continue
+		enemy.set_initial_telegraph(self, reserved_fray_slots)
+		if String(enemy.telegraph.get("type", "")) == "fray":
+			var target_slot: int = int(enemy.telegraph.get("target_slot", -1))
+			if target_slot >= 0 and not reserved_fray_slots.has(target_slot):
+				reserved_fray_slots.append(target_slot)
 
 func start_player_turn() -> void:
 	if is_combat_over():

@@ -11,11 +11,14 @@ static func create_state(
 	deck_pages: Array,
 	enemy_data_list: Array,
 	page_library: Dictionary = {},
+	stain_page_ids: PackedStringArray = PackedStringArray(),
 	seed: int = 1
 ) -> Variant:
-	return COMBAT_STATE_SCRIPT.create(run_rules_data, deck_pages, enemy_data_list, page_library, seed)
+	return COMBAT_STATE_SCRIPT.create(run_rules_data, deck_pages, enemy_data_list, page_library, stain_page_ids, seed)
 
 func start_combat(state: Variant) -> void:
+	# Callers should place current bindings before start_combat so initial telegraphs can target them.
+	state.set_initial_enemy_telegraphs()
 	state.start_player_turn()
 
 func play_card(state: Variant, hand_index: int, target_enemy_index: int = -1) -> bool:
@@ -91,4 +94,17 @@ func _resolve_enemy_phase(state: Variant) -> void:
 		enemy.act_from_telegraph(state)
 		if state.is_combat_over():
 			break
-		enemy.advance_telegraph(state)
+
+	if state.is_combat_over():
+		return
+
+	var reserved_fray_slots: Array[int] = []
+	for enemy_variant: Variant in state.enemies:
+		var enemy: Variant = enemy_variant
+		if not enemy.is_alive():
+			continue
+		enemy.advance_telegraph(state, reserved_fray_slots)
+		if String(enemy.telegraph.get("type", "")) == "fray":
+			var target_slot: int = int(enemy.telegraph.get("target_slot", -1))
+			if target_slot >= 0 and not reserved_fray_slots.has(target_slot):
+				reserved_fray_slots.append(target_slot)

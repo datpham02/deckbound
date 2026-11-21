@@ -12,6 +12,7 @@ func test() -> void:
 	_test_remove_this_page_effect_removes_played_card_from_run()
 	_test_scaling_effects_use_discard_and_binding_counts()
 	_test_add_page_to_discard_effect_uses_page_id_param()
+	_test_add_page_to_discard_effect_requires_page_id()
 
 func _test_registry_covers_all_loader_play_effect_ids() -> void:
 	var core: Variant = COMBAT_CORE_SCRIPT.new()
@@ -31,7 +32,7 @@ func _test_remove_this_page_effect_removes_played_card_from_run() -> void:
 	var deck_pages: Array = [_create_page("water_stain", 0, "none", page_effects)]
 	var enemies: Array = [_create_enemy("dummy", 20, [{"id": "idle", "type": "guard", "value": 0}], ["idle"])]
 
-	var state: Variant = COMBAT_CORE_SCRIPT.create_state(rules, deck_pages, enemies, {}, 31)
+	var state: Variant = COMBAT_CORE_SCRIPT.create_state(rules, deck_pages, enemies, {}, PackedStringArray(["water_stain"]), 31)
 	core.start_combat(state)
 	var played: bool = core.play_card(state, 0, -1)
 
@@ -50,7 +51,14 @@ func _test_scaling_effects_use_discard_and_binding_counts() -> void:
 	var deck_pages: Array = [_create_page("ledger", 0, "enemy", scaling_effects)]
 	var enemies: Array = [_create_enemy("target", 20, [{"id": "idle", "type": "guard", "value": 0}], ["idle"])]
 
-	var state: Variant = COMBAT_CORE_SCRIPT.create_state(rules, deck_pages, enemies, {"junk": _create_page("junk", 0, "none", [])}, 37)
+	var state: Variant = COMBAT_CORE_SCRIPT.create_state(
+		rules,
+		deck_pages,
+		enemies,
+		{"junk": _create_page("junk", 0, "none", [])},
+		PackedStringArray(["water_stain"]),
+		37
+	)
 	state.add_page_to_discard_by_id("junk")
 	state.add_page_to_discard_by_id("junk")
 	state.set_binding(0, COMBAT_CARD_SCRIPT.create_placeholder("bind_a"))
@@ -74,7 +82,7 @@ func _test_add_page_to_discard_effect_uses_page_id_param() -> void:
 	var page_library: Dictionary = {"water_stain": _create_page("water_stain", 0, "none", [{"id": "remove_this_page"}])}
 	var enemies: Array = [_create_enemy("target", 30, [{"id": "idle", "type": "guard", "value": 0}], ["idle"])]
 
-	var state: Variant = COMBAT_CORE_SCRIPT.create_state(rules, deck_pages, enemies, page_library, 41)
+	var state: Variant = COMBAT_CORE_SCRIPT.create_state(rules, deck_pages, enemies, page_library, PackedStringArray(["water_stain"]), 41)
 	core.start_combat(state)
 	var played: bool = core.play_card(state, 0, 0)
 
@@ -82,6 +90,24 @@ func _test_add_page_to_discard_effect_uses_page_id_param() -> void:
 	assert_equal(state.discard_pile.size(), 2, "Discard should contain both generated page and the played page.")
 	assert_true(_discard_contains_page_id(state.discard_pile, "water_stain"), "Discard should include generated page id.")
 	assert_true(_discard_contains_page_id(state.discard_pile, "candle_debt"), "Discard should include the played card id.")
+
+func _test_add_page_to_discard_effect_requires_page_id() -> void:
+	var core: Variant = COMBAT_CORE_SCRIPT.new()
+	var rules: Variant = _create_run_rules()
+	var spawn_effects: Array[Dictionary] = [{"id": "add_page_to_discard"}]
+	var deck_pages: Array = [_create_page("missing_param", 0, "none", spawn_effects)]
+	var enemies: Array = [_create_enemy("target", 30, [{"id": "idle", "type": "guard", "value": 0}], ["idle"])]
+
+	var state: Variant = COMBAT_CORE_SCRIPT.create_state(rules, deck_pages, enemies, {}, PackedStringArray(["water_stain"]), 43)
+	core.start_combat(state)
+	var played: bool = core.play_card(state, 0, -1)
+
+	assert_true(played, "Card should still play even if add_page_to_discard params are invalid.")
+	assert_equal(state.discard_pile.size(), 1, "Only the played card should be discarded when page_id is missing.")
+	assert_true(
+		_array_contains_substring(state.errors, "add_page_to_discard"),
+		"State errors should report the missing page_id requirement."
+	)
 
 func _create_run_rules() -> Variant:
 	var rules: Variant = RUN_RULES_DATA_SCRIPT.new()
@@ -128,5 +154,11 @@ func _create_enemy(enemy_id: String, health: int, actions: Array[Dictionary], te
 func _discard_contains_page_id(discard_pile: Array, page_id: String) -> bool:
 	for card_variant: Variant in discard_pile:
 		if String(card_variant.page_id) == page_id:
+			return true
+	return false
+
+func _array_contains_substring(values: Array[String], target: String) -> bool:
+	for value: String in values:
+		if value.find(target) != -1:
 			return true
 	return false

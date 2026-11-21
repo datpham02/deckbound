@@ -1,8 +1,6 @@
 class_name CombatEffectRegistry
 extends RefCounted
 
-const STAIN_PAGE_IDS: PackedStringArray = ["water_stain", "blot"]
-
 var _handlers: Dictionary = {}
 
 func _init() -> void:
@@ -73,20 +71,21 @@ func _effect_lose_health(params: Dictionary, state: Variant, _source_card: Varia
 func _effect_add_page_to_discard(params: Dictionary, state: Variant, _source_card: Variant, _target_enemy_index: int) -> void:
 	var page_id: String = String(params.get("page_id", ""))
 	if page_id == "":
-		page_id = "water_stain"
+		state.push_error("Play effect 'add_page_to_discard' requires params.page_id.")
+		return
 	state.add_page_to_discard_by_id(page_id)
 
 func _effect_remove_this_page(_params: Dictionary, state: Variant, _source_card: Variant, _target_enemy_index: int) -> void:
 	state.mark_source_card_removed()
 
 func _effect_remove_stains_hand_and_discard(_params: Dictionary, state: Variant, _source_card: Variant, _target_enemy_index: int) -> void:
-	state.remove_stains_from_hand_and_discard(STAIN_PAGE_IDS)
+	state.remove_stains_from_hand_and_discard(state.stain_page_ids)
 
 func _effect_remove_stain_from_hand(params: Dictionary, state: Variant, _source_card: Variant, _target_enemy_index: int) -> void:
 	var count: int = _read_int(params, "count", 1)
 	if params.has("amount"):
 		count = _read_int(params, "amount", count)
-	state.remove_stains_from_hand(count, STAIN_PAGE_IDS)
+	state.remove_stains_from_hand(count, state.stain_page_ids)
 
 func _effect_remove_enemy_guard(_params: Dictionary, state: Variant, _source_card: Variant, target_enemy_index: int) -> void:
 	var enemy_index: int = _resolve_enemy_target_index(state, target_enemy_index)
