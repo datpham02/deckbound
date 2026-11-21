@@ -18,7 +18,12 @@ Run from repository root.
 
 ```bash
 godot --path .                    # open in editor
+bash ./tests/run_headless_tests.sh      # headless tests (CI/Linux/macOS)
+# .\tests\run_headless_tests.cmd        # headless tests (Windows cmd)
 godot --headless --path . --quit  # smoke check (required before handoff)
+# optional non-zero proof run:
+# bash ./tests/run_headless_tests.sh -- --case res://tests/cases/example_failure_case.gd
+# .\tests\run_headless_tests.cmd --case=res://tests/cases/example_failure_case.gd
 # release signing must come from shell env vars (never commit values):
 #   GODOT_ANDROID_KEYSTORE_RELEASE_PATH
 #   GODOT_ANDROID_KEYSTORE_RELEASE_USER

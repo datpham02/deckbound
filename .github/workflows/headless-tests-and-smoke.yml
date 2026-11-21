@@ -1,0 +1,54 @@
+name: Headless Tests and Smoke
+
+on:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  headless-tests-and-smoke:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Download and verify Godot
+        shell: bash
+        run: |
+          set -euo pipefail
+          GODOT_VERSION="4.6.3-stable"
+          GODOT_ZIP="Godot_v${GODOT_VERSION}_linux.x86_64.zip"
+          BASE_URL="https://github.com/godotengine/godot/releases/download/${GODOT_VERSION}"
+          curl -fL "${BASE_URL}/${GODOT_ZIP}" -o "${RUNNER_TEMP}/${GODOT_ZIP}"
+          curl -fL "${BASE_URL}/SHA512-SUMS.txt" -o "${RUNNER_TEMP}/SHA512-SUMS.txt"
+          awk "/ ${GODOT_ZIP}\$/" "${RUNNER_TEMP}/SHA512-SUMS.txt" > "${RUNNER_TEMP}/SHA512-GODOT.txt"
+          test -s "${RUNNER_TEMP}/SHA512-GODOT.txt" || { echo "Missing checksum entry for ${GODOT_ZIP} in SHA512-SUMS.txt" >&2; exit 1; }
+          (cd "${RUNNER_TEMP}" && sha512sum -c SHA512-GODOT.txt)
+          unzip -q "${RUNNER_TEMP}/${GODOT_ZIP}" -d "${RUNNER_TEMP}/godot"
+          GODOT_BIN="${RUNNER_TEMP}/godot/Godot_v${GODOT_VERSION}_linux.x86_64"
+          chmod +x "${GODOT_BIN}"
+          echo "GODOT_BIN=${GODOT_BIN}" >> "$GITHUB_ENV"
+
+      - name: Import project assets
+        shell: bash
+        run: |
+          set -euo pipefail
+          "$GODOT_BIN" --headless --path . --import
+
+      - name: Run headless tests
+        run: bash ./tests/run_headless_tests.sh
+
+      - name: Run headless smoke check
+        run: $GODOT_BIN --headless --path . --quit
+
+      - name: Verify clean working tree
+        shell: bash
+        run: |
+          set -euo pipefail
+          DIRTY_FILES="$(git status --porcelain)"
+          if [ -n "$DIRTY_FILES" ]; then
+            echo "Working tree is dirty after import/tests:"
+            echo "$DIRTY_FILES"
+            exit 1
+          fi
