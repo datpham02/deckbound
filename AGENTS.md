@@ -19,7 +19,26 @@ Run from repository root.
 ```bash
 godot --path .                    # open in editor
 godot --headless --path . --quit  # smoke check (required before handoff)
+godot --headless --path . --export-release Android build/android/deckbound.aab
+# optional debug export command:
+# godot --headless --path . --export-debug Android build/android/deckbound.apk
 ```
+
+## Android export prerequisites (studio machine, 2026-11-21)
+
+- Godot 4.6.3 editor: present
+- Godot 4.6.3 export templates: missing
+- Android SDK at `%LOCALAPPDATA%\Android\Sdk`: present (build-tools 36.0.0, android-36.1, platform-tools)
+- JDK: present only as Android Studio JBR OpenJDK 21
+- Debug keystore (`~/.android/debug.keystore`): missing
+
+## Android SDK policy values in this repo
+
+- `export_presets.cfg` sets `gradle_build/target_sdk="36"` (Google Play mobile app requirement effective 2026-08-31):  
+  [developer.android.com/google/play/requirements/target-sdk](https://developer.android.com/google/play/requirements/target-sdk) and  
+  [support.google.com/googleplay/android-developer/answer/11926878](https://support.google.com/googleplay/android-developer/answer/11926878)
+- `export_presets.cfg` sets `gradle_build/min_sdk="24"` (Godot 4.6 Android exporter minimum; Play currently mandates target API but does not publish a mobile minSdk policy value):  
+  [godotengine/godot `platform/android/export/export_plugin.cpp` (`DEFAULT_MIN_SDK_VERSION`)](https://github.com/godotengine/godot/blob/4.6-stable/platform/android/export/export_plugin.cpp)
 
 ## QA screenshots
 
