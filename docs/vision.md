@@ -23,15 +23,15 @@ Deckbound is the deckbuilder where you wear your deck. Every card you take is a 
 
 ### 3. Readable before it is deep
 
-**Meaning.** The player can always see the state that matters: enemy intents, bind slots and their status, deck and discard counts, and the two faces of every page at gameplay scale. Depth comes from the interaction of visible rules, never from hidden information. Every new mechanic ships with its on-screen representation or it does not ship.
+**Meaning.** The player can always see the state that matters: enemy intents, bind slots and their status, deck and discard counts, and the two faces of every page. The screen that matters is a phone held at arm's length in portrait: everything above must be readable on a 6-inch screen without zooming or scrolling, the whole combat state fits in one vertical glance, and a single tap brings any page to full legibility with both faces. Nothing is shown only on hover, because there is no hover. Depth comes from the interaction of visible rules, never from hidden information. Every new mechanic ships with its on-screen representation, sized for the phone canvas, or it does not ship.
 
-**Rules out.** Enemy actions that are not telegraphed, status effects with hidden timers, and card text that requires a glossary to parse.
+**Rules out.** Enemy actions that are not telegraphed, status effects with hidden timers, card text that requires a glossary to parse, tooltips that need a mouse, and any layout that only reads on a monitor or a tablet.
 
 ### 4. The run is the whole game
 
-**Meaning.** A first-run player and a hundred-run player face the same hero and the same rules. Meta progression unlocks options (pages, events, heroes), never power. Runs are designed to be completed in one sitting and to be worth replaying because of decisions, not grind.
+**Meaning.** A first-run player and a hundred-run player face the same hero and the same rules. Meta progression unlocks options (pages, events, heroes), never power. Runs are short, resumable from any node or turn when the phone is put away, and worth replaying because of decisions, not grind.
 
-**Rules out.** Permanent stat upgrades between runs, currencies that carry over, and content gated behind play time rather than discovery.
+**Rules out.** Permanent stat upgrades between runs, currencies that carry over, content gated behind play time rather than discovery, and any purchase or ad reward that changes the power of a run.
 
 ### 5. A quiet, original dark fantasy
 
@@ -41,7 +41,7 @@ Deckbound is the deckbuilder where you wear your deck. Every card you take is a 
 
 ## Visual direction
 
-The look is painterly, hand-illustrated dark fantasy with readable silhouettes and a restrained palette, as set out in [docs/art/ART-PIPELINE.md](art/ART-PIPELINE.md). The pillars add two demands that the art pipeline must serve: bindings are worn on the hero and must read as part of the silhouette at gameplay scale, and every page shows two faces on one card, so card layout and type hierarchy are gameplay information first and decoration second. Reference study of other games follows the pipeline's §2.1 policy; nothing from those references ships.
+The look is painterly, hand-illustrated dark fantasy with readable silhouettes and a restrained palette, as set out in [docs/art/ART-PIPELINE.md](art/ART-PIPELINE.md). The pillars add two demands that the art pipeline must serve: bindings are worn on the hero and must read as part of the silhouette at gameplay scale, and every page shows two faces on one card, so card layout and type hierarchy are gameplay information first and decoration second. Both are judged on a phone in portrait at the performance budget in [concept.md](concept.md), not on a monitor. Reference study of other games follows the pipeline's §2.1 policy; nothing from those references ships.
 
 ## Acceptance criteria
 
@@ -50,6 +50,6 @@ Reviewers and QA can check a design or content change against this document as f
 1. Each pillar above states a design consequence and names at least one thing it rules out.
 2. Any proposed page has a Play and a Bind face that each pass the "when would you choose it" question in its design note (pillar 1).
 3. Any proposed passive source other than binding is rejected or escalated to `director` (pillars 1 and 2).
-4. Any proposed mechanic ships with an on-screen representation listed in its spec (pillar 3).
+4. Any proposed mechanic ships with an on-screen representation listed in its spec, and any UI change is checked on an Android phone of the target class in portrait: readable at arm's length, both card faces legible after one tap, no hover-only information (pillar 3).
 5. Any proposed meta-progression item unlocks options only; anything that raises run power is rejected (pillar 4).
 6. Any proposed name, character, symbol, card text or UI treatment is checked against the originality rule before merge (pillar 5).
