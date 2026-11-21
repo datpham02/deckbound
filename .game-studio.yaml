@@ -1,0 +1,6 @@
+status: PROPOSED
+project:
+  id: deckbound
+engine:
+  name: godot
+  version: 4.6.3

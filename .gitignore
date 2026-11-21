@@ -1,0 +1,12 @@
+# Godot editor/import cache
+.godot/
+
+# Godot translation exports
+*.translation
+
+# Export output directories
+build/
+exports/
+
+# Paperclip workspace metadata
+.paperclip/

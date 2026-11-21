@@ -4,6 +4,20 @@ Single-player deckbuilder game (Godot 4.x). Original game; visual direction is i
 
 Status: **initializing** — Art Phase 0 (audit and decisions).
 
+## Run
+
+From repository root:
+
+```bash
+godot --path .
+```
+
+Headless smoke check:
+
+```bash
+godot --headless --path . --quit
+```
+
 ## Documents
 
 - [Art pipeline](docs/art/ART-PIPELINE.md) — toolchain, reference policy, asset workflow, rollout phases.
