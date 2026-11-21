@@ -7,7 +7,7 @@
 | Asset class | card_art |
 | Owner | game-artist |
 | Priority | medium (slice piece 3) |
-| Status | art-ready candidate; FAILS file-size budget (1.16 MB vs 900 KB), see Provenance |
+| Status | art-ready (802,249 bytes, within the 900 KB budget); not production-accepted until SOU-73 |
 | Approval state | not approved (approver: director, then Board) |
 
 ## Use
@@ -52,10 +52,10 @@
 - Prompt text: "dark fantasy painted illustration, close view of one single torn sheet of old parchment with ragged edges, bound to a thick frayed cord that loops across it, resting on wet dark stone, black water behind, warm amber glow from upper left, cool blue-grey shadows, a small copper tag on the cord, a small teal knot, muted painterly, empty page, no text, no letters, no lamp, no book"
 - Negative prompt: "text, letters, writing, lamp, lantern, candle, book, watermark, frame, border, people"
 - Reference images used as generator input: none
-- Editing steps: `art-ops.py resize <s402 png> assets/slice/cards/card_art_sample.png --size 700 900` (Lanczos, same 7:9 ratio). Previews: `grade --contrast 0.6`, then `resize --size 280 360`.
+- Editing steps: `art-ops.py resize <s402 png> <tmp> --size 700 900` (Lanczos, 7:9); refine round 2 (size and background fix): `resize <700x900> <tmp> --size 420 540 --fit stretch`, `resize <tmp> <tmp2> --size 700 900 --fit stretch` (softens noise so the PNG compresses), then `grade <tmp2> assets/slice/cards/card_art_sample.png --saturation 0.7 --brightness 0.85` (darker, less saturated teal wash). Previews: `grade --contrast 0.6`, then `resize --size 280 360`.
 - Images generated: 11 of 32 (7 first round, 4 refine round 1)
 - Licence notes: output of an allowed model, no input images.
-- Known gap (Tool capability failure: PNG size reduction): the PNG is 1,161,980 bytes, over the 900 KB budget. `art-ops.py` has no quantise or PNG optimise; softening the image by 20% still gave 1.0 MB. Needs a PNG optimiser (e.g. 256-colour quantise) or a budget decision.
+- File size: 802,249 bytes after refine round 2 (was 1,161,980); budget 921,600. Cost: slightly softer fine texture.
 - Originality check: _pending (director)_
 
 ## Acceptance checklist
