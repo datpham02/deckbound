@@ -8,5 +8,19 @@
 build/
 exports/
 
+# Keep committed Android custom build template sources.
+!android/build/
+!android/build/**
+
+# Ignore generated Android/Gradle export output.
+android/build/.gradle/
+android/build/build/
+android/build/libs/
+android/build/local.properties
+android/build/assetPackInstallTime/build/
+android/build/assetPackInstallTime/src/main/assets/
+android/build/src/main/assets/
+android/build/src/instrumented/assets/.godot/
+
 # Paperclip workspace metadata
 .paperclip/
