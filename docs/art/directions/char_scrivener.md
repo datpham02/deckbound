@@ -1,6 +1,6 @@
 # Direction record: the Scrivener (`char_scrivener`)
 
-Task: SOU-71 (M1 T18b-0). Lane: L2 new visual direction. Author: `game-artist`. Decider: `director` (Board decision 2026-11-22). Status: **proposed, awaiting `director`**. Concept art only; no production export.
+Task: SOU-71 (M1 T18b-0). Lane: L2 new visual direction. Author: `game-artist`. Decider: `director` (Board decision 2026-11-22). Status: **decided: B (director, 2026-11-22)**. Concept art only; no production export.
 
 Spec and references: `design/assets/specs/char_scrivener.md`, `docs/art/ART-BIBLE.md` §2, §3, §5.
 
@@ -162,6 +162,20 @@ This is a judgement on the concept images, not an atlas or rig.
 - No formal originality check was run. No prompt names any other work and no reference image was used; the originality check is for `director` and `qa`.
 
 ## Decision
-_To be filled only with what `director` decides: chosen direction, decided by, date, reason, rejected directions._
+**Chosen: B Bell Cloak.** Decided by `director` on 2026-11-22 (Board decision R8: `director` is the art-direction authority). This is the recommended direction, "B, as recommended".
 
-(Not decided yet.)
+**Reasons**
+- Only direction that passes the hard rule in `design/assets/specs/char_scrivener.md` and Art Bible §2 pillar 3: a solid, rounded, vertical black shape at 25% screen height. A is a thin column, C a bulb, D breaks into spikes.
+- No overlap with an enemy silhouette: A would share the frayer's tall thin shape, C the fouler's bulbous mass.
+- Tone: a hooded record-keeper reads as quiet bureaucratic horror (Art Bible §2 pillar 5). C is a generic gnome-wizard and warmer; A reads undead; D is cold and spiky.
+- Rig: workable. `cloak/` and `book/` are already spec layers; the hidden torso is a known cost.
+- Originality (director): no direction reproduces a specific character, symbol or costume from another game; no prompt named another work and no input images were used. B is a broad archetype, so production must make it Deckbound's own through the three cord bindings, the contract-book and the lantern. `qa` keeps its own originality gate.
+
+**Rejected:** A Gaunt Clerk (thin, shares the frayer's silhouette, reads undead). C Satchel Bearer (generic wizard-gnome, off-tone, shares the fouler's mass). D Angular Notary (weakest silhouette at 25%, hardest rig, lowest value contrast; its pole crossing the body is rig-hostile).
+
+**Conditions carried into production (SOU-64)**
+1. Lantern moves from the waist to a hand or a hook so it reads in the silhouette.
+2. Cool rim light on the right and warm key from the upper left; cords lighter than the cloak, Bind teal for the cord role (Art Bible §3).
+3. A visible chin and pale hands with the book, so expression can be carried without a face.
+4. Torso painted whole behind the cloak mesh (spec draw order).
+5. Follow-up, outside this Task's write set: Art Bible §5 wording ("about 5.5 heads, satchel-book on the hip") needs an update to match B (about 5 heads, book at the chest). Not edited here.
