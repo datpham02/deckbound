@@ -1,0 +1,9 @@
+{
+  "id": "registrar",
+  "node": "warden",
+  "pool": "warden",
+  "weight": 1,
+  "enemies": [
+    { "id": "registrar", "start_offset": 0 }
+  ]
+}

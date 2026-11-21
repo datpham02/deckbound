@@ -1,0 +1,13 @@
+{
+  "id": "bailiff",
+  "name": "Bailiff",
+  "size_class": "common",
+  "stats": {
+    "health": 26
+  },
+  "actions": [
+    { "id": "rap", "type": "attack", "value": 5 },
+    { "id": "brace", "type": "guard", "value": 7 }
+  ],
+  "telegraph_pattern": ["rap", "rap", "brace"]
+}

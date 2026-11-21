@@ -1,0 +1,35 @@
+{
+  "id": "redactor",
+  "name": "The Redactor",
+  "size_class": "boss",
+  "stats": {
+    "health": 96
+  },
+  "actions": [
+    { "id": "p1_strike_1", "type": "attack", "value": 8 },
+    {
+      "id": "p1_strike_out",
+      "type": "sever",
+      "value": 8,
+      "fallback": { "type": "attack", "value": 10 }
+    },
+    { "id": "p1_brace", "type": "guard", "value": 12 },
+    { "id": "p1_strike_2", "type": "attack", "value": 9 },
+    {
+      "id": "p2_strike_out",
+      "type": "sever",
+      "value": 10,
+      "fallback": { "type": "attack", "value": 12 }
+    },
+    { "id": "p2_strike_1", "type": "attack", "value": 12 },
+    { "id": "p2_brace", "type": "guard", "value": 10 },
+    { "id": "p2_strike_2", "type": "attack", "value": 10 }
+  ],
+  "telegraph_pattern": ["p1_strike_1", "p1_strike_out", "p1_brace", "p1_strike_2"],
+  "phases": [
+    {
+      "health_at_or_below": 48,
+      "telegraph_pattern": ["p2_strike_out", "p2_strike_1", "p2_brace", "p2_strike_2"]
+    }
+  ]
+}

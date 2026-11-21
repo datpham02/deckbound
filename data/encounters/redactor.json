@@ -1,0 +1,9 @@
+{
+  "id": "redactor",
+  "node": "boss",
+  "pool": "boss",
+  "weight": 1,
+  "enemies": [
+    { "id": "redactor", "start_offset": 0 }
+  ]
+}

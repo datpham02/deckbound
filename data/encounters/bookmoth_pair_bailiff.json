@@ -1,0 +1,11 @@
+{
+  "id": "bookmoth_pair_bailiff",
+  "node": "fight",
+  "pool": "mixed",
+  "weight": 1,
+  "enemies": [
+    { "id": "bookmoth", "start_offset": 0 },
+    { "id": "bookmoth", "start_offset": 1 },
+    { "id": "bailiff", "start_offset": 2 }
+  ]
+}
