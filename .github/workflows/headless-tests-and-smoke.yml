@@ -41,3 +41,14 @@ jobs:
 
       - name: Run headless smoke check
         run: $GODOT_BIN --headless --path . --quit
+
+      - name: Verify clean working tree
+        shell: bash
+        run: |
+          set -euo pipefail
+          DIRTY_FILES="$(git status --porcelain)"
+          if [ -n "$DIRTY_FILES" ]; then
+            echo "Working tree is dirty after import/tests:"
+            echo "$DIRTY_FILES"
+            exit 1
+          fi
