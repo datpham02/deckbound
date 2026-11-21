@@ -21,6 +21,23 @@ godot --path .                    # open in editor
 godot --headless --path . --quit  # smoke check (required before handoff)
 ```
 
+## QA screenshots
+
+Run from repository root:
+
+```bash
+godot_console --path . --windowed --scene res://tools/qa/qa_screenshot_runner.tscn --
+```
+
+Arguments after `--` are optional and positional:
+
+- `scene_path` (default: `res://scenes/main/main.tscn`)
+- `sizes_csv` (default: `1920x1080,2400x1080,2640x1080`)
+
+Output PNGs are written to `.godot/qa/` as `<scene-name>-<W>x<H>.png`.
+
+This tool must run in a normal windowed session. Do not use `--headless` for captures.
+
 ## Folder map
 
 - `scenes/` runtime scenes; keep one scene per feature folder.
