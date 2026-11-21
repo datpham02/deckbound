@@ -23,7 +23,8 @@ jobs:
           curl -fL "${BASE_URL}/${GODOT_ZIP}" -o "${RUNNER_TEMP}/${GODOT_ZIP}"
           curl -fL "${BASE_URL}/SHA512-SUMS.txt" -o "${RUNNER_TEMP}/SHA512-SUMS.txt"
           awk "/ ${GODOT_ZIP}\$/" "${RUNNER_TEMP}/SHA512-SUMS.txt" > "${RUNNER_TEMP}/SHA512-GODOT.txt"
-          sha512sum -c "${RUNNER_TEMP}/SHA512-GODOT.txt"
+          test -s "${RUNNER_TEMP}/SHA512-GODOT.txt" || { echo "Missing checksum entry for ${GODOT_ZIP} in SHA512-SUMS.txt" >&2; exit 1; }
+          (cd "${RUNNER_TEMP}" && sha512sum -c SHA512-GODOT.txt)
           unzip -q "${RUNNER_TEMP}/${GODOT_ZIP}" -d "${RUNNER_TEMP}/godot"
           GODOT_BIN="${RUNNER_TEMP}/godot/Godot_v${GODOT_VERSION}_linux.x86_64"
           chmod +x "${GODOT_BIN}"
