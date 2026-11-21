@@ -16,14 +16,14 @@
 - Region: inside the 16:9 core.
 
 ## Canvas
-- Frame canvas: 384 x 384 (the figure is tall and thin, so it fills height, not width).
+- Frame canvas: 512 x 512, 4 x 3 cells. The cell holds the stated on-screen height (about 420 px) plus the tallest and widest action pose at 1:1 (no runtime upscale); the reach pose stays inside the cell with headroom.
 - Safe area / overscan: n/a.
 - Background: transparent.
 - Pivot / origin: bottom centre, between the feet. Same on every frame.
 
 ## Budget
-- Texture memory: sheet 1536 x 1152 x 4 = about 6.8 MB uncompressed.
-- File size target: sheet PNG at most 2 MB.
+- Texture memory: sheet 2048 x 1536 x 4 = about 12.6 MB uncompressed (12 cells, 10 used).
+- File size target: sheet PNG at most 3 MB.
 - Atlas: one sheet, at most 2048 x 2048.
 - Frame count: 10 (idle 4, fray reach 6).
 

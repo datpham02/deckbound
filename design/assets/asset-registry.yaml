@@ -34,8 +34,8 @@ slice_assets:
     spec: design/assets/specs/enemy_attacker.md
     source: art_src/enemies/enemy_attacker.kra
     export: assets/slice/enemies/enemy_attacker_sheet.png
-    size_px: [1536, 1152]       # 4 x 3 frames of 384 x 384
-    budget_mb_uncompressed: 6.8
+    size_px: [2048, 1536]       # 4 x 3 frames of 512 x 512
+    budget_mb_uncompressed: 12.6
     pivot: bottom_center
     animation: {approach: frame, states: [idle, attack], frames: 10}
     provenance: {origin: generated_draft_plus_paintover, recorded: false}
@@ -49,8 +49,8 @@ slice_assets:
     spec: design/assets/specs/enemy_frayer.md
     source: art_src/enemies/enemy_frayer.kra
     export: assets/slice/enemies/enemy_frayer_sheet.png
-    size_px: [1536, 1152]
-    budget_mb_uncompressed: 6.8
+    size_px: [2048, 1536]       # 4 x 3 frames of 512 x 512
+    budget_mb_uncompressed: 12.6
     pivot: bottom_center
     animation: {approach: frame, states: [idle, fray_reach], frames: 10}
     provenance: {origin: generated_draft_plus_paintover, recorded: false}

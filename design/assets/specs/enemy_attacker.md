@@ -16,14 +16,14 @@
 - Region: inside the 16:9 core.
 
 ## Canvas
-- Frame canvas: 384 x 384, one frame per cell.
+- Frame canvas: 512 x 512, 4 x 3 cells, one frame per cell. The cell holds the stated on-screen height (about 380 px) plus the tallest and widest action pose at 1:1 (no runtime upscale); the idle figure stays within about 480 px wide so the raised-weapon wind-up has room.
 - Safe area / overscan: n/a.
 - Background: transparent.
 - Pivot / origin: bottom centre, between the feet. Same on every frame.
 
 ## Budget
-- Texture memory: sheet 1536 x 1152 x 4 = about 6.8 MB uncompressed.
-- File size target: sheet PNG at most 2 MB.
+- Texture memory: sheet 2048 x 1536 x 4 = about 12.6 MB uncompressed (12 cells, 10 used).
+- File size target: sheet PNG at most 3 MB.
 - Atlas: one sheet, at most 2048 x 2048.
 - Frame count: 10 (idle 4, attack 6).
 

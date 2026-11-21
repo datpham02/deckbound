@@ -12,7 +12,7 @@ Seven pieces that together show: silhouette language, palette, lighting, linewor
 | 2 | Common enemy: binding-frayer | enemy silhouette, facing left, shape distinct from the hero | 800 x 800 working | `enemy_frayer`, informs `enemy_attacker` |
 | 3 | Boss (severing) | boss scale and menace, higher detail | 1200 x 1000 working | none in M1 slice; look reference only |
 | 4 | Card illustration | focal region, readability when mostly covered, full at spread size | 700 x 900 | `card_art_sample` |
-| 5 | Bind-slot icon, three states (intact, frayed, severed) | icon family, shape-not-colour state coding | 128 x 128 each | `slot_icon_states` |
+| 5 | Bind-slot icon, three states (intact, frayed, severed); the slice spec `slot_icon_states` adds a fourth, `empty` | icon family, shape-not-colour state coding | 128 x 128 each | `slot_icon_states` |
 | 6 | Combat background | lanes kept clear, overscan, value structure | 2640 x 1080 | `bg_combat_flooded_hall` |
 | 7 | Combat UI screen mockup | layout per concept, safe areas, readability, colour-blind check | 2400 x 1080 | `ui_combat_composition` |
 
