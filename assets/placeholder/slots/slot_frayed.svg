@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="128" height="128" viewBox="0 0 128 128">
+  <!-- Bind slot, frayed: loop with a visible gap and loose threads, thinner and desaturated. -->
+  <rect x="4" y="4" width="120" height="120" rx="16" fill="#1B2026" stroke="#6B7780" stroke-width="5"/>
+  <path d="M64 32 A32 32 0 1 0 92 80" fill="none" stroke="#6B7780" stroke-width="8" stroke-linecap="round"/>
+  <path d="M92 80 L104 96 M92 80 L108 84 M64 32 L52 22 M64 32 L78 20" fill="none" stroke="#E6DCC3" stroke-width="4" stroke-linecap="round"/>
+</svg>

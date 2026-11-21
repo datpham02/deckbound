@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="128" height="128" viewBox="0 0 128 128">
+  <!-- Telegraph: foul. Ink blot with drips, over a page. -->
+  <circle cx="64" cy="64" r="58" fill="#1A1426" stroke="#6B7780" stroke-width="6"/>
+  <rect x="34" y="26" width="60" height="76" rx="4" fill="#E6DCC3"/>
+  <path d="M64 44 Q92 46 86 66 Q96 86 70 88 Q56 100 48 82 Q32 66 46 54 Q50 42 64 44 Z" fill="#0E1317" stroke="#4FA3B8" stroke-width="3"/>
+  <path d="M60 90 L60 110 M76 88 L76 104" stroke="#0E1317" stroke-width="7" stroke-linecap="round"/>
+</svg>

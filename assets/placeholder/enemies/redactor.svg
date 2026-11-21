@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="420" height="486" viewBox="0 0 420 486">
+  <!-- The Redactor placeholder: faces left. Largest, hooded, black bar for a face, wide flat strike-through blade held low, ink pooling. -->
+  <ellipse cx="215" cy="455" rx="195" ry="26" fill="#1A1426"/>
+  <!-- cloak -->
+  <path d="M120 470 Q100 250 150 130 Q230 70 310 140 Q350 260 330 470 Z" fill="#3A434B" stroke="#1A1426" stroke-width="8" stroke-linejoin="round"/>
+  <path d="M310 140 Q350 260 330 470 L290 470 Q310 280 285 150 Z" fill="#1B2026"/>
+  <!-- hood -->
+  <path d="M135 150 Q120 30 230 24 Q320 30 305 150 Q220 185 135 150 Z" fill="#1B2026" stroke="#1A1426" stroke-width="8" stroke-linejoin="round"/>
+  <!-- black bar where a face would be -->
+  <rect x="150" y="84" width="130" height="30" fill="#0E1317" stroke="#6B7780" stroke-width="3"/>
+  <!-- strike-through blade, wide and flat, held low -->
+  <rect x="8" y="368" width="330" height="26" transform="rotate(-6 8 368)" fill="#E6DCC3" stroke="#1A1426" stroke-width="7"/>
+  <rect x="300" y="354" width="90" height="32" transform="rotate(-6 300 354)" fill="#1A1426"/>
+  <!-- hand on blade grip -->
+  <circle cx="330" cy="365" r="22" fill="#1A1426"/>
+  <!-- wax seal accent -->
+  <circle cx="215" cy="215" r="20" fill="#8C2F2B" stroke="#1A1426" stroke-width="5"/>
+</svg>

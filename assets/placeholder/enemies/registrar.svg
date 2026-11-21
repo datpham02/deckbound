@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="240" height="378" viewBox="0 0 240 378">
+  <!-- Registrar placeholder: faces left. Tall straight robe, great seal-press held high in both hands (wide flat top). -->
+  <ellipse cx="120" cy="370" rx="85" ry="8" fill="#0E1317"/>
+  <!-- seal-press: wide flat block above head -->
+  <rect x="20" y="8" width="200" height="50" rx="4" fill="#8C2F2B" stroke="#1A1426" stroke-width="6"/>
+  <rect x="100" y="58" width="40" height="40" fill="#6B7780" stroke="#1A1426" stroke-width="6"/>
+  <!-- arms raised to press -->
+  <path d="M85 190 L65 100 L105 96 M155 190 L175 100 L135 96" fill="none" stroke="#1A1426" stroke-width="22" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M85 190 L65 100 L105 96 M155 190 L175 100 L135 96" fill="none" stroke="#3A434B" stroke-width="12" stroke-linecap="round" stroke-linejoin="round"/>
+  <!-- hood/head -->
+  <path d="M85 160 Q80 105 120 102 Q160 105 155 160 Z" fill="#1B2026" stroke="#1A1426" stroke-width="6" stroke-linejoin="round"/>
+  <circle cx="102" cy="138" r="5" fill="#E8A33D"/>
+  <!-- long straight robe -->
+  <path d="M82 160 L158 160 L190 370 L50 370 Z" fill="#3A434B" stroke="#1A1426" stroke-width="6" stroke-linejoin="round"/>
+  <path d="M120 165 L120 370" stroke="#1A1426" stroke-width="5"/>
+  <path d="M82 160 L50 370 L68 370 L95 165 Z" fill="#6B7780"/>
+  <rect x="95" y="220" width="50" height="14" fill="#E6DCC3" stroke="#1A1426" stroke-width="4"/>
+</svg>

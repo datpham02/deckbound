@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="128" height="128" viewBox="0 0 128 128">
+  <!-- Telegraph: fray. Cord splitting into loose threads. -->
+  <circle cx="64" cy="64" r="58" fill="#1A1426" stroke="#A8324A" stroke-width="6"/>
+  <path d="M22 64 L60 64" stroke="#E6DCC3" stroke-width="12" stroke-linecap="round"/>
+  <path d="M60 64 L104 36 M60 64 L108 62 M60 64 L102 90 M60 64 L92 108" stroke="#E6DCC3" stroke-width="6" stroke-linecap="round"/>
+</svg>

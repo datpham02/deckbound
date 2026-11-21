@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="128" height="128" viewBox="0 0 128 128">
+  <!-- Telegraph: guard. Shield with flat top and pointed base. -->
+  <circle cx="64" cy="64" r="58" fill="#1A1426" stroke="#7C9A6D" stroke-width="6"/>
+  <path d="M34 34 L94 34 L94 70 Q94 90 64 106 Q34 90 34 70 Z" fill="#7C9A6D" stroke="#0E1317" stroke-width="4" stroke-linejoin="round"/>
+  <path d="M64 34 L64 106" stroke="#0E1317" stroke-width="5"/>
+</svg>
