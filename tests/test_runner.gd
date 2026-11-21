@@ -1,6 +1,6 @@
 extends Node
 
-const TEST_CASES_DIR: String = "res://tests/cases"
+const TEST_ROOT_DIR: String = "res://tests"
 const DEFAULT_TEST_SUFFIX: String = "_test.gd"
 var _argument_error: String = ""
 
@@ -80,21 +80,32 @@ func _parse_explicit_case_paths(args: PackedStringArray) -> Array[String]:
 
 func _discover_default_test_case_paths() -> Array[String]:
   var paths: Array[String] = []
-  var directory: DirAccess = DirAccess.open(TEST_CASES_DIR)
+  _collect_test_case_paths(TEST_ROOT_DIR, paths)
+  paths.sort()
+  return paths
+
+func _collect_test_case_paths(directory_path: String, out_paths: Array[String]) -> void:
+  var directory: DirAccess = DirAccess.open(directory_path)
 
   if directory == null:
-    return paths
+    return
 
   directory.list_dir_begin()
   var entry: String = directory.get_next()
 
   while entry != "":
-    if not directory.current_is_dir() and entry.ends_with(DEFAULT_TEST_SUFFIX):
-      paths.append("%s/%s" % [TEST_CASES_DIR, entry])
+    if entry == "." or entry == "..":
+      entry = directory.get_next()
+      continue
+
+    var entry_path: String = "%s/%s" % [directory_path, entry]
+    if directory.current_is_dir():
+      _collect_test_case_paths(entry_path, out_paths)
+    elif entry.ends_with(DEFAULT_TEST_SUFFIX):
+      out_paths.append(entry_path)
     entry = directory.get_next()
 
   directory.list_dir_end()
-  return paths
 
 func _run_case(test_case_path: String) -> Array[String]:
   var failures: Array[String] = []

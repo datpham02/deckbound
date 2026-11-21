@@ -71,6 +71,7 @@ This tool must run in a normal windowed session. Do not use `--headless` for cap
 
 - `scenes/` runtime scenes; keep one scene per feature folder.
 - `scripts/` runtime scripts; mirror scene folder structure where practical.
+- `data/` design-tunable gameplay JSON (pages, enemies, run rules); gameplay numbers live here, not hard-coded in scripts.
 - `assets/` exported/imported runtime assets.
 - `art_src/` editable source art files (reserved; do not replace with exports).
 - `docs/` documentation.
