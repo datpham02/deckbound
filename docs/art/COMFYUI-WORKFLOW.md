@@ -3,7 +3,7 @@
 Status: **proposed** (SOU-56). Applies decision D1 from the M1 plan: local ComfyUI with FLUX.1 schnell and SDXL, installed on the studio machine 2026-11-21 (Board decision). This document describes use; it installs and changes nothing.
 
 ## Rules (non-negotiable)
-1. **Final art allowed (Board 2026-11-22).** Generated images may ship as final art after selection, consistency checks and scripted cleanup with `art-ops`, then Director review and Board approval. Krita paintover is optional.
+1. **Final art allowed (Board 2026-11-22).** Generated images may ship as final art after selection, consistency checks and scripted cleanup with `art-ops`, then the Task's review stages (`qa`, Director) and Board approval. Krita paintover is optional.
 2. **Never a reference image as input.** No img2img, ControlNet, IP-Adapter, style reference, LoRA or fine-tune built from any game's screenshots, captures, moodboard or other reference material (pipeline §2.1). Text prompts only. An empty latent is the only image-shaped input. The one later exception to consider is our own approved original art, and that needs separate approval and is not used in this PR.
 3. **Original design words only** in prompts. No game, character, card or artist names from other works.
 4. **Local only.** Prompts and outputs stay on the studio machine.

@@ -157,6 +157,6 @@ Pass / fail / not tested, never inferred (pipeline §6):
 
 1. Approve the Phase 1 pillars, palette roles and proposed values (§2, §3, §5) as the direction for the slice.
 2. Approve the visual target pack in [TARGET-PACK-PLAN.md](TARGET-PACK-PLAN.md): seven pieces (hero, common enemy, boss, card illustration, bind-slot icon, background, UI screen). The pipeline's relic icon is replaced by the bind-slot icon, because the concept has no relics.
-3. D1 (local ComfyUI, FLUX.1 schnell and SDXL; final art allowed since 2026-11-22) is decided by the Board (M1 plan, 2026-11-21); workflow in [COMFYUI-WORKFLOW.md](COMFYUI-WORKFLOW.md). Model licences are still to be verified before a draft is kept. D2-D6 in [TOOL-DECISIONS.md](TOOL-DECISIONS.md) remain as approved there.
+3. D1 (local ComfyUI, FLUX.1 schnell and SDXL; final art allowed since 2026-11-22) is decided by the Board (M1 plan, 2026-11-21); workflow in [COMFYUI-WORKFLOW.md](COMFYUI-WORKFLOW.md). Model licences verified 2026-11-22 against the official files (Company OS dependency registry: `sd-xl-base-1-0` CreativeML Open RAIL++-M, `flux1-schnell-fp8` Apache-2.0); the licensing rule is in `AGENTS.md`. D2-D6 in [TOOL-DECISIONS.md](TOOL-DECISIONS.md) remain as approved there.
 4. Project-setting changes in audit F1-F3 are `gameplay-programmer` work and are not part of this document.
 5. A phone readability test confirms or changes every **(proposed)** number.

@@ -25,7 +25,7 @@
 
 ### Image generation
 
-**Board decision 2026-11-22: AI makes the final art.** The local ComfyUI (D1: FLUX.1 schnell and SDXL, text-to-image only) produces final illustrations as well as concepts. A generated image becomes final art through selection, regeneration for consistency and scripted operations (colour-key, trim, resize, grade, sprite sheets: `art-ops`), not through a required human paintover in Krita. Krita stays available for optional hand fixes. Every asset still passes Director review (originality, Art Bible) and Board approval by eye. Known trade-off accepted by the Board: purely AI-generated images may get no copyright protection in some jurisdictions.
+**Board decision 2026-11-22: AI makes the final art.** The local ComfyUI (D1: FLUX.1 schnell and SDXL, text-to-image only) produces final illustrations as well as concepts. A generated image becomes final art through selection, regeneration for consistency and scripted operations (colour-key, trim, resize, grade, sprite sheets: `art-ops`), not through a required human paintover in Krita. Krita stays available for optional hand fixes. Every asset still passes the review stages its Task names (at least `qa`, and Director review for originality and the Art Bible) and Board approval by eye. Known trade-off accepted by the Board: purely AI-generated images may get no copyright protection in some jurisdictions.
 
 Do not assume Claude Code itself is the image generator. Claude Code should orchestrate prompts, files, validation and integration around a separately selected image-generation tool.
 
