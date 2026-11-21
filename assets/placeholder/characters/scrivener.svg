@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="300" height="432" viewBox="0 0 300 432">
+  <!-- Scrivener placeholder: faces right, stooped, long coat, satchel-book on left hip, lantern. -->
+  <ellipse cx="140" cy="422" rx="95" ry="8" fill="#0E1317"/>
+  <!-- coat -->
+  <path d="M95 120 Q70 250 60 415 L215 415 Q205 250 185 120 Z" fill="#3A434B" stroke="#1A1426" stroke-width="6" stroke-linejoin="round"/>
+  <path d="M185 120 Q205 250 215 415 L190 415 Q180 260 165 130 Z" fill="#6B7780"/>
+  <!-- head and hood, stooped forward (right) -->
+  <path d="M105 125 Q95 40 150 38 Q200 40 195 105 Q185 135 150 135 Z" fill="#1B2026" stroke="#1A1426" stroke-width="6" stroke-linejoin="round"/>
+  <ellipse cx="172" cy="88" rx="22" ry="26" fill="#E6DCC3" stroke="#1A1426" stroke-width="5"/>
+  <circle cx="182" cy="86" r="4" fill="#1A1426"/>
+  <!-- satchel-book on left hip (back side) -->
+  <rect x="48" y="255" width="62" height="78" rx="6" fill="#8C2F2B" stroke="#1A1426" stroke-width="6"/>
+  <rect x="58" y="268" width="42" height="12" fill="#E6DCC3"/>
+  <!-- front arm holding lantern -->
+  <path d="M175 140 Q235 175 250 240" fill="none" stroke="#1A1426" stroke-width="30" stroke-linecap="round"/>
+  <path d="M175 140 Q235 175 250 240" fill="none" stroke="#3A434B" stroke-width="20" stroke-linecap="round"/>
+  <line x1="250" y1="240" x2="250" y2="262" stroke="#1A1426" stroke-width="5"/>
+  <rect x="234" y="262" width="32" height="42" rx="6" fill="#E8A33D" stroke="#1A1426" stroke-width="6"/>
+  <!-- binding cords: shoulder (slot 3), chest (slot 1), hip (slot 2); each a loop in a distinct place -->
+  <path d="M105 150 L185 190" stroke="#E6DCC3" stroke-width="8" stroke-linecap="round"/>
+  <ellipse cx="145" cy="170" rx="14" ry="10" fill="none" stroke="#4FA3B8" stroke-width="7" transform="rotate(22 145 170)"/>
+  <ellipse cx="140" cy="215" rx="26" ry="14" fill="none" stroke="#4FA3B8" stroke-width="7"/>
+  <ellipse cx="120" cy="300" rx="26" ry="14" fill="none" stroke="#4FA3B8" stroke-width="7"/>
+</svg>

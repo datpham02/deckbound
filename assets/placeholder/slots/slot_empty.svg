@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="128" height="128" viewBox="0 0 128 128">
+  <!-- Bind slot, empty: dashed open ring, no cord. -->
+  <rect x="4" y="4" width="120" height="120" rx="16" fill="#1B2026" stroke="#6B7780" stroke-width="5"/>
+  <circle cx="64" cy="64" r="30" fill="none" stroke="#6B7780" stroke-width="6" stroke-dasharray="12 10"/>
+</svg>

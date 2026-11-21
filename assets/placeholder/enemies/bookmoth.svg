@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="300" height="270" viewBox="0 0 300 270">
+  <!-- Bookmoth placeholder: faces left. Ragged flier, torn-page wings, proboscis with trailing thread. Only winged silhouette. -->
+  <!-- far wing (upper) -->
+  <path d="M150 120 L190 10 L205 45 L235 15 L245 70 L275 60 L250 125 Z" fill="#E6DCC3" stroke="#1A1426" stroke-width="6" stroke-linejoin="round"/>
+  <!-- near wing (lower) -->
+  <path d="M150 135 L215 150 L205 190 L240 200 L200 245 L170 225 L150 255 L135 175 Z" fill="#6B7780" stroke="#1A1426" stroke-width="6" stroke-linejoin="round"/>
+  <!-- body -->
+  <ellipse cx="135" cy="140" rx="40" ry="55" fill="#3A434B" stroke="#1A1426" stroke-width="6"/>
+  <!-- head -->
+  <circle cx="92" cy="108" r="26" fill="#1B2026" stroke="#1A1426" stroke-width="6"/>
+  <circle cx="84" cy="102" r="7" fill="#E8A33D"/>
+  <!-- antennae -->
+  <path d="M100 85 Q96 60 70 48 M112 88 Q122 60 108 40" fill="none" stroke="#1A1426" stroke-width="5" stroke-linecap="round"/>
+  <!-- proboscis with trailing loose thread -->
+  <path d="M72 118 Q40 130 30 165 Q25 195 40 225" fill="none" stroke="#1A1426" stroke-width="7" stroke-linecap="round"/>
+  <path d="M40 225 Q55 250 30 262" fill="none" stroke="#E6DCC3" stroke-width="5" stroke-linecap="round"/>
+</svg>

@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="900" viewBox="0 0 1400 900">
+  <!-- Spread frame: open two-page book. Play on left page (copper mark), Bind on right page (blue-teal loop mark), shared Ink cost circle at the spine. No text. -->
+  <rect x="6" y="6" width="1388" height="888" rx="30" fill="#3A434B" stroke="#1A1426" stroke-width="10"/>
+  <rect x="30" y="30" width="660" height="840" rx="14" fill="#E6DCC3" stroke="#1A1426" stroke-width="6"/>
+  <rect x="710" y="30" width="660" height="840" rx="14" fill="#E6DCC3" stroke="#1A1426" stroke-width="6"/>
+  <!-- spine -->
+  <rect x="690" y="30" width="20" height="840" fill="#1A1426"/>
+  <circle cx="700" cy="110" r="52" fill="#1A1426" stroke="#E8A33D" stroke-width="6"/>
+  <!-- illustration areas (spread size, reduced contrast) -->
+  <rect x="70" y="190" width="580" height="320" rx="8" fill="#1A1426" fill-opacity="0.12"/>
+  <rect x="750" y="190" width="580" height="320" rx="8" fill="#1A1426" fill-opacity="0.12"/>
+  <!-- rules text zones -->
+  <rect x="70" y="540" width="580" height="290" rx="8" fill="#1A1426" fill-opacity="0.06"/>
+  <rect x="750" y="540" width="580" height="290" rx="8" fill="#1A1426" fill-opacity="0.06"/>
+  <!-- face markers: different shapes, not colour alone -->
+  <path d="M80 120 L112 90 L144 120 L112 150 Z" fill="#D9783A"/>
+  <circle cx="1290" cy="120" r="30" fill="none" stroke="#4FA3B8" stroke-width="12"/>
+</svg>

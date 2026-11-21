@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="128" height="128" viewBox="0 0 128 128">
+  <!-- Bind slot, severed: two short cut ends, empty centre, diagonal cut mark. -->
+  <rect x="4" y="4" width="120" height="120" rx="16" fill="#1B2026" stroke="#A8324A" stroke-width="5"/>
+  <path d="M30 50 L48 50 M80 78 L98 78" stroke="#6B7780" stroke-width="10" stroke-linecap="round"/>
+  <line x1="34" y1="96" x2="94" y2="32" stroke="#A8324A" stroke-width="8" stroke-linecap="round"/>
+</svg>

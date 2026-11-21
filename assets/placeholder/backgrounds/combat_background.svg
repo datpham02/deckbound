@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="2640" height="1080" viewBox="0 0 2640 1080">
+  <!-- Combat background: 2400x1080 canvas plus 120 px overscan each side (2640 wide). Damp stone wall above, lantern-lit black water below. Opaque. Busy detail kept out of the lanes (Scrivener left third, enemies right two thirds); only soft shapes there. -->
+  <rect width="2640" height="1080" fill="#1B2026"/>
+  <!-- wall blocks -->
+  <g fill="#3A434B" fill-opacity="0.45">
+    <rect x="0" y="60" width="520" height="150" rx="6"/><rect x="560" y="260" width="620" height="150" rx="6"/>
+    <rect x="1240" y="60" width="540" height="150" rx="6"/><rect x="1830" y="260" width="600" height="150" rx="6"/>
+    <rect x="2480" y="60" width="160" height="150" rx="6"/>
+  </g>
+  <!-- arches -->
+  <path d="M300 640 L300 340 Q300 200 460 200 Q620 200 620 340 L620 640 Z" fill="#0E1317"/>
+  <path d="M2020 640 L2020 340 Q2020 200 2180 200 Q2340 200 2340 340 L2340 640 Z" fill="#0E1317"/>
+  <!-- lantern glow from upper left: the single warm light -->
+  <circle cx="420" cy="140" r="520" fill="#E8A33D" fill-opacity="0.08"/>
+  <circle cx="420" cy="140" r="260" fill="#E8A33D" fill-opacity="0.10"/>
+  <circle cx="420" cy="140" r="16" fill="#E8A33D"/>
+  <!-- stone floor strip (characters stand here) -->
+  <rect x="0" y="700" width="2640" height="130" fill="#3A434B"/>
+  <rect x="0" y="700" width="2640" height="8" fill="#6B7780"/>
+  <!-- black water -->
+  <rect x="0" y="830" width="2640" height="250" fill="#0E1317"/>
+  <g stroke="#3A434B" stroke-width="4" stroke-linecap="round" stroke-opacity="0.6">
+    <line x1="200" y1="900" x2="420" y2="900"/><line x1="900" y1="960" x2="1200" y2="960"/>
+    <line x1="1600" y1="920" x2="1840" y2="920"/><line x1="2200" y1="990" x2="2460" y2="990"/>
+  </g>
+</svg>

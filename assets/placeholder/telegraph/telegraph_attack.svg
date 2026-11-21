@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="128" height="128" viewBox="0 0 128 128">
+  <!-- Telegraph: attack. Diagonal blade, point down-left. -->
+  <circle cx="64" cy="64" r="58" fill="#1A1426" stroke="#A8324A" stroke-width="6"/>
+  <path d="M96 20 L108 32 L48 92 L34 94 L36 80 Z" fill="#E6DCC3" stroke="#0E1317" stroke-width="4" stroke-linejoin="round"/>
+  <rect x="26" y="90" width="26" height="10" transform="rotate(45 39 95)" fill="#A8324A"/>
+</svg>

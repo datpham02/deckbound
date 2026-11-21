@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="128" height="128" viewBox="0 0 128 128">
+  <!-- Telegraph: sever. Cord cut cleanly by a horizontal strike-through bar, two separated ends. -->
+  <circle cx="64" cy="64" r="58" fill="#1A1426" stroke="#A8324A" stroke-width="6"/>
+  <path d="M20 44 L50 44 M78 44 L108 44 M20 84 L50 84 M78 84 L108 84" stroke="#E6DCC3" stroke-width="10" stroke-linecap="round"/>
+  <rect x="14" y="58" width="100" height="12" fill="#A8324A" stroke="#0E1317" stroke-width="3"/>
+</svg>

@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="330" height="270" viewBox="0 0 330 270">
+  <!-- Bailiff placeholder: faces left. Broad, stooped, hooded; hooked tally-rod across the body. Widest common. -->
+  <ellipse cx="165" cy="262" rx="150" ry="8" fill="#0E1317"/>
+  <!-- heavy wet coat hem -->
+  <path d="M60 255 Q40 150 90 90 Q160 50 250 100 Q300 160 290 255 Z" fill="#3A434B" stroke="#1A1426" stroke-width="6" stroke-linejoin="round"/>
+  <path d="M75 255 Q60 200 80 165 L120 255 Z M130 255 L165 190 L200 255 Z M215 255 L250 185 L285 255 Z" fill="#1B2026"/>
+  <!-- hood -->
+  <path d="M70 105 Q60 30 125 28 Q180 30 175 100 Q150 125 100 120 Z" fill="#1B2026" stroke="#1A1426" stroke-width="6" stroke-linejoin="round"/>
+  <path d="M82 80 Q95 62 120 66" fill="none" stroke="#6B7780" stroke-width="5"/>
+  <circle cx="92" cy="92" r="5" fill="#E8A33D"/>
+  <!-- tally-rod with hook across body -->
+  <line x1="20" y1="205" x2="305" y2="120" stroke="#1A1426" stroke-width="16" stroke-linecap="round"/>
+  <line x1="20" y1="205" x2="305" y2="120" stroke="#6B7780" stroke-width="8" stroke-linecap="round"/>
+  <path d="M20 205 Q4 215 14 235" fill="none" stroke="#1A1426" stroke-width="12" stroke-linecap="round"/>
+  <!-- ink-black fists -->
+  <circle cx="115" cy="178" r="15" fill="#1A1426"/>
+  <circle cx="230" cy="148" r="15" fill="#1A1426"/>
+</svg>
