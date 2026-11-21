@@ -64,8 +64,8 @@ Run across several runs. Keep a tally of the distinct page names you meet (about
 | E3.2 *Fray ends* | Keep playing the same fight to its end, then start the next fight. | The slot is **intact** again at the start of the next fight and the effect works again. A frayed page is not lost. | E3 row |
 | E3.3 *Fray: deck* | After a fray, check deck and discard counts. | They did not change because of the fray. The page does not come back into the deck. | E3 row |
 | E3.4 *Sever* | 1. Bind a page. 2. Reach the **boss** (or a node whose enemy has a sever telegraph). 3. Let the sever hit that slot. | The slot **empties**. The page is gone from the run: look at the deck and discard counts (not changed) and play on; the page never appears. | E3 row |
-| E3.5 *Sever stays* | After a sever, finish the fight (or die and start a new run, then compare with the first run) and check at the rest. | At the next rest, the severed page cannot be unbound; it is not in the deck. The slot stays empty. | E3 row |
-| E3.6 *Defend* | When a fray or sever is telegraphed, use a guard page or kill the enemy before it acts. | If the enemy is killed or its action is blocked as designed, the slot is **not** frayed or severed. Note exactly what you did. | E3 row, note |
+| E3.5 *Sever stays* | After a sever, finish the fight and check at the rest. | At the next rest, the severed page cannot be unbound; it is not in the deck. The slot stays empty. | E3 row |
+| E3.6 *Defend* | When a fray or sever is telegraphed, kill that enemy before it acts (guard does not protect a slot). | The slot is not frayed or severed. Note what you did. | E3 row, note |
 
 If the game never gives you a fray or a sever situation in several runs, mark **Not tested** and say which enemy you were waiting for.
 
@@ -93,7 +93,7 @@ If the game never gives you a fray or a sever situation in several runs, mark **
 
 | Case | Steps | Expected | Record |
 |---|---|---|---|
-| E6.1 | Play one run from New run to the end by choosing a path. Tick each as you meet it: attacker, frayer, deck-fouler, warden. | All three common enemy types and the warden show up in the one run. If they do not all appear in one run, say which path you took; a branch that avoids one is allowed only if another run covers it (note both runs). | E6 row |
+| E6.1 | Play one run from New run to the end by choosing a path. Tick each as you meet it: attacker, frayer, deck-fouler, warden. | All three common enemy types and the warden show up in the one run. If a run misses one, mark **Fail** and note the path you took. | E6 row |
 | E6.2 | Reach the last node. | The last fight is the **boss** and nothing comes after it. | E6 row |
 | E6.3 *Win* | Beat the boss. | A **run summary** appears for the win (shows it was a win and some run facts). A way back to the title is offered. | E6 row |
 | E6.4 *Loss* | Start a new run and lose all health on purpose (end turns without playing). | A **run summary** appears for the loss. A way back to the title is offered. | E6 row |
@@ -125,7 +125,7 @@ For every case: follow the steps, then compare with the state you wrote down bef
 |---|---|---|---|---|
 | E8.1 *Map* | On the map, with at least one node done and one slot bound | 1. Note state. 2. Kill from recents. 3. Reopen, tap **Continue**. | Back on the **map** at the same position with the same completed nodes. Deck, bindings and health as before. | E8 row |
 | E8.2 *Fight, player turn* | In a normal fight, **after the player turn began** and you have played one page, before ending the turn | Note state. Kill. Resume. | Same fight, same turn, same hand (minus the played page), same Ink, deck and discard counts, enemy health, telegraphs. | E8 row |
-| E8.3 *Fight, after player turn* | In a normal fight, **right after you tap End turn and the screen is showing the enemy's result** (if it goes too fast, kill the app as soon as the enemy has acted) | Note state. Kill. Resume. | Resumes in the **same fight** at the point stored: either your next turn with the hand shown before the kill, or the state right after your turn ended. Counts, telegraphs, health and guard match. | E8 row, note which you got |
+| E8.3 *Fight, after player turn* | In a normal fight, **right after you tap End turn and the screen is showing the enemy's result** (if it goes too fast, kill the app as soon as the enemy has acted) | Note state. Kill. Resume. | Resumes in the **same fight** at the point stored: either your next turn with the hand shown before the kill, or the state right after your turn ended. Counts, telegraphs, health and guard match. If the game resumes at the end of your turn, the enemies then act **once**; health, guard and slots afterwards match one enemy turn, never two, and never none. | E8 row, note which you got |
 | E8.4 *Fight, after enemy turn* | In a normal fight, **after the enemy acted and your new turn has begun**, before you touch anything | Note state. Kill. Resume. | Same turn, **same hand** (not re-drawn), same new telegraphs. | E8 row |
 | E8.5 *Warden* | Repeat E8.2 and E8.4 in the **warden** fight | As above | As above, including the warden's telegraph. | E8 row |
 | E8.6 *Boss* | Repeat E8.2 and E8.4 in the **boss** fight | As above | As above, including a sever telegraph and its line to the slot. | E8 row |
@@ -134,7 +134,7 @@ For every case: follow the steps, then compare with the state you wrote down bef
 | E8.9 *Frayed slot* | In combat with a **frayed** slot | Note state. Kill. Resume. | The slot is still frayed (effect still off) until the end of this combat. | E8 row |
 | E8.10 *Both rotations* | Repeat E8.2 once with the phone rotated top-left, and once top-right; resume in the **other** rotation than you killed in | Note state. Kill. Rotate. Resume. | State is the same and the layout is correct in the new rotation. | E8 row |
 | E8.11 *Summary* | On the run summary screen | Kill. Resume. | The title screen (or the summary again); **Continue** does not offer the finished run. No crash. | E8 row |
-| E8.12 *Pause, not kill* | In combat, press Home, wait ten seconds, and return from recents | Expected: back in the same state. Then press Home, wait, **kill** from recents, and resume. | Same state both times. | E8 row |
+| E8.12 *Pause, not kill* | In combat, press Home, wait ten seconds, and return from recents. Then press Home, wait, **kill** from recents, and resume. | Back in the same state both times. | E8 row |
 | E8.13 *Repeat* | Do E8.2 three times in a row in one fight (kill, resume, play a card, kill, resume, …) | Each resume matches. Nothing is duplicated or lost; deck+hand+discard+bound totals stay the same. | E8 row |
 
 ## 9. E9 — Compact face, tap opens spread, long-press inspects
@@ -142,7 +142,7 @@ For every case: follow the steps, then compare with the state you wrote down bef
 | Case | Steps | Expected | Record |
 |---|---|---|---|
 | E9.1 | In a fight, look at the hand without touching. | Each card shows: **Ink cost**, **name**, **one Play line**, a divider, **one Bind line** with the bind icon. Lines are not cut off with "...". Text is readable at arm's length. | E9 row |
-| E9.2 | **Tap** one card once. | The spread opens. **Nothing else happens**: Ink, hand, enemies and counts do not change. The rest of the screen is dimmed but enemies and slots are visible. | E9 row |
+| E9.2 | **Tap** one card once. | The spread opens. **Nothing else happens**: Ink, hand, enemies and counts do not change. The rest of the screen is dimmed but enemies and slots are visible, and the enemies this page can target, or the slots it can go to, are highlighted. | E9 row |
 | E9.3 | With the spread open, tap the dimmed area. Then open it again and tap the card. | Each closes the spread **without acting**. | E9 row |
 | E9.4 | **Press and hold** a card in hand (about one second). | An inspect overlay with full text opens. Release closes it. **Nothing is played or bound.** Ink and counts unchanged. | E9 row |
 | E9.5 | Long-press a **bind slot** that is filled, an **enemy telegraph** and a **status** (guard, frayed). | Each opens an inspect overlay with text that does not cover the thing you inspect. Release closes it; nothing else happens. | E9 row |
@@ -207,7 +207,7 @@ The runner shows the main scene only, and QA cannot use other sizes without Boar
 | E13.3 *Animations* | Watch the busiest moments: playing a card, a bind, a fray, a sever, a reshuffle, a boss fight. If you can, record the screen (Android's screen recorder). | No visible freeze or slideshow (never below 30 fps). Note any stutter and the moment. | E13 row, attach recording of the worst moment |
 | E13.4 *Measure (if a counter exists)* | If the build shows an FPS counter or a debug overlay, read it during E13.1–E13.3. If not, ask QA for the measurement in `docs/qa/perf-M1.md` (T20). | Map and combat steady at about 60; lowest value during animations at least 30. | E13 row, note the numbers |
 | E13.5 *Size* | On the phone or the PC, check the APK file size (Files app → Details; or the build output). | **Under 100 MB.** | E13 row, with the size in MB |
-| E13.6 *Memory* | After 10 minutes of play, press Home for a minute, then return. | The game did not restart from the title or lose the node (the OS has not killed it). If it did, mark as a Fail for E8 as well. | E13 row, note |
+| E13.6 *Memory* | After 10 minutes of play, press Home for a minute, then return. | Either the game is still where you left it, or it restarts to the title and **Continue** brings back the same node and state. Losing the node is a Fail for E8 as well. | E13 row, note |
 
 The eye test is the Board's call; QA treats the T20 measurement as the proof for the numbers. A row only passes if both agree. Without a measurement, the row is **Not tested**.
 
@@ -224,17 +224,17 @@ The Board does not run this case on the phone. QA runs it on the studio machine 
 
 ## 15. E15 — Deck floor and empty deck
 
-The floor value is in `data/run/rules.json` (start value **5**). Ask QA for the current value before this case; use it as *F* below. The starting deck is larger than the floor; to reach the floor you must **bind** pages until the deck is at the limit.
+The floor value is in `data/run/rules.json` (start value **5**). Ask QA for the current value before this case; use it as *F* below. The starting deck is at most floor + slot count (8 with the current values 5 and 3), so the floor is reachable in one run by binding, without debug tools.
 
 | Case | Steps | Expected | Record |
 |---|---|---|---|
-| E15.1 *Refuse at floor* | 1. Start a new run with the starting deck. Count the deck + hand + discard (**N** pages). 2. Across fights and rests, bind pages until the total in the run is exactly the floor **F**. You may need to unbind at rests and rebind to keep slots free. 3. Try to bind one more page. | The bind is **refused** (a visible message or cue). The page stays in the hand, Ink is **not** spent, the slot stays empty. | E15 row |
+| E15.1 *Refuse at floor* | 1. Start a new run with the starting deck. Count the deck + hand + discard (**N** pages). 2. Choose **none** at every reward so the deck does not grow. Bind pages until the unbound total (deck + hand + discard) equals **F**. The number of binds needed is **S - F**, where S is the starting deck size; ask QA for S from `docs/design/pages.md`. 3. Try to bind one more page. | The bind is **refused** (a visible message or cue). The page stays in the hand, Ink is **not** spent, the slot stays empty. | E15 row |
 | E15.2 *Just above* | Bind a page when the total would stay at or above F after binding. | This bind **is allowed**. | E15 row |
-| E15.3 *Empty deck and discard* | Get to a state with an empty deck and empty discard (play or bind pages until the hand is all that is left, or use Torn Margin-type draw pages). Then end the turn so a new draw is due. | The draw gives nothing **without hanging**: the game stays responsive, you can still tap End turn and play any page left in hand. No crash, no endless loop, no error. | E15 row |
-| E15.4 *Draw page on empty* | With deck and discard empty, play a page that draws cards. | It does nothing for the draw part, and the game continues. | E15 row |
+| E15.3 *Empty deck and discard* | At the floor, reach a turn where every unbound page is in your hand (deck 0, discard 0; this happens when the hand size is at least the unbound total; use draw pages if needed). 1. Play a page that draws cards. 2. Tap **End turn**. | 1. It does nothing for the draw part, no hang, you can still tap End turn. 2. The hand is discarded, enemies act, the discard reshuffles into the deck and a new hand is drawn normally (the draw stops at the number of pages that exist). No crash, no endless loop. | E15 row |
+| E15.4 | *Merged into E15.3; id kept so references stay stable. Nothing to run.* | n/a | n/a |
 | E15.5 *Kill at the floor* | At the floor and at the empty-draw state, kill and resume (see E8). | The floor and the state are the same after resume. | E15 row |
 
-If you cannot reach the floor in a reasonable number of fights, mark **Not tested**, and say how far you got (the lowest total reached). QA will then ask for a headless test or a debug seed to prove it.
+If you cannot reach the floor, mark **Not tested** and say how far you got (the lowest total reached). It is reachable in one run by natural play, so treat this as a defect to investigate, not an expected outcome.
 
 ## 16. Result table
 
@@ -285,7 +285,7 @@ Header for the comment: phone model, Android version, cutout (real / simulated),
 ## 18. Known limits and open items for the reviewer
 
 - **Page, enemy and rules names are not yet in the repository** (T4, T5 and T3 have not merged). The cases use the roles from the M1 plan (attacker, frayer, deck-fouler, warden, boss) and the concept's example pages. QA refreshes this plan with the real names and the real floor value once those Tasks merge; the structure and ids stay the same.
-- **No debug tools are assumed.** Reaching the deck floor (E15), a full hand, three enemies, a sever and an empty deck by natural play may take several runs. If T7 or T17 ships a debug seed or console, QA adds it as a shortcut; until then those rows may end **Not tested**, which fails the exit, and the answer is a headless test or a debug aid rather than a pass.
+- **No debug tools are assumed.** The deck floor (E15) is reachable by natural play (design commitment for T4). Three enemies (E11.5) and a sever (E3.4) are natural-play cases: T5 puts a three-enemy fight on every path and the boss always severs. Every path from start to boss has each common type at least once and the warden exactly once.
 - **E13 needs a measurement**, not only the eye. T20 (`docs/qa/perf-M1.md`) is the source for the numbers.
 - **E12.7** can only use the three sizes of the committed screenshot command and only the main scene.
-- **E8.3** depends on the save timing T17 implements (after the player ends the turn, after enemies act). The expected result lists both acceptable resume points; the game designer should confirm that either is intended.
+- **E8.3** depends on the save timing T17 implements (after the player ends the turn, after enemies act). The game designer confirmed both resume points are intended; the case checks that the enemies act exactly once.
