@@ -13,22 +13,27 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Setup Godot
-        uses: firebelley/setup-godot@v1
-        with:
-          version: 4.6.3
-
-      - name: Resolve Godot binary
+      - name: Download and verify Godot
         shell: bash
         run: |
-          if command -v godot >/dev/null 2>&1; then
-            echo "GODOT_BIN=godot" >> "$GITHUB_ENV"
-          elif command -v godot4 >/dev/null 2>&1; then
-            echo "GODOT_BIN=godot4" >> "$GITHUB_ENV"
-          else
-            echo "Godot binary not found after setup." >&2
-            exit 1
-          fi
+          set -euo pipefail
+          GODOT_VERSION="4.6.3-stable"
+          GODOT_ZIP="Godot_v${GODOT_VERSION}_linux.x86_64.zip"
+          BASE_URL="https://github.com/godotengine/godot/releases/download/${GODOT_VERSION}"
+          curl -fL "${BASE_URL}/${GODOT_ZIP}" -o "${RUNNER_TEMP}/${GODOT_ZIP}"
+          curl -fL "${BASE_URL}/SHA512-SUMS.txt" -o "${RUNNER_TEMP}/SHA512-SUMS.txt"
+          awk "/ ${GODOT_ZIP}\$/" "${RUNNER_TEMP}/SHA512-SUMS.txt" > "${RUNNER_TEMP}/SHA512-GODOT.txt"
+          sha512sum -c "${RUNNER_TEMP}/SHA512-GODOT.txt"
+          unzip -q "${RUNNER_TEMP}/${GODOT_ZIP}" -d "${RUNNER_TEMP}/godot"
+          GODOT_BIN="${RUNNER_TEMP}/godot/Godot_v${GODOT_VERSION}_linux.x86_64"
+          chmod +x "${GODOT_BIN}"
+          echo "GODOT_BIN=${GODOT_BIN}" >> "$GITHUB_ENV"
+
+      - name: Import project assets
+        shell: bash
+        run: |
+          set -euo pipefail
+          "$GODOT_BIN" --headless --path . --import
 
       - name: Run headless tests
         run: bash ./tests/run_headless_tests.sh
