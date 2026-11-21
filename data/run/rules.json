@@ -1,0 +1,10 @@
+{
+  "schema_version": 1,
+  "hero_health": 50,
+  "ink_per_turn": 3,
+  "hand_draw": 5,
+  "hand_max": 8,
+  "bind_slots": 3,
+  "deck_floor": 5,
+  "blot_persists_after_combat": true
+}
