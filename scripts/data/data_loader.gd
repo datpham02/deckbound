@@ -44,6 +44,8 @@ const PAGE_BIND_PASSIVE_IDS: PackedStringArray = [
 ]
 
 const ENEMY_ACTION_TYPES: PackedStringArray = ["attack", "guard", "fray", "foul", "sever"]
+const PAGE_TARGET_TYPES: PackedStringArray = ["enemy", "none"]
+const ENEMY_SIZE_CLASSES: PackedStringArray = ["common", "warden", "boss"]
 
 const GAME_DATA_CATALOG_SCRIPT := preload("res://scripts/data/game_data_catalog.gd")
 const PAGE_DATA_SCRIPT := preload("res://scripts/data/page_data.gd")
@@ -54,9 +56,20 @@ static func load_all(base_path: String = "res://data") -> Variant:
   var catalog: Variant = GAME_DATA_CATALOG_SCRIPT.new()
   catalog.pages = load_pages("%s/pages" % base_path, catalog.errors)
   catalog.enemies = load_enemies("%s/enemies" % base_path, catalog.errors)
-  var run_rules: Variant = load_run_rules_file("%s/run/rules.json" % base_path, catalog.errors)
+  var run_rules_file_path: String = "%s/run/rules.json" % base_path
+  var run_rules: Variant = load_run_rules_file(run_rules_file_path, catalog.errors)
   if run_rules != null:
     catalog.run_rules = run_rules
+    var known_page_ids: Dictionary = {}
+    for page_variant: Variant in catalog.pages:
+      var page: Variant = page_variant
+      if page.id != "":
+        known_page_ids[page.id] = true
+
+    for index: int in range(run_rules.starting_deck.size()):
+      var page_id: String = run_rules.starting_deck[index]
+      if not known_page_ids.has(page_id):
+        _append_error(catalog.errors, run_rules_file_path, "$.starting_deck[%d]" % index, "Unknown page id '%s'." % page_id)
   return catalog
 
 static func load_pages(directory_path: String, errors: Array[String]) -> Array:
@@ -105,6 +118,13 @@ static func load_page_file(file_path: String, errors: Array[String]) -> Variant:
       var compact: Dictionary = compact_variant
       page.compact_play_line = _require_string(compact, "play", file_path, "$.compact.play", errors)
       page.compact_bind_line = _require_string(compact, "bind", file_path, "$.compact.bind", errors)
+
+  page.play_text = _require_string(root, "play_text", file_path, "$.play_text", errors)
+  page.bind_text = _require_string(root, "bind_text", file_path, "$.bind_text", errors)
+  page.target = _require_string(root, "target", file_path, "$.target", errors)
+  if page.target != "" and not PAGE_TARGET_TYPES.has(page.target):
+    _append_error(errors, file_path, "$.target", "Unknown target '%s'." % page.target)
+  page.pool = _require_bool(root, "pool", file_path, "$.pool", errors)
 
   if not root.has("play_effects"):
     _append_error(errors, file_path, "$.play_effects", "Missing required field.")
@@ -169,6 +189,9 @@ static func load_enemy_file(file_path: String, errors: Array[String]) -> Variant
   var enemy: Variant = ENEMY_DATA_SCRIPT.new()
   enemy.id = _require_string(root, "id", file_path, "$.id", errors)
   enemy.name = _require_string(root, "name", file_path, "$.name", errors)
+  enemy.size_class = _require_string(root, "size_class", file_path, "$.size_class", errors)
+  if enemy.size_class != "" and not ENEMY_SIZE_CLASSES.has(enemy.size_class):
+    _append_error(errors, file_path, "$.size_class", "Unknown size_class '%s'." % enemy.size_class)
 
   if not root.has("stats"):
     _append_error(errors, file_path, "$.stats", "Missing required field.")
@@ -220,26 +243,59 @@ static func load_enemy_file(file_path: String, errors: Array[String]) -> Variant
             _append_error(errors, file_path, "%s.hits" % action_path, "Expected int, got %s." % type_string(typeof(hits_variant)))
           elif int(hits_variant) <= 0:
             _append_error(errors, file_path, "%s.hits" % action_path, "Expected hits > 0.")
+
+        if action_type == "fray" or action_type == "sever":
+          if not action_data.has("fallback"):
+            _append_error(errors, file_path, "%s.fallback" % action_path, "Missing required field.")
+          else:
+            var fallback_variant: Variant = action_data["fallback"]
+            if typeof(fallback_variant) != TYPE_DICTIONARY:
+              _append_error(errors, file_path, "%s.fallback" % action_path, "Expected Dictionary, got %s." % type_string(typeof(fallback_variant)))
+            else:
+              var fallback_data: Dictionary = fallback_variant
+              var fallback_type: String = _require_string(fallback_data, "type", file_path, "%s.fallback.type" % action_path, errors)
+              if fallback_type != "" and fallback_type != "attack":
+                _append_error(errors, file_path, "%s.fallback.type" % action_path, "Expected 'attack', got '%s'." % fallback_type)
+              var fallback_value: int = _require_int(fallback_data, "value", file_path, "%s.fallback.value" % action_path, errors)
+              if fallback_value < 0:
+                _append_error(errors, file_path, "%s.fallback.value" % action_path, "Expected value >= 0.")
+              if fallback_data.has("hits"):
+                var fallback_hits_variant: Variant = fallback_data["hits"]
+                if typeof(fallback_hits_variant) != TYPE_INT:
+                  _append_error(errors, file_path, "%s.fallback.hits" % action_path, "Expected int, got %s." % type_string(typeof(fallback_hits_variant)))
+                elif int(fallback_hits_variant) <= 0:
+                  _append_error(errors, file_path, "%s.fallback.hits" % action_path, "Expected hits > 0.")
         enemy.actions.append(action_data)
 
   if not root.has("telegraph_pattern"):
     _append_error(errors, file_path, "$.telegraph_pattern", "Missing required field.")
   else:
-    var pattern_variant: Variant = root["telegraph_pattern"]
-    if typeof(pattern_variant) != TYPE_ARRAY:
-      _append_error(errors, file_path, "$.telegraph_pattern", "Expected Array, got %s." % type_string(typeof(pattern_variant)))
+    enemy.telegraph_pattern = _validate_telegraph_pattern(root["telegraph_pattern"], action_ids, file_path, "$.telegraph_pattern", errors)
+
+  if root.has("phases"):
+    var phases_variant: Variant = root["phases"]
+    if typeof(phases_variant) != TYPE_ARRAY:
+      _append_error(errors, file_path, "$.phases", "Expected Array, got %s." % type_string(typeof(phases_variant)))
     else:
-      var pattern_array: Array = pattern_variant
-      for index: int in range(pattern_array.size()):
-        var pattern_step_variant: Variant = pattern_array[index]
-        var pattern_path: String = "$.telegraph_pattern[%d]" % index
-        if typeof(pattern_step_variant) != TYPE_STRING:
-          _append_error(errors, file_path, pattern_path, "Expected String, got %s." % type_string(typeof(pattern_step_variant)))
+      var phases_array: Array = phases_variant
+      for index: int in range(phases_array.size()):
+        var phase_variant: Variant = phases_array[index]
+        var phase_path: String = "$.phases[%d]" % index
+        if typeof(phase_variant) != TYPE_DICTIONARY:
+          _append_error(errors, file_path, phase_path, "Expected Dictionary, got %s." % type_string(typeof(phase_variant)))
           continue
-        var pattern_step: String = pattern_step_variant
-        enemy.telegraph_pattern.append(pattern_step)
-        if not action_ids.has(pattern_step):
-          _append_error(errors, file_path, pattern_path, "Unknown action reference '%s'." % pattern_step)
+
+        var phase_data: Dictionary = phase_variant
+        var health_at_or_below: int = _require_int(phase_data, "health_at_or_below", file_path, "%s.health_at_or_below" % phase_path, errors)
+        if health_at_or_below <= 0:
+          _append_error(errors, file_path, "%s.health_at_or_below" % phase_path, "Expected health_at_or_below > 0.")
+
+        if not phase_data.has("telegraph_pattern"):
+          _append_error(errors, file_path, "%s.telegraph_pattern" % phase_path, "Missing required field.")
+        else:
+          _validate_telegraph_pattern(phase_data["telegraph_pattern"], action_ids, file_path, "%s.telegraph_pattern" % phase_path, errors)
+
+        enemy.phases.append(phase_data)
 
   if errors.size() > start_error_count:
     return null
@@ -263,7 +319,8 @@ static func load_run_rules_file(file_path: String, errors: Array[String]) -> Var
   run_rules.hand_max = _require_int(root, "hand_max", file_path, "$.hand_max", errors)
   run_rules.bind_slots = _require_int(root, "bind_slots", file_path, "$.bind_slots", errors)
   run_rules.deck_floor = _require_int(root, "deck_floor", file_path, "$.deck_floor", errors)
-  run_rules.blot_persists_after_combat = _require_bool(root, "blot_persists_after_combat", file_path, "$.blot_persists_after_combat", errors)
+  run_rules.starting_deck = _require_string_array(root, "starting_deck", file_path, "$.starting_deck", errors)
+  run_rules.stains_persist_after_combat = _require_bool(root, "stains_persist_after_combat", file_path, "$.stains_persist_after_combat", errors)
 
   if run_rules.schema_version < 1:
     _append_error(errors, file_path, "$.schema_version", "Expected schema_version >= 1.")
@@ -281,6 +338,8 @@ static func load_run_rules_file(file_path: String, errors: Array[String]) -> Var
     _append_error(errors, file_path, "$.bind_slots", "Expected bind_slots > 0.")
   if run_rules.deck_floor < 0:
     _append_error(errors, file_path, "$.deck_floor", "Expected deck_floor >= 0.")
+  if run_rules.starting_deck.is_empty():
+    _append_error(errors, file_path, "$.starting_deck", "Expected at least one page id.")
 
   if errors.size() > start_error_count:
     return null
@@ -371,6 +430,55 @@ static func _require_bool(data: Dictionary, key: String, file_path: String, fiel
     _append_error(errors, file_path, field_path, "Expected bool, got %s." % type_string(typeof(value)))
     return false
   return bool(value)
+
+static func _require_string_array(data: Dictionary, key: String, file_path: String, field_path: String, errors: Array[String]) -> Array[String]:
+  if not data.has(key):
+    _append_error(errors, file_path, field_path, "Missing required field.")
+    return []
+
+  var value: Variant = data[key]
+  if typeof(value) != TYPE_ARRAY:
+    _append_error(errors, file_path, field_path, "Expected Array, got %s." % type_string(typeof(value)))
+    return []
+
+  var values: Array[String] = []
+  var array_value: Array = value
+  for index: int in range(array_value.size()):
+    var item_variant: Variant = array_value[index]
+    var item_path: String = "%s[%d]" % [field_path, index]
+    if typeof(item_variant) != TYPE_STRING:
+      _append_error(errors, file_path, item_path, "Expected String, got %s." % type_string(typeof(item_variant)))
+      continue
+
+    var item: String = item_variant
+    if item.strip_edges() == "":
+      _append_error(errors, file_path, item_path, "Expected a non-empty string.")
+      continue
+
+    values.append(item)
+
+  return values
+
+static func _validate_telegraph_pattern(pattern_variant: Variant, action_ids: Dictionary, file_path: String, field_path: String, errors: Array[String]) -> Array[String]:
+  var pattern: Array[String] = []
+  if typeof(pattern_variant) != TYPE_ARRAY:
+    _append_error(errors, file_path, field_path, "Expected Array, got %s." % type_string(typeof(pattern_variant)))
+    return pattern
+
+  var pattern_array: Array = pattern_variant
+  for index: int in range(pattern_array.size()):
+    var pattern_step_variant: Variant = pattern_array[index]
+    var pattern_path: String = "%s[%d]" % [field_path, index]
+    if typeof(pattern_step_variant) != TYPE_STRING:
+      _append_error(errors, file_path, pattern_path, "Expected String, got %s." % type_string(typeof(pattern_step_variant)))
+      continue
+
+    var pattern_step: String = pattern_step_variant
+    pattern.append(pattern_step)
+    if not action_ids.has(pattern_step):
+      _append_error(errors, file_path, pattern_path, "Unknown action reference '%s'." % pattern_step)
+
+  return pattern
 
 static func _append_error(errors: Array[String], file_path: String, field_path: String, reason: String) -> void:
   errors.append("%s :: %s :: %s" % [file_path, field_path, reason])
