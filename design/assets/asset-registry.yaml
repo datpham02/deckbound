@@ -1,0 +1,141 @@
+# Deckbound asset registry
+#
+# Content fields are owned by game-artist. The schema, parser and tooling are owned by
+# gameplay-programmer and may change; this is the initial content (SOU-56, M1 T18a).
+# Fields follow docs/art/ART-PIPELINE.md section 4. Status flow:
+#   planned -> concept -> review -> approved -> integrated -> verified
+# The game-artist never sets approved or later. Paths under assets/slice/ do not exist yet.
+# Placeholder rows (assets/placeholder/) are added by T22, not here.
+
+schema_version: 1
+
+slice_assets:
+  - id: char_scrivener
+    name: The Scrivener
+    class: character
+    owner: game-artist
+    priority: high
+    status: planned
+    spec: design/assets/specs/char_scrivener.md
+    source: art_src/characters/char_scrivener.kra
+    export: assets/slice/characters/char_scrivener_parts.png
+    size_px: [1024, 1024]       # parts atlas
+    budget_mb_uncompressed: 4
+    pivot: bottom_center
+    animation: {approach: godot_skeleton2d, states: [idle, action_tear_page]}
+    provenance: {origin: generated_draft_plus_paintover, recorded: false}
+
+  - id: enemy_attacker
+    name: Plain attacker (working name)
+    class: enemy
+    owner: game-artist
+    priority: high
+    status: planned
+    spec: design/assets/specs/enemy_attacker.md
+    source: art_src/enemies/enemy_attacker.kra
+    export: assets/slice/enemies/enemy_attacker_sheet.png
+    size_px: [1536, 1152]       # 4 x 3 frames of 384 x 384
+    budget_mb_uncompressed: 6.8
+    pivot: bottom_center
+    animation: {approach: frame, states: [idle, attack], frames: 10}
+    provenance: {origin: generated_draft_plus_paintover, recorded: false}
+
+  - id: enemy_frayer
+    name: Binding-frayer (working name)
+    class: enemy
+    owner: game-artist
+    priority: high
+    status: planned
+    spec: design/assets/specs/enemy_frayer.md
+    source: art_src/enemies/enemy_frayer.kra
+    export: assets/slice/enemies/enemy_frayer_sheet.png
+    size_px: [1536, 1152]
+    budget_mb_uncompressed: 6.8
+    pivot: bottom_center
+    animation: {approach: frame, states: [idle, fray_reach], frames: 10}
+    provenance: {origin: generated_draft_plus_paintover, recorded: false}
+
+  - id: card_art_sample
+    name: Card illustration sample
+    class: card_art
+    owner: game-artist
+    priority: medium
+    status: planned
+    spec: design/assets/specs/card_art_sample.md
+    source: art_src/cards/card_art_sample.kra
+    export: assets/slice/cards/card_art_sample.png
+    size_px: [700, 900]
+    budget_mb_uncompressed: 2.4
+    pivot: n/a
+    animation: {approach: static_plus_godot_transforms}
+    provenance: {origin: generated_draft_plus_paintover, recorded: false}
+
+  - id: slot_icon_states
+    name: Bind-slot icon states
+    class: icon
+    owner: game-artist
+    priority: high
+    status: planned
+    spec: design/assets/specs/slot_icon_states.md
+    source: art_src/icons/slot_icon_states.kra
+    export: assets/slice/icons/slot_icon_states.png
+    size_px: [512, 128]         # empty, intact, frayed, severed at 128 x 128
+    budget_mb_uncompressed: 0.25
+    pivot: center
+    animation: {approach: static_plus_godot_transforms}
+    provenance: {origin: original, recorded: false}
+
+  - id: bg_combat_flooded_hall
+    name: Combat background, flooded hall
+    class: background
+    owner: game-artist
+    priority: medium
+    status: planned
+    spec: design/assets/specs/bg_combat_flooded_hall.md
+    source: art_src/backgrounds/bg_combat_flooded_hall.kra
+    export: assets/slice/backgrounds/bg_combat_flooded_hall.png
+    size_px: [2640, 1080]
+    budget_mb_uncompressed: 11.4
+    pivot: center
+    animation: {approach: static}
+    provenance: {origin: generated_draft_plus_paintover, recorded: false}
+
+  - id: ui_combat_composition
+    name: Combat UI composition
+    class: ui
+    owner: game-artist        # with ui-designer
+    priority: medium
+    status: planned
+    spec: design/assets/specs/ui_combat_composition.md
+    source: art_src/ui/ui_combat_composition.kra
+    export: assets/slice/ui/ui_combat_atlas.png
+    size_px: [1024, 1024]
+    budget_mb_uncompressed: 4
+    pivot: center
+    animation: {approach: static_plus_godot_transforms}
+    provenance: {origin: original, recorded: false}
+
+  - id: vfx_fray
+    name: Fray VFX
+    class: vfx
+    owner: game-artist
+    priority: medium
+    status: planned
+    spec: design/assets/specs/vfx_fray.md
+    source: art_src/vfx/vfx_fray.kra
+    export: assets/slice/vfx/vfx_fray_sheet.png
+    size_px: [1024, 512]        # 8 frames of 256 x 256
+    budget_mb_uncompressed: 2
+    pivot: center
+    animation: {approach: frame, states: [play], frames: 8}
+    provenance: {origin: original, recorded: false}
+
+# Visual target pack (docs/art/TARGET-PACK-PLAN.md). Look references, not shipped.
+target_pack:
+  - {id: pack_hero, piece: 1, status: planned, size_px: [900, 1200]}
+  - {id: pack_enemy_common, piece: 2, status: planned, size_px: [800, 800]}
+  - {id: pack_boss, piece: 3, status: planned, size_px: [1200, 1000]}
+  - {id: pack_card_art, piece: 4, status: planned, size_px: [700, 900]}
+  - {id: pack_slot_icon, piece: 5, status: planned, size_px: [128, 128]}
+  - {id: pack_background, piece: 6, status: planned, size_px: [2640, 1080]}
+  - {id: pack_ui_screen, piece: 7, status: planned, size_px: [2400, 1080]}
