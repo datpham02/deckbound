@@ -19,6 +19,7 @@ android/build/libs/
 android/build/local.properties
 android/build/assetPackInstallTime/build/
 android/build/assetPackInstallTime/src/main/assets/
+android/build/src/main/assets/
 android/build/src/instrumented/assets/.godot/
 
 # Paperclip workspace metadata
