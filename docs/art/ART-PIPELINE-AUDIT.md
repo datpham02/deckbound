@@ -30,9 +30,9 @@ Inspected at `d1d407e` (main after the concept merge).
 | `display/window/size/viewport_width` x `height` | 1920 x 1080 | The concept's design canvas is **2400 x 1080**. Mismatch, see finding F1 |
 | `display/window/stretch/mode` | `canvas_items` | Matches the concept |
 | `display/window/stretch/aspect` | `expand` | Matches the concept |
-| `display/window/handheld/orientation` | not set (default portrait on Android) | The concept needs landscape with both rotations. Finding F1 |
-| Renderer (`rendering/renderer/rendering_method`) | not set (Godot default, Forward+) | The concept calls Compatibility the safe default for this device class. Finding F2 |
-| Texture compression / VRAM import | not set. No `rendering/textures/vram_compression/import_etc2_astc`, so mobile texture compression is off | Finding F3 |
+| `display/window/handheld/orientation` | not set (Godot default is fixed landscape, value 0 = `SCREEN_LANDSCAPE`; taken from the Godot docs as relayed in the SOU-33 review, not re-confirmed in the 4.6 editor in this run because shell execution of Godot was blocked, so `gameplay-programmer` should confirm) | The concept needs sensor landscape (value 4, `SCREEN_SENSOR_LANDSCAPE`) so both rotations are allowed. Finding F1 |
+| Renderer (`rendering/renderer/rendering_method.mobile`) | not set. On Android the engine reads the `.mobile` setting, whose default is `mobile`, so the effective renderer on the target device is the **Mobile** renderer (Forward+ is the desktop default) | The concept calls Compatibility the safe default for this device class. Finding F2 |
+| Texture compression / VRAM import | not set. Compressed textures on Android need **two** things: the project setting `rendering/textures/vram_compression/import_etc2_astc` (not set) and the per-texture import mode `compress/mode = VRAM Compressed` (the Godot default import mode is Lossless, which is held as uncompressed RGBA in VRAM). Neither is in place | Finding F3 |
 | Default texture filter | not set (linear). Painterly art is fine with linear; confirm in the Art Bible | none |
 | Safe-area / immersive settings | not set | Gameplay work, not art |
 | `export_presets.cfg` | missing (not in the repo) | Android export is not set up in the project |
@@ -55,18 +55,18 @@ Inspected at `d1d407e` (main after the concept merge).
 
 ## 3. Studio machine tools
 
-The permission layer for this run limits shell access to the workspace and blocks running most executables, so only Python could be confirmed. Everything else is `not checked`, not `missing`. An operator can fill the table in with one pass.
+Python was confirmed by the author. The other rows were filled in by a Board operator pass on the studio machine (2026-11-21, read-only, nothing installed; recorded in the SOU-33 comments). Rows still `not checked` were not covered by that pass.
 
 | Tool | State | Needed for |
 |---|---|---|
 | Python 3 | **present** (3.12.10) | validators, atlas checks (pipeline §1) |
-| Krita | not checked | primary 2D editor |
-| Blender | not checked | optional blockouts and pose references |
-| Spine (Essential or Professional licence) and its Godot runtime | not checked; no licence is recorded anywhere | only if the proof of concept passes |
-| Image-generation provider (account, subscription, API key) | not checked; provider is still TBD | concept drafts. See TOOL-DECISIONS |
-| Godot editor binary on PATH | not checked (version is documented, not verified on this machine) | all |
+| Krita | **missing** (not on PATH, no Program Files install) | primary 2D editor |
+| Blender | **missing** | optional blockouts and pose references |
+| Spine (Essential or Professional licence) and its Godot runtime | **missing**; no licence is recorded anywhere | only if the proof of concept passes |
+| Image-generation provider (account, subscription, API key) | **missing** (no account set up, per Board); provider is still TBD | concept drafts. See TOOL-DECISIONS |
+| Godot editor binary on PATH | **present**, 4.6.3.stable.official.7d41c59c4 (WinGet) | all |
 | Git LFS binary | not checked | only if LFS is approved |
-| PixelFX (Board-approved 2026-11-21 for VFX sprites) | not checked | optional pixel-art VFX |
+| PixelFX (approval status: not checked; no repository document records a Board decision) | not checked | optional pixel-art VFX |
 | Image validation libraries for Python (for example Pillow) | not checked | validators |
 
 ### Android export prerequisites (studio machine)
@@ -75,10 +75,10 @@ Per `docs/concept.md` ("Google Play prerequisites"). Nothing was installed.
 
 | Prerequisite | State | Notes |
 |---|---|---|
-| Android SDK (platform-tools, build-tools, platform, cmdline-tools) | not checked | Godot 4.6 needs it for export; the required versions are listed in the editor's export documentation and must be read at setup time |
-| JDK | not checked | Godot's Android export needs a JDK of a version its docs name; verify then |
-| Godot Android export templates (matching 4.6.3) | not checked | |
-| Debug keystore | not checked | auto-generated by the SDK/JDK `keytool` setup; needed to run a debug build on a device |
+| Android SDK (platform-tools, build-tools, platform, cmdline-tools) | **present** at `%LOCALAPPDATA%\Android\Sdk`: build-tools 36.0.0, platform android-36.1, platform-tools (adb). cmdline-tools not reported. `ANDROID_HOME` / `ANDROID_SDK_ROOT` unset | Godot editor settings must point to it; required versions to be read from Godot's export docs at setup time |
+| JDK | **present only as Android Studio's bundled JBR**, OpenJDK 21.0.10 (`C:\Program Files\Android\Android Studio\jbr`); no standalone JDK, `JAVA_HOME` unset | Godot 4.6 compatibility with JDK 21 to be confirmed by `gameplay-programmer` (verify) |
+| Godot Android export templates (matching 4.6.3) | **missing** (`%APPDATA%\Godot\export_templates` exists, no version installed) | |
+| Debug keystore | **missing** (`~/.android/debug.keystore` not found) | needed to run a debug build on a device |
 | Release keystore / Play App Signing | not checked, probably missing | Board or build owner; never commit it |
 | `export_presets.cfg` with an Android preset | **missing** in the repo | |
 | Target Android device (low/mid-range, Android 10+) plus USB debugging | not checked | the concept requires at least one |
@@ -90,9 +90,9 @@ Each item below is a request for a decision or a handoff. This Task does not cha
 
 | ID | Finding | Owner of the fix |
 |---|---|---|
-| F1 | The project viewport is 1920 x 1080 and orientation is unset, while the concept designs for 2400 x 1080 landscape (both rotations). Art is sized for 2400 x 1080 in the Art Bible | `gameplay-programmer`, with Board approval for project settings (AGENTS.md guardrail) |
-| F2 | The renderer is the Godot default, not the Compatibility renderer the concept names as the safe choice on Mali-G52 / Adreno 610 | Board approval, then `gameplay-programmer` |
-| F3 | Mobile texture compression is not enabled. Without ASTC or ETC2 import, atlases are stored uncompressed in VRAM, which breaks the 1 GB memory and 100 MB size budgets | Board approval, then `gameplay-programmer`; art side defines atlas sizes in the Art Bible |
+| F1 | The project viewport is 1920 x 1080 and orientation is unset (Godot default is fixed landscape, value 0), while the concept designs for 2400 x 1080 landscape with both rotations, which needs sensor landscape (value 4). Art is sized for 2400 x 1080 in the Art Bible | `gameplay-programmer`, with Board approval for project settings (AGENTS.md guardrail) |
+| F2 | The effective renderer on Android is the Mobile renderer (`rendering/renderer/rendering_method.mobile`, default `mobile`), not the Compatibility renderer the concept names as the safe choice on Mali-G52 / Adreno 610 | Board approval to switch `rendering_method.mobile` to Compatibility, then `gameplay-programmer` |
+| F3 | Mobile texture compression is not enabled. It needs both the project setting `import_etc2_astc` and `compress/mode = VRAM Compressed` on each texture import (default is Lossless). Otherwise atlases are held uncompressed in VRAM, which breaks the 1 GB memory and 100 MB size budgets | Board approval, then `gameplay-programmer`; art side defines atlas sizes in the Art Bible |
 | F4 | No Android export preset exists, so no size or performance number can be measured on a device yet | `gameplay-programmer`, first-playable milestone |
 | F5 | Spine's proof of concept (pipeline Spine gate) must run on the target Android device, but no export path exists yet (F4) | blocks the Spine decision, see TOOL-DECISIONS |
 | F6 | Registry, specs, references and validator folders do not exist. The registry schema, parser and validators belong to `gameplay-programmer`; its content fields belong to `game-artist` | Phase 1 |

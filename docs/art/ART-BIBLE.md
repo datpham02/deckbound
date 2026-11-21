@@ -1,6 +1,6 @@
 # Deckbound Art Bible: Outline
 
-Status: **outline, proposed** (SOU-33, Art Phase 0). This is a structure with proposed rules, not an approved Art Bible. Visual pillars, palette values and the visual target pack are produced in Art Phase 1 and need Board approval (pipeline §5 Step 1). `game-designer` approves the direction; `director` is involved if it changes the vision or pillars.
+Status: **outline, proposed** (SOU-33, Art Phase 0). This is a structure with proposed rules, not an approved Art Bible. Visual pillars, palette values and the visual target pack are produced in Art Phase 1 and need Board approval (pipeline §5 Step 1). `game-designer` and `game-artist` propose the direction; `director` approves it (pipeline §6); the Board approves the visual target pack and budgets.
 Companions: [ART-PIPELINE.md](ART-PIPELINE.md), [ART-PIPELINE-AUDIT.md](ART-PIPELINE-AUDIT.md), [TOOL-DECISIONS.md](TOOL-DECISIONS.md), [../concept.md](../concept.md), [../vision.md](../vision.md).
 
 Numbers marked **(proposed)** are starting values to be confirmed by a readability test on a target-class Android phone in Phase 1. Numbers marked **(from concept)** are fixed by `docs/concept.md`.
@@ -102,7 +102,7 @@ These apply to every asset. Display facts are **(from concept)** unless marked.
 Detailed numbers are proposed in [TOOL-DECISIONS.md](TOOL-DECISIONS.md) ("Android budgets") and become `RENDER-STANDARDS.md` after approval.
 
 - Resolution and aspect per asset class; no print-resolution sources shipped.
-- Atlas pages at most 2048 x 2048 **(proposed)**; compressed GPU textures (ASTC, ETC2 fallback) require the project setting in audit F3.
+- Atlas pages at most 2048 x 2048 **(proposed)**; compressed GPU textures (ASTC, ETC2 fallback) require the project setting and the per-texture `VRAM Compressed` import mode in audit F3.
 - Texture memory in combat at most 250 MB **(proposed)**. Art size of the first playable at most 60 MB **(proposed)**, inside the 100 MB download **(from concept)**.
 - Transparent versus opaque rules: opaque where possible, to limit overdraw. Premultiplied alpha policy to settle in Phase 1.
 - Mipmaps and texture filtering policy for painterly art on UI and scaled elements: to settle in Phase 1.

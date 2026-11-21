@@ -82,7 +82,7 @@ Pipeline §1 says adopt Spine only after a proof of concept in the real Godot pr
 | Blender | Optional blockouts and pose references | Keep as optional, no install pre-approved | Reference only; never shipped as 3D |
 | Python 3 | Validators: dimensions, naming, atlas sizes, alpha | Keep. **present**, 3.12.10. Validators belong to `gameplay-programmer` (pipeline tooling) | `game-artist` supplies the art-side rules (Art Bible) |
 | Git LFS | Large binary art | **Defer.** Not configured. Source `.kra` files can grow; revisit when `art_src/` passes a size threshold the Board sets (suggest 500 MB total) | Needs approval to initialise |
-| PixelFX | Pixel-art VFX sprites | Allowed where installed, but the visual direction is painterly, so use only where the Art Bible's VFX rules allow it | Provenance must record its use |
+| PixelFX | Pixel-art VFX sprites | Approval status not checked (no repository document records a Board decision); use only if approved and installed. The visual direction is painterly, so use only where the Art Bible's VFX rules allow it | Provenance must record its use |
 | Texture packing / atlas tool | Packing sprites into atlases | **Open.** Godot's import plus a validator script may be enough; choose in Phase 1 | `gameplay-programmer` |
 | Godot 4.6.3 | Runtime | Keep. Android export needs the items in audit §3 | |
 
@@ -94,7 +94,7 @@ Pipeline §1 says adopt Spine only after a proof of concept in the real Godot pr
 | D2 | Animation default | Godot Skeleton2D (Scrivener, bosses) + frame animation (common enemies) |
 | D3 | Spine | Not adopted. One Android-measured proof of concept in Phase 1, if a test licence is approved |
 | D4 | Android texture and atlas budgets | Approve the table above, subject to `gameplay-programmer` confirmation |
-| D5 | Project settings (audit F1-F3): 2400 x 1080 viewport, landscape, Compatibility renderer, ASTC/ETC2 | Request Board approval; `gameplay-programmer` implements |
+| D5 | Project settings (audit F1-F3): 2400 x 1080 viewport, sensor landscape (orientation value 4), Compatibility renderer (`rendering/renderer/rendering_method.mobile`), ASTC/ETC2 (`import_etc2_astc` plus `compress/mode = VRAM Compressed` per texture) | Request Board approval; `gameplay-programmer` implements |
 | D6 | Git LFS | Defer; threshold above |
 
 Phase 0 ends here. No Phase 1 work starts until the Board approves or amends these decisions.
