@@ -1,6 +1,6 @@
 # Deckbound Art Bible: Outline
 
-Status: **outline, proposed** (SOU-33, Art Phase 0). This is a structure with proposed rules, not an approved Art Bible. Visual pillars, palette values and the visual target pack are produced in Art Phase 1 and need Board approval (pipeline §5 Step 1). `game-designer` and `game-artist` propose the direction; `director` approves it (pipeline §6); the Board approves the visual target pack and budgets.
+Status: **Phase 1 wording, proposed** (SOU-56, M1 T18a; outline from SOU-33). Sections 2, 3 and 5 now carry Phase 1 wording and starting palette values. Nothing here is approved: `director` reviews, then the Board approves, with the visual target pack ([TARGET-PACK-PLAN.md](TARGET-PACK-PLAN.md)) before the slice scales (pipeline §5 Step 1). Values stay **(proposed)** until a readability test on a target-class phone. `game-designer` and `game-artist` propose the direction; `director` approves it (pipeline §6); the Board approves the visual target pack and budgets.
 Companions: [ART-PIPELINE.md](ART-PIPELINE.md), [ART-PIPELINE-AUDIT.md](ART-PIPELINE-AUDIT.md), [TOOL-DECISIONS.md](TOOL-DECISIONS.md), [../concept.md](../concept.md), [../vision.md](../vision.md).
 
 Numbers marked **(proposed)** are starting values to be confirmed by a readability test on a target-class Android phone in Phase 1. Numbers marked **(from concept)** are fixed by `docs/concept.md`.
@@ -14,24 +14,49 @@ Numbers marked **(proposed)** are starting values to be confirmed by a readabili
 
 ## 2. Visual pillars (from the vision pillars)
 
-Each art pillar below names the design consequence and what it rules out. Final wording is a Phase 1 deliverable.
+Each art pillar names the design consequence, the rule, and what it rules out. Phase 1 wording, proposed.
 
-| Vision pillar | Art consequence to write up |
-|---|---|
-| 1. Every card is a choice twice | Both faces carry equal visual weight. Play and Bind are told apart by form and position, never by colour alone. Illustration supports both faces |
-| 2. Commitment has teeth | Fray and sever must be visible state: a bound page looks intact, frayed, or severed at a glance on the hero and the bind slot |
-| 3. Readable before it is deep | Gameplay information first, decoration second. Everything reads on a 6-inch screen in landscape without zoom. No hover-only cues |
-| 4. The run is the whole game | Run-state art (map, rests, summary) reads quickly after resuming from a backgrounded app. No art that requires reading long text |
-| 5. A quiet, original dark fantasy | Damp stone, lantern light on black water, bureaucratic horror, no gore. Original symbols and silhouettes only |
+| Vision pillar | Art rule (Phase 1) | Rules out |
+|---|---|---|
+| 1. Every card is a choice twice | Both faces carry equal visual weight. Play sits on the left page and Bind on the right, each with its own icon shape (Play: open hand-strike mark; Bind: closed stitched loop). The illustration serves both faces | Colour-only Play/Bind coding; an illustration that favours one face |
+| 2. Commitment has teeth | A binding has three drawn states: **intact** (taut, whole stitched cord), **frayed** (loose threads, a visible gap, desaturated), **severed** (cut ends, empty loop). The same three states appear on the hero and in the bind slot icon, told apart by silhouette | State shown by tint alone; a severed binding that still looks attached |
+| 3. Readable before it is deep | One focal point per area, gameplay information first, decoration second. Every character and enemy passes the black-silhouette test at 25% screen height and the 3 px detail minimum. No hover-only cues | Fine texture that reads as noise at phone size; baked text |
+| 4. The run is the whole game | Map, rest, reward and summary art is recognisable in under a second after resuming the app: one large shape per screen, text in Godot labels only | Art that needs reading; run state hidden in decoration |
+| 5. A quiet, original dark fantasy | Damp stone, lantern light on black water, bureaucratic horror (stamps, ledgers, cord, wax), no gore. Original symbols, silhouettes and shapes only | Any shape, symbol, layout or character borrowed from another game |
 
 ## 3. Mood, palette and value structure
 
-To define in Phase 1, with the structure fixed now:
-- Palette: a restrained set (target of 8-12 anchor colours) with named roles: background stone and water, lantern warm light, paper/page, ink, Play accent, Bind accent, danger, safe/guard. Values chosen with contrast in mind.
-- Value structure as general principles, for example "background sits two value steps below characters", "interactive elements hold the highest local contrast".
-- Colour is never the only carrier of meaning (colour-blind safety): each state also has a shape, icon or position.
-- Lighting: one dominant warm light source per scene, cool ambient, consistent direction (to fix in Phase 1).
-- Per-floor palette variation limits (first playable has one floor).
+### Anchor palette **(proposed, 12 colours)**
+Final values are confirmed in the target pack and the phone test. Painted art may blend between anchors but stays inside their hue families.
+
+| Role | Hex | Use |
+|---|---|---|
+| Water black | `#0E1317` | deepest background, water |
+| Stone dark | `#1B2026` | background walls, shadow |
+| Stone mid | `#3A434B` | background mid tones, panels |
+| Stone light | `#6B7780` | rim light on stone, UI borders |
+| Lantern warm | `#E8A33D` | the single dominant light, highlights |
+| Paper | `#E6DCC3` | pages, card faces, text panels |
+| Ink | `#1A1426` | linework, text on paper, silhouettes |
+| Play accent | `#D9783A` | Play face marks (copper) |
+| Bind accent | `#4FA3B8` | Bind face marks (blue-teal) |
+| Danger | `#A8324A` | fray and sever telegraphs, damage |
+| Guard | `#7C9A6D` | guard, safe states (moss) |
+| Wax | `#8C2F2B` | accents on seals and cords, never state coding |
+
+### Value structure (principles)
+- Background sits two value steps darker than characters; characters sit one step darker than interactive elements.
+- Interactive elements and telegraphs hold the highest local contrast on screen.
+- The warm lantern light comes from the upper left in screen space with a cool ambient fill, on the Scrivener, enemies, background and card art alike, so the whole scene has one light.
+- Illustration behind the compact card face is lowered in contrast so text wins (4.5:1 minimum).
+
+### Colour-blind safety
+- Colour is never the only carrier of meaning. Play vs Bind: shape and page side. Intact vs frayed vs severed: silhouette of the cord. Danger telegraph: icon and number.
+- Check each piece in greyscale and with a deuteranopia and protanopia simulation before review. Play copper and Danger crimson are close in some simulations, so they never appear as the only difference between two states.
+
+### Lighting
+- One dominant warm light per scene (lantern), cool ambient, light direction from the upper left in screen space, consistent across hero, enemies, background and card art. Exact angle fixed in the target pack.
+- Per-floor palette variation limit: a hue shift of at most one anchor family per floor. First playable has one floor.
 
 ## 4. Phone-screen rules
 
@@ -72,7 +97,9 @@ These apply to every asset. Display facts are **(from concept)** unless marked.
 - Telegraph art: action icon plus number above each enemy's head; a fray or sever draws a line to the threatened slot.
 - Rig vs frame animation per asset class: follows [TOOL-DECISIONS.md](TOOL-DECISIONS.md) (b): skeletal only for the Scrivener and bosses **(from concept)**, short frame loops for common enemies.
 - Animation timing principles: anticipation, impact, recoil, recovery. Frame-rate targets and durations in asset specs. Nothing may drop animation below 30 fps on the target device **(from concept)**.
-- Layer separation requirements for rig-ready sources (naming in Phase 1).
+- Layer separation for rig-ready sources (Scrivener, bosses). Krita layer names are `snake_case`, grouped `body/`, `head/`, `arm_front/`, `arm_back/`, `leg_front/`, `leg_back/`, `cloak/`, `book/`, `lantern/`, and `binding_1/`, `binding_2/`, `binding_3/` each with sub-layers `_intact`, `_frayed`, `_severed`. Each part is painted whole behind its overlap so bones can rotate without gaps. Draw order is stated in the spec.
+- Proportions **(proposed)**: Scrivener is a lean, slightly stooped figure, about 5.5 heads tall, with a long coat and a large satchel-book on the left hip; read as a rounded vertical shape with the lantern as a bright accent. Enemies each have one exaggerated shape feature (attacker: broad and low; frayer: tall and thin with long hands; fouler: bulbous, trailing paper) so no two share a silhouette.
+- Binding on the hero: three cords crossing the coat and book strap, each a loop with its own position (chest, hip, shoulder) so the three slots are told apart by place.
 
 ## 6. Cards (compact face, spread)
 
@@ -128,7 +155,8 @@ Pass / fail / not tested, never inferred (pipeline §6):
 
 ## 12. Open questions for Board approval
 
-1. Approve this structure and the proposed numbers as a starting point for Phase 1.
-2. Approve the visual target pack in Phase 1: one hero, one common enemy, one boss, one card illustration, one background and one UI screen. A relic icon is dropped for now, because the concept has no relics (bindings fill that role); the pipeline's relic item is replaced by a bind-slot icon.
-3. Confirm D1-D6 in [TOOL-DECISIONS.md](TOOL-DECISIONS.md).
-4. Confirm the project-setting changes in audit F1-F3.
+1. Approve the Phase 1 pillars, palette roles and proposed values (§2, §3, §5) as the direction for the slice.
+2. Approve the visual target pack in [TARGET-PACK-PLAN.md](TARGET-PACK-PLAN.md): seven pieces (hero, common enemy, boss, card illustration, bind-slot icon, background, UI screen). The pipeline's relic icon is replaced by the bind-slot icon, because the concept has no relics.
+3. D1 (local ComfyUI, FLUX.1 schnell and SDXL, drafts only) is decided by the Board (M1 plan, 2026-11-21); workflow in [COMFYUI-WORKFLOW.md](COMFYUI-WORKFLOW.md). Model licences are still to be verified before a draft is kept. D2-D6 in [TOOL-DECISIONS.md](TOOL-DECISIONS.md) remain as approved there.
+4. Project-setting changes in audit F1-F3 are `gameplay-programmer` work and are not part of this document.
+5. A phone readability test confirms or changes every **(proposed)** number.
