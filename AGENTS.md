@@ -19,6 +19,10 @@ Run from repository root.
 ```bash
 godot --path .                    # open in editor
 godot --headless --path . --quit  # smoke check (required before handoff)
+# release signing must come from shell env vars (never commit values):
+#   GODOT_ANDROID_KEYSTORE_RELEASE_PATH
+#   GODOT_ANDROID_KEYSTORE_RELEASE_USER
+#   GODOT_ANDROID_KEYSTORE_RELEASE_PASSWORD
 godot --headless --path . --export-release Android build/android/deckbound.aab
 # optional debug export command:
 # godot --headless --path . --export-debug AndroidDebug build/android/deckbound.apk
@@ -31,6 +35,7 @@ godot --headless --path . --export-release Android build/android/deckbound.aab
 - Android SDK at `%LOCALAPPDATA%\Android\Sdk`: present (build-tools 36.0.0, android-36.1, platform-tools)
 - JDK: present only as Android Studio JBR OpenJDK 21
 - Debug keystore (`~/.android/deckbound_debug.keystore`): present
+- Release signing vars (set in shell only, no committed values): `GODOT_ANDROID_KEYSTORE_RELEASE_PATH`, `GODOT_ANDROID_KEYSTORE_RELEASE_USER`, `GODOT_ANDROID_KEYSTORE_RELEASE_PASSWORD`
 
 ## Android SDK policy values in this repo
 
