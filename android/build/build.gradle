@@ -52,9 +52,20 @@ dependencies {
     } else {
         // Godot gradle build mode. In this scenario this project is the only one around and the Godot
         // library is available through the pre-generated godot-lib.*.aar android archive files.
-        debugImplementation fileTree(dir: 'libs/debug', include: ['**/*.jar', '*.aar'])
-        devImplementation fileTree(dir: 'libs/dev', include: ['**/*.jar', '*.aar'])
-        releaseImplementation fileTree(dir: 'libs/release', include: ['**/*.jar', '*.aar'])
+        def debugAars = fileTree(dir: 'libs/debug', include: ['**/*.jar', '*.aar'])
+        def devAars = fileTree(dir: 'libs/dev', include: ['**/*.jar', '*.aar'])
+        def releaseAars = fileTree(dir: 'libs/release', include: ['**/*.jar', '*.aar'])
+        if (!debugAars.isEmpty() || !devAars.isEmpty() || !releaseAars.isEmpty()) {
+            debugImplementation debugAars
+            devImplementation devAars
+            releaseImplementation releaseAars
+        } else {
+            // Fall back to Maven-hosted Godot Android library for clean-clone exports.
+            String godotAarVersion = new File(projectDir, '../.build_version').text.trim()
+            debugImplementation "org.godotengine:godot:${godotAarVersion}"
+            devImplementation "org.godotengine:godot:${godotAarVersion}"
+            releaseImplementation "org.godotengine:godot:${godotAarVersion}"
+        }
     }
 
     // Godot user plugins remote dependencies
