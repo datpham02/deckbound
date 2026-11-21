@@ -1,0 +1,20 @@
+{
+  "id": "blotting_sheet",
+  "name": "Blotting Sheet",
+  "cost": 1,
+  "compact": {
+    "play": "Deal 7, purge a stain",
+    "bind": "Stains hit all for 4"
+  },
+  "play_text": "Deal 7 damage to an enemy. Remove a Water-stain from your hand from the run.",
+  "bind_text": "Whenever a Water-stain is added to your discard, deal 4 damage to each enemy.",
+  "target": "enemy",
+  "pool": true,
+  "play_effects": [
+    { "id": "damage", "params": { "amount": 7, "target": "enemy" } },
+    { "id": "remove_stain_from_hand", "params": { "count": 1 } }
+  ],
+  "bind_passives": [
+    { "id": "on_stain_added_damage_all", "params": { "amount": 4 } }
+  ]
+}

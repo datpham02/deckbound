@@ -1,0 +1,19 @@
+{
+  "id": "blank_folio",
+  "name": "Blank Folio",
+  "cost": 1,
+  "compact": {
+    "play": "Deal 3 per empty slot",
+    "bind": "2 Guard per empty slot"
+  },
+  "play_text": "Deal 3 damage to an enemy for each empty bind slot.",
+  "bind_text": "At the start of each turn, gain 2 Guard for each empty bind slot.",
+  "target": "enemy",
+  "pool": true,
+  "play_effects": [
+    { "id": "damage_per_empty_slot", "params": { "per": 3, "target": "enemy" } }
+  ],
+  "bind_passives": [
+    { "id": "turn_guard_per_empty_slot", "params": { "per": 2 } }
+  ]
+}

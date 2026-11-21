@@ -1,0 +1,19 @@
+{
+  "id": "pressed_thorn",
+  "name": "Pressed Thorn",
+  "cost": 1,
+  "compact": {
+    "play": "Deal 4",
+    "bind": "Hit back for 3"
+  },
+  "play_text": "Deal 4 damage to an enemy.",
+  "bind_text": "Whenever an enemy attacks you, deal 3 damage to it.",
+  "target": "enemy",
+  "pool": true,
+  "play_effects": [
+    { "id": "damage", "params": { "amount": 4, "target": "enemy" } }
+  ],
+  "bind_passives": [
+    { "id": "thorns", "params": { "amount": 3 } }
+  ]
+}

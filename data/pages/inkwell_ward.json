@@ -1,0 +1,19 @@
+{
+  "id": "inkwell_ward",
+  "name": "Inkwell Ward",
+  "cost": 1,
+  "compact": {
+    "play": "Gain 5 Guard",
+    "bind": "Start with 5 Guard"
+  },
+  "play_text": "Gain 5 Guard.",
+  "bind_text": "Start each combat with 5 Guard.",
+  "target": "none",
+  "pool": false,
+  "play_effects": [
+    { "id": "guard", "params": { "amount": 5 } }
+  ],
+  "bind_passives": [
+    { "id": "start_combat_guard", "params": { "amount": 5 } }
+  ]
+}

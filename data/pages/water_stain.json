@@ -1,0 +1,19 @@
+{
+  "id": "water_stain",
+  "name": "Water-stain",
+  "cost": 1,
+  "compact": {
+    "play": "Remove this page",
+    "bind": "No effect"
+  },
+  "play_text": "Remove this page from the run.",
+  "bind_text": "No effect. The page fills the slot until you unbind it at a rest.",
+  "target": "none",
+  "pool": false,
+  "play_effects": [
+    { "id": "remove_this_page" }
+  ],
+  "bind_passives": [
+    { "id": "none" }
+  ]
+}

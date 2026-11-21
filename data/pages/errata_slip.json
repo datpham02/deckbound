@@ -1,0 +1,19 @@
+{
+  "id": "errata_slip",
+  "name": "Errata Slip",
+  "cost": 1,
+  "compact": {
+    "play": "Purge Water-stains",
+    "bind": "Purge stains after wins"
+  },
+  "play_text": "Remove every Water-stain in your hand and discard from the run.",
+  "bind_text": "After each combat you win, remove every Water-stain in your deck from the run.",
+  "target": "none",
+  "pool": true,
+  "play_effects": [
+    { "id": "remove_stains_hand_and_discard" }
+  ],
+  "bind_passives": [
+    { "id": "after_win_remove_stains" }
+  ]
+}

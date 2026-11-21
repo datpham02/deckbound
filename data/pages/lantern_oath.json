@@ -1,0 +1,19 @@
+{
+  "id": "lantern_oath",
+  "name": "Lantern Oath",
+  "cost": 2,
+  "compact": {
+    "play": "Deal 5 to all enemies",
+    "bind": "2 to all enemies a turn"
+  },
+  "play_text": "Deal 5 damage to each enemy.",
+  "bind_text": "At the end of each of your turns, deal 2 damage to each enemy.",
+  "target": "none",
+  "pool": true,
+  "play_effects": [
+    { "id": "damage_all", "params": { "amount": 5 } }
+  ],
+  "bind_passives": [
+    { "id": "end_turn_damage_all", "params": { "amount": 2 } }
+  ]
+}
