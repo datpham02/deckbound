@@ -7,7 +7,7 @@
 | Asset class | background |
 | Owner | game-artist |
 | Priority | medium (slice piece 5) |
-| Status | planned |
+| Status | art-ready candidate (review) |
 | Approval state | not approved (approver: director, then Board) |
 
 ## Use
@@ -46,15 +46,18 @@
 - Import notes: confirm with `gameplay-programmer`.
 
 ## Provenance (fill when made)
-- Origin: generated draft + paintover
-- Tool and version: _pending_
-- Model file name and licence: _pending_
-- Generation settings: _pending_
-- Prompt text: _pending_
+- Origin: generated + scripted cleanup (no paintover)
+- Tool and version: ComfyUI 0.46.0, art-ops
+- Model file name and licence: `flux1-schnell-fp8.safetensors`, Apache-2.0
+- Generation settings: seed 2202, steps 4, sampler euler, scheduler simple, cfg 1.0, size 1344 x 576, workflow `bg_combat_flooded_hall_flux_20261122-085010_s2202.workflow.json` (staging)
+- Prompt text: "wide empty flooded stone hall interior, damp dark stone walls and arches, still black water covering the floor, a single warm lantern glow in the upper left casting soft amber light, faint reflection on the water, cool blue-grey ambient shadow, large calm empty dark areas in the middle and right, low frequency texture, painterly, muted restrained palette, side view 2D game background, no characters, no text" (negative prompt: n/a for FLUX)
 - Reference images used as generator input: none
-- Editing steps: _pending_
-- Licence notes: _pending_
+- Editing steps: `resize --size 2640 1080 --fit cover` (centre crop) -> `round0_resized.png`; `grade --saturation 0.8 --contrast 0.85 --brightness 1.0` -> export. Round 1 (saturation 0.55) rejected: lantern lost its warmth.
+- Candidates (5 images of the 32 budget): SDXL seeds 1101-1103 rejected (bright daylight windows and light shafts, high-contrast shapes behind the lanes, no lantern); FLUX seed 2201 rejected (large hanging lantern with foliage is a high-contrast shape top left, busy right arches); FLUX seed 2202 selected. Sheet: `assets/slice/review/bg_combat_flooded_hall/candidates.png`.
+- Licence notes: model output, no input images; licence per AGENTS.md "Assets and licensing".
 - Originality check: _pending (director)_
+- Evidence: `assets/slice/review/bg_combat_flooded_hall/contact.png` (round 0 | round 1 | final)
+- Known limitations: lantern is mid-height on the left wall, not at the top; hue is cooler teal than the neutral Stone anchors; the PNG has an alpha channel (all 255); the numeric value range was not measured (no approved tool).
 
 ## Acceptance checklist
 - [ ] 2640 x 1080 opaque; centre 1920 x 1080 holds the composition
