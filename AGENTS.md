@@ -94,12 +94,19 @@ This tool must run in a normal windowed session. Do not use `--headless` for cap
 
 - **Allowed:** original work; output of the registered checkpoints
   `sd-xl-base-1-0` (CreativeML Open RAIL++-M; its use restrictions apply) and
-  `flux1-schnell-fp8` (Apache-2.0), made through `comfy-draft.py`. PixelFX
-  effects only with a Board approval for this project.
-- **Not allowed:** third-party art, fonts or textures; any reference image fed
-  to a generator; prompts naming another game, studio, artist or character.
+  `flux1-schnell-fp8` (Apache-2.0), made through `comfy-draft.py`; edits of
+  Deckbound's own art through `comfy-edit.py` (img2img with either model,
+  inpainting with SDXL only; Board decision 2026-11-22), when the input image
+  has recorded provenance in this repository or in its staging folder.
+  PixelFX effects only with a Board approval for this project.
+- **Not allowed:** third-party art, fonts or textures; any image that is not
+  Deckbound's own art fed to a generator (screenshots, captures, moodboards,
+  other games' or artists' work); prompts naming another game, studio, artist
+  or character.
 - **Provenance:** recorded for every asset in its spec under
-  `design/assets/specs/` (model file and licence, seed, prompt, art-ops steps).
+  `design/assets/specs/` (model file and licence, seed, prompt, art-ops steps;
+  for `comfy-edit.py`, the template, denoise, input path and SHA256, and the
+  mask SHA256).
 - **Review evidence folder:** `assets/slice/review/` (contact sheets,
   target-background previews, before/after, direction sheets). It replaces the
   company default `art_src/review/<TASK-KEY>/` for this project.
