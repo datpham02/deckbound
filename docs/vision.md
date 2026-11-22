@@ -41,7 +41,7 @@ Deckbound is the deckbuilder where you wear your deck. Every card you take is a 
 
 ## Visual direction
 
-The look is painterly, hand-illustrated dark fantasy with readable silhouettes and a restrained palette, as set out in [docs/art/ART-PIPELINE.md](art/ART-PIPELINE.md). The pillars add two demands that the art pipeline must serve: bindings are worn on the hero and must read as part of the silhouette at gameplay scale, and every page has two faces, shown as a compact face in hand and as a two-page spread on tap, so card layout and type hierarchy are gameplay information first and decoration second. Both are judged on a phone in landscape at the performance budget in [concept.md](concept.md), not on a monitor. Reference study of other games follows the pipeline's §2.1 policy; nothing from those references ships.
+The look is 2D hand-drawn dark fantasy in the house style A Ink Cel: a bold, uneven ink outline and flat cel shading in two or three tones, with readable silhouettes and a restrained palette, as set out in [docs/art/ART-BIBLE.md](art/ART-BIBLE.md) §3A and produced through [docs/art/ART-PIPELINE.md](art/ART-PIPELINE.md). The pillars add two demands that the art pipeline must serve: bindings are worn on the hero and must read as part of the silhouette at gameplay scale, and every page has two faces, shown as a compact face in hand and as a two-page spread on tap, so card layout and type hierarchy are gameplay information first and decoration second. Both are judged on a phone in landscape at the performance budget in [concept.md](concept.md), not on a monitor. Reference study of other games follows the pipeline's §2.1 policy; nothing from those references ships.
 
 ## Acceptance criteria
 
