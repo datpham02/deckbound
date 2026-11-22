@@ -40,7 +40,7 @@
 - Reason and integration cost: one opaque layer keeps overdraw low.
 
 ## Files
-- Editable source: `art_src/backgrounds/bg_combat_flooded_hall.kra`
+- Source deliverables (replace the Krita source): the selected generation(s), kept under `art_src/backgrounds/bg_combat_flooded_hall/` with provenance. Krita stays optional (deckbound PR #20); a `.kra` file is not required.
 - Export: `assets/slice/backgrounds/bg_combat_flooded_hall.png`
 - Godot resource path: set by `gameplay-programmer`.
 - Import notes: confirm with `gameplay-programmer`.

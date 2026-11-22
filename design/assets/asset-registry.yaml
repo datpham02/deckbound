@@ -9,6 +9,7 @@
 
 schema_version: 1
 
+# Board changed source and provenance.origin of the slice rows on 2026-11-22 (SOU-86); other fields stay with SOU-61.
 slice_assets:
   - id: char_scrivener
     name: The Scrivener
@@ -17,13 +18,13 @@ slice_assets:
     priority: high
     status: planned
     spec: design/assets/specs/char_scrivener.md
-    source: art_src/characters/char_scrivener.kra
+    source: art_src/characters/char_scrivener/
     export: assets/slice/characters/char_scrivener_parts.png
     size_px: [1024, 1024]       # parts atlas
     budget_mb_uncompressed: 4
     pivot: bottom_center
     animation: {approach: godot_skeleton2d, states: [idle, action_tear_page]}
-    provenance: {origin: generated_draft_plus_paintover, recorded: false}
+    provenance: {origin: generated_plus_scripted_cleanup, recorded: false}
 
   - id: enemy_attacker
     name: Plain attacker (working name)
@@ -32,13 +33,13 @@ slice_assets:
     priority: high
     status: planned
     spec: design/assets/specs/enemy_attacker.md
-    source: art_src/enemies/enemy_attacker.kra
+    source: art_src/enemies/enemy_attacker/
     export: assets/slice/enemies/enemy_attacker_sheet.png
     size_px: [2048, 1536]       # 4 x 3 frames of 512 x 512
     budget_mb_uncompressed: 12.6
     pivot: bottom_center
     animation: {approach: frame, states: [idle, attack], frames: 10}
-    provenance: {origin: generated_draft_plus_paintover, recorded: false}
+    provenance: {origin: generated_plus_scripted_cleanup, recorded: false}
 
   - id: enemy_frayer
     name: Binding-frayer (working name)
@@ -47,13 +48,13 @@ slice_assets:
     priority: high
     status: planned
     spec: design/assets/specs/enemy_frayer.md
-    source: art_src/enemies/enemy_frayer.kra
+    source: art_src/enemies/enemy_frayer/
     export: assets/slice/enemies/enemy_frayer_sheet.png
     size_px: [2048, 1536]       # 4 x 3 frames of 512 x 512
     budget_mb_uncompressed: 12.6
     pivot: bottom_center
     animation: {approach: frame, states: [idle, fray_reach], frames: 10}
-    provenance: {origin: generated_draft_plus_paintover, recorded: false}
+    provenance: {origin: generated_plus_scripted_cleanup, recorded: false}
 
   - id: card_art_sample
     name: Card illustration sample
@@ -62,13 +63,13 @@ slice_assets:
     priority: medium
     status: planned
     spec: design/assets/specs/card_art_sample.md
-    source: art_src/cards/card_art_sample.kra
+    source: art_src/cards/card_art_sample/
     export: assets/slice/cards/card_art_sample.png
     size_px: [700, 900]
     budget_mb_uncompressed: 2.4
     pivot: n/a
     animation: {approach: static_plus_godot_transforms}
-    provenance: {origin: generated_draft_plus_paintover, recorded: false}
+    provenance: {origin: generated_plus_scripted_cleanup, recorded: false}
 
   - id: slot_icon_states
     name: Bind-slot icon states
@@ -77,7 +78,7 @@ slice_assets:
     priority: high
     status: planned
     spec: design/assets/specs/slot_icon_states.md
-    source: art_src/icons/slot_icon_states.kra
+    source: art_src/icons/slot_icon_states/
     export: assets/slice/icons/slot_icon_states.png
     size_px: [512, 128]         # empty, intact, frayed, severed at 128 x 128
     budget_mb_uncompressed: 0.25
@@ -92,13 +93,13 @@ slice_assets:
     priority: medium
     status: planned
     spec: design/assets/specs/bg_combat_flooded_hall.md
-    source: art_src/backgrounds/bg_combat_flooded_hall.kra
+    source: art_src/backgrounds/bg_combat_flooded_hall/
     export: assets/slice/backgrounds/bg_combat_flooded_hall.png
     size_px: [2640, 1080]
     budget_mb_uncompressed: 11.4
     pivot: center
     animation: {approach: static}
-    provenance: {origin: generated_draft_plus_paintover, recorded: false}
+    provenance: {origin: generated_plus_scripted_cleanup, recorded: false}
 
   - id: ui_combat_composition
     name: Combat UI composition
@@ -107,7 +108,7 @@ slice_assets:
     priority: medium
     status: planned
     spec: design/assets/specs/ui_combat_composition.md
-    source: art_src/ui/ui_combat_composition.kra
+    source: art_src/ui/ui_combat_composition/
     export: assets/slice/ui/ui_combat_atlas.png
     size_px: [1024, 1024]
     budget_mb_uncompressed: 4
@@ -122,7 +123,7 @@ slice_assets:
     priority: medium
     status: planned
     spec: design/assets/specs/vfx_fray.md
-    source: art_src/vfx/vfx_fray.kra
+    source: art_src/vfx/vfx_fray/
     export: assets/slice/vfx/vfx_fray_sheet.png
     size_px: [1024, 512]        # 8 frames of 256 x 256
     budget_mb_uncompressed: 2
