@@ -4,7 +4,7 @@ Status: **proposed** (SOU-56). Applies decision D1 from the M1 plan: local Comfy
 
 ## Rules (non-negotiable)
 1. **Final art allowed (Board 2026-11-22).** Generated images may ship as final art after selection, consistency checks and scripted cleanup with `art-ops`, then the Task's review stages (`qa`, Director) and Board approval. Krita paintover is optional.
-2. **Never a reference image as input.** No img2img, ControlNet, IP-Adapter, style reference, LoRA or fine-tune built from any game's screenshots, captures, moodboard or other reference material (pipeline §2.1). Text prompts only. An empty latent is the only image-shaped input. The one later exception to consider is our own approved original art, and that needs separate approval and is not used in this PR.
+2. **Never an outside image as input.** No img2img, ControlNet, IP-Adapter, style reference, LoRA or fine-tune built from any game's screenshots, captures, moodboard or other reference material (pipeline §2.1). **Exception (Board decision 2026-11-22):** Deckbound's own art with recorded provenance may be the input of `comfy-edit.py` (img2img with SDXL or FLUX; inpainting with SDXL and an `art-ops mask`, pixels outside the mask restored exactly). ControlNet, IP-Adapter, style reference, LoRA and fine-tunes stay not approved.
 3. **Original design words only** in prompts. No game, character, card or artist names from other works.
 4. **Local only.** Prompts and outputs stay on the studio machine.
 5. Record provenance for every kept draft (below). A draft without provenance is deleted.
@@ -30,7 +30,7 @@ Either may be used for any piece; record which.
 5. Compare candidates against the spec: silhouette at 25% screen height as solid black, palette roles, composition. Pick at most one or two.
 6. Clean up the chosen image with `art-ops`: generate on a flat plain backdrop, `key` it to transparency, `trim`, `resize` to the spec's size, place it on the spec's `canvas`, build `sheet`s for frames, and make a `contact` sheet for review. Optional: hand fixes in Krita.
 7. Export to `assets/slice/` per the spec. Run the validators `gameplay-programmer` provides, when they exist.
-8. Fill the provenance block in the spec: tool and version, model file and licence, seed, steps, sampler, size, workflow file name, prompt, "reference images as input: none", Krita steps.
+8. Fill the provenance block in the spec: tool and version, model file and licence, seed, steps, sampler, size, workflow file name, prompt, the input images ("none" for `comfy-draft.py`; for `comfy-edit.py` the template, denoise, input path and SHA256, mask SHA256), Krita steps.
 
 ## Provenance record (copy into the spec)
 ```
@@ -40,7 +40,7 @@ Model: <FLUX.1 schnell | SDXL base> <file name>, licence <name and link>, checke
 Settings: seed <n>, steps <n>, sampler <name>, size <W x H>, workflow <file>
 Prompt: <text>
 Negative prompt: <text or n/a>
-Reference images used as input: none
+Reference images used as input: none (comfy-draft) | own art: <template> <input path> sha256 <...>, mask sha256 <...>, denoise <x> (comfy-edit)
 Editing: <art-ops commands, and Krita steps if any>
 ```
 
