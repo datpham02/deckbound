@@ -33,7 +33,7 @@ Inspected at `d1d407e` (main after the concept merge).
 | `display/window/handheld/orientation` | not set (Godot default is fixed landscape, value 0 = `SCREEN_LANDSCAPE`; taken from the Godot docs as relayed in the SOU-33 review, not re-confirmed in the 4.6 editor in this run because shell execution of Godot was blocked, so `gameplay-programmer` should confirm) | The concept needs sensor landscape (value 4, `SCREEN_SENSOR_LANDSCAPE`) so both rotations are allowed. Finding F1 |
 | Renderer (`rendering/renderer/rendering_method.mobile`) | not set. On Android the engine reads the `.mobile` setting, whose default is `mobile`, so the effective renderer on the target device is the **Mobile** renderer (Forward+ is the desktop default) | The concept calls Compatibility the safe default for this device class. Finding F2 |
 | Texture compression / VRAM import | not set. Compressed textures on Android need **two** things: the project setting `rendering/textures/vram_compression/import_etc2_astc` (not set) and the per-texture import mode `compress/mode = VRAM Compressed` (the Godot default import mode is Lossless, which is held as uncompressed RGBA in VRAM). Neither is in place | Finding F3 |
-| Default texture filter | not set (linear). Flat-tone ink art (A Ink Cel, Art Bible §3A) may prefer a different filter; policy stays open (Art Bible §7) | none |
+| Default texture filter | not set (linear). Flat-tone ink art (A Ink Cel, Art Bible §3A) may prefer a different filter; policy stays open (Art Bible §9) | none |
 | Safe-area / immersive settings | not set | Gameplay work, not art |
 | `export_presets.cfg` | missing (not in the repo) | Android export is not set up in the project |
 | Default import presets for images | untouched Godot defaults | none |
