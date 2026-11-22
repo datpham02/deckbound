@@ -7,7 +7,7 @@
 | Asset class | character |
 | Owner | game-artist |
 | Priority | high (slice piece 1) |
-| Status | planned (direction B Bell Cloak decided, SOU-71; production is SOU-64) |
+| Status | in production (SOU-64): full figure exported, parts atlas NOT achieved with the approved tools (see "Production result") |
 | Approval state | not approved (approver: director, then Board) |
 | Direction | B Bell Cloak, `docs/art/directions/char_scrivener.md` (director, 2026-11-22). The approved concept is a direction, not a production atlas or rig. |
 | Integration owner (rig: rotation, overlap, animation, binding swap, pivot): | SOU-77 (Scrivener rig integration, `gameplay-programmer`, blocked by SOU-64; Board decision 2026-11-22) |
@@ -48,7 +48,7 @@ Each line is a pass / fail check at review.
 5. Light: warm key from the upper left and cool rim light on the right edge of cloak, hood and book; cords lighter than the cloak.
 6. Hidden parts: torso, legs and the arm and book areas behind the cloak are painted whole, so rotation shows no gap or hole.
 7. Layers: the part list below is complete, one PNG per part, names exactly as listed.
-8. Pivot: one common bottom-centre pivot for every part.
+8. Pivot: one common bottom-centre assembly origin for every part, and a joint point for every moving part, listed in the parts list.
 
 ## Animation (D2)
 - Approach: Godot Skeleton2D (Bone2D + Polygon2D, AnimationPlayer). Decided in TOOL-DECISIONS D2: skeletal only for the Scrivener and bosses. Spine is not adopted.
@@ -85,7 +85,7 @@ Names per ART-BIBLE §5 (direction B):
 
 ## Files
 - Source deliverables (replace the Krita source): the selected generations (raw, unkeyed) and the per-part PNGs, kept under `art_src/characters/char_scrivener/` (`generations/` and `parts/`), with provenance per part (see below). Krita stays optional (deckbound PR #20); a `.kra` file is not required.
-- Export: `assets/slice/characters/char_scrivener_parts.png` (one page) plus a parts list in `assets/slice/characters/char_scrivener_parts.md` (part name, rectangle, pivot, source generation).
+- Export: `assets/slice/characters/char_scrivener_parts.png` (one page) plus a parts list in `assets/slice/characters/char_scrivener_parts.md` (part name, rectangle, offset from the assembly origin, joint point, source generation).
 - Godot resource path: set by `gameplay-programmer`. Slice only touches `assets/slice/` (swap-in is T22).
 - Import notes: confirm with `gameplay-programmer`; no project settings changed here.
 
@@ -93,7 +93,26 @@ Names per ART-BIBLE §5 (direction B):
 - Origin: AI-generated (ComfyUI per COMFYUI-WORKFLOW.md), selected, regenerated for consistency and processed with `art-ops`; no Krita paintover required.
 - Per part, record: part name, model file name and licence, tool and version, seed, prompt text, size, and each `art-ops` step with its arguments (key, crop, trim, resize, canvas, sheet, grade).
 - Reference images used as generator input: none
-- Licence notes: _pending_
+- Licence notes: model `flux1-schnell-fp8.safetensors`, Apache-2.0 (as printed by the tool, 2026-11-22). Images are original; no input images.
+
+### Records (SOU-64 run 1)
+Common: Origin: generated + scripted cleanup. Tool: ComfyUI 0.46.0, art-ops. Settings: euler/simple, 4 steps, cfg 1.0, size 832 x 1216. Negative prompt: n/a. Reference images used as input: none.
+
+**Selected: `art_src/characters/char_scrivener/generations/char_scrivener_flux_s6302.png`** (raw, unkeyed; pixel-exact copy via `resize --size 832 1216 --fit stretch`), workflow `char_scrivener_flux_20261122-111821_s6302.workflow.json` (staging).
+Prompt: "one figure, full body head to feet, facing right, centered, perfectly flat uniform light grey backdrop, no vignette, no glow, no cast shadow. A scribe in a huge near-black hooded cloak that flares out like a bell: narrow hooded head and shoulders, the hem spreading very wide at the ground, hem at least twice as wide as the shoulders, smooth rounded triangle silhouette, five heads tall, the pale chin visible under the hood, a pale hand cradles a closed thick book with a plain blank cream cover at the chest, the other pale hand grips a short iron hook with a glowing lantern hanging at hip height outside the cloak edge, three bright teal cords tied across the cloak at shoulder, chest and hip. Warm amber light from the upper left, cool blue rim light on the right edge. Plain blank surfaces, no lettering, no gore, no weapons."
+Editing for `assets/slice/characters/char_scrivener_full.png` (313 x 650): `key --tolerance 75 --soft 10` (corner colour 215,215,215) -> `trim` -> `key --tolerance 130 --soft 12` (from raw) -> `trim` -> `crop --box 0 0 491 1000` (removes feet and cast shadow) -> `trim` -> `resize --size 313 650`. Review images: `resize` 130 x 270, `grade --brightness 0` (silhouette), `grade --saturation 0` (greyscale), `contact --bg 27 32 38`.
+
+Images generated: **16 of 32.** FLUX seeds: 6101-6103 (master round 1; 6101 has baked "Contract" text and a glyph at the hem, 6102/6103 columns), 6201-6204 (round 2; 6202 best but a column, 6201 lantern floats, 6203 floats, 6204 signature glyph), 6301-6304 (round 3; 6302 selected; 6301 pale face and short cloak, 6303 drab, 6304 hem trails and lantern doubles), 7101 lantern, 7201 book, 7301/7302/7303 chest-cord states (parts test, not used). Rejected candidates stay in staging; sheets: `assets/slice/review/char_scrivener/candidates_master.png`, `candidates_round2.png`, `candidates_round3.png`, `parts_test.png`.
+- Originality check: _pending (director)_
+
+## Production result (SOU-64, run 1)
+Delivered: full figure `assets/slice/characters/char_scrivener_full.png` (hooded bell, visible chin, pale hands, closed book, lantern on a chain outside the cloak edge, teal cords at the collar and chest). Review: `assets/slice/review/char_scrivener/contact.png` (colour at 650 px, colour at 270 px, flat silhouette, greyscale, on `#1B2026`).
+
+Not achieved:
+- **Tool capability failure: parts atlas (body, head, arms, legs, cloak, book, loose page, lantern, 3 bindings x 3 states)** — parts generated one by one do not match the master figure or each other (`parts_test.png`: book came out open, cords tiny, "frayed" had no gap, backdrops vignetted and unkeyable), and parts cannot be cut from one image because hidden areas are not painted. What would fix it: an approved image-to-image or inpainting step on our own approved art (COMFYUI-WORKFLOW rule 2 names it as a possible later exception), or a layered paintover.
+- **Tool capability failure: cast shadow under the feet** — it is close in value to the backdrop, so `key` leaves it, and `art-ops` has no region erase. The export is cropped at the hem, so the feet are not in it. What would fix it: a mask or region-erase tool, or a truly shadowless generation.
+- Only one of the three binding locations is visible on the figure (collar/chest cords); the shoulder strap is brown, not a teal cord; the three states are not drawn. The lantern is not in the flat silhouette at 270 px. Rim light on the right is weak. The pose differs from the spec (the front hand holds the book and the lantern chain; `arm_back` with a hook is not shown). No `.kra`, no per-part PNGs (`parts/` is empty).
+- D2 fallback (static figure + Godot transforms) is available; Director and the Board decide.
 - Originality check: _pending (director)_
 
 ## Acceptance checklist
