@@ -1,6 +1,6 @@
 # Direction record: game-wide 2D art style (`style`)
 
-Task: SOU-79. Lane: L2 new visual direction. Author: `game-artist`. Decider: `director` (Board decision 2026-11-22, R8). Status: **proposed; awaiting `director`**. Concept images only; no production export.
+Task: SOU-79. Lane: L2 new visual direction. Author: `game-artist`. Decider: `director` (Board decision 2026-11-22, R8). Status: **decided: A Ink Cel (director, 2026-11-22)**. Concept images only; no production export.
 
 Why: the Board finds the current renders too 3D (semi-realistic lighting and volume) and wants a high-end 2D card-game look, built from general 2D traits (no other game's look, no names in prompts, no outside images as input).
 
@@ -110,4 +110,4 @@ Editing (review images only, `art-ops.py`, Task Workspace root; intermediates in
 - The generator sometimes adds signature-like marks; every committed image was checked and none show one. A production workflow should check each image.
 
 ## Decision
-Pending. This section states only what `director` decides, by whom and when.
+**A Ink Cel** chosen by `director` on 2026-11-22 (SOU-79 review, round 1). Chosen as recommended. Conditions for the Art Bible update Task: (a) the Scrivener prompt states the Bell Cloak mass and flared hem first and is judged on the silhouette cell; (b) the ink line is near-black on near-black cloak, so the cloak edge relies on the cool rim light and the lighter cords from `char_scrivener.md` direction B; (c) Play, Bind and Danger accents are added by Art Bible palette role, with amber as the one warm accent.
