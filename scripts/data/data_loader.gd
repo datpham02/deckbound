@@ -237,12 +237,7 @@ static func load_enemy_file(file_path: String, errors: Array[String]) -> Variant
         if action_value < 0:
           _append_error(errors, file_path, "%s.value" % action_path, "Expected value >= 0." )
 
-        if action_data.has("hits"):
-          var hits_variant: Variant = action_data["hits"]
-          if typeof(hits_variant) != TYPE_INT:
-            _append_error(errors, file_path, "%s.hits" % action_path, "Expected int, got %s." % type_string(typeof(hits_variant)))
-          elif int(hits_variant) <= 0:
-            _append_error(errors, file_path, "%s.hits" % action_path, "Expected hits > 0.")
+        _require_optional_positive_int(action_data, "hits", file_path, "%s.hits" % action_path, errors)
 
         if action_type == "fray" or action_type == "sever":
           if not action_data.has("fallback"):
@@ -259,12 +254,7 @@ static func load_enemy_file(file_path: String, errors: Array[String]) -> Variant
               var fallback_value: int = _require_int(fallback_data, "value", file_path, "%s.fallback.value" % action_path, errors)
               if fallback_value < 0:
                 _append_error(errors, file_path, "%s.fallback.value" % action_path, "Expected value >= 0.")
-              if fallback_data.has("hits"):
-                var fallback_hits_variant: Variant = fallback_data["hits"]
-                if typeof(fallback_hits_variant) != TYPE_INT:
-                  _append_error(errors, file_path, "%s.fallback.hits" % action_path, "Expected int, got %s." % type_string(typeof(fallback_hits_variant)))
-                elif int(fallback_hits_variant) <= 0:
-                  _append_error(errors, file_path, "%s.fallback.hits" % action_path, "Expected hits > 0.")
+              _require_optional_positive_int(fallback_data, "hits", file_path, "%s.fallback.hits" % action_path, errors)
         enemy.actions.append(action_data)
 
   if not root.has("telegraph_pattern"):
@@ -419,6 +409,21 @@ static func _require_int(data: Dictionary, key: String, file_path: String, field
 
   _append_error(errors, file_path, field_path, "Expected int, got %s." % type_string(typeof(value)))
   return 0
+
+static func _require_optional_positive_int(data: Dictionary, key: String, file_path: String, field_path: String, errors: Array[String]) -> void:
+  if not data.has(key):
+    return
+
+  var start_error_count: int = errors.size()
+  var value: int = _require_int(data, key, file_path, field_path, errors)
+  if errors.size() > start_error_count:
+    return
+
+  if value <= 0:
+    _append_error(errors, file_path, field_path, "Expected hits > 0.")
+    return
+
+  data[key] = value
 
 static func _require_bool(data: Dictionary, key: String, file_path: String, field_path: String, errors: Array[String]) -> bool:
   if not data.has(key):
