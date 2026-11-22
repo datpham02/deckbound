@@ -6,13 +6,9 @@ func bind_from_hand(state: Variant, hand_index: int, slot_index: int) -> bool:
 		return false
 
 	var selected_card: Variant = state.hand[hand_index]
-	var selected_uid: int = int(selected_card.uid)
 	var page_id: String = String(selected_card.page_id)
 	var deck_floor: int = maxi(0, int(state.run_rules.deck_floor))
-	var removable_count: int = _count_matching_cards(state.hand, page_id)
-	removable_count += _count_matching_cards(state.draw_pile, page_id)
-	removable_count += _count_matching_cards(state.discard_pile, page_id)
-	var projected_deck_count: int = _count_deck_cards(state) - removable_count
+	var projected_deck_count: int = _count_deck_cards(state) - 1
 	if projected_deck_count < deck_floor:
 		state.push_error(
 			"Cannot bind '%s': deck floor %d would be broken (%d remaining)." % [
@@ -23,13 +19,12 @@ func bind_from_hand(state: Variant, hand_index: int, slot_index: int) -> bool:
 		)
 		return false
 
-	var bound_card: Variant = _remove_card_from_hand_for_binding(state, page_id, selected_uid)
+	var bound_card: Variant = state.remove_card_from_hand_at(hand_index)
 	if bound_card == null:
 		state.push_error("Could not bind '%s' because the source card was not found." % page_id)
 		return false
 
-	_remove_matching_cards_to_removed(state.draw_pile, page_id, state.removed_from_run)
-	_remove_matching_cards_to_removed(state.discard_pile, page_id, state.removed_from_run)
+	state.player_ink -= int(bound_card.cost)
 	state.set_binding(slot_index, bound_card, false)
 	state.add_log("bind:%s:slot_%d" % [page_id, slot_index])
 	return true
@@ -103,7 +98,49 @@ func collect_active_passives_by_id(state: Variant, passive_id: String) -> Array[
 			selected_passives.append(passive_data)
 	return selected_passives
 
+func apply_start_of_combat_passives(state: Variant) -> void:
+	for passive_data: Dictionary in collect_active_passives(state):
+		var passive_id: String = String(passive_data.get("id", ""))
+		match passive_id:
+			"start_combat_guard":
+				state.gain_player_guard(_passive_param_int(passive_data, "amount"))
+			"start_combat_damage_all":
+				_damage_all_enemies(state, _passive_param_int(passive_data, "amount"))
+
+func apply_start_of_turn_passives(state: Variant) -> void:
+	for passive_data: Dictionary in collect_active_passives(state):
+		var passive_id: String = String(passive_data.get("id", ""))
+		match passive_id:
+			"turn_ink":
+				state.gain_player_ink(_passive_param_int(passive_data, "amount"))
+			"turn_guard_per_empty_slot":
+				var per_guard: int = _passive_param_int(passive_data, "per")
+				state.gain_player_guard(per_guard * state.count_empty_binding_slots())
+			"turn_draw":
+				state.draw_cards(_passive_param_int(passive_data, "count"))
+			"turn_draw_lose_health":
+				state.draw_cards(_passive_param_int(passive_data, "count"))
+				state.lose_player_health(_passive_param_int(passive_data, "amount"))
+
+func apply_end_of_turn_passives(state: Variant) -> void:
+	for passive_data: Dictionary in collect_active_passives(state):
+		if String(passive_data.get("id", "")) != "end_turn_damage_all":
+			continue
+		_damage_all_enemies(state, _passive_param_int(passive_data, "amount"))
+
+func modify_played_damage(state: Variant, amount: int) -> int:
+	var modified: int = maxi(0, amount)
+	for passive_data: Dictionary in collect_active_passives_by_id(state, "played_damage_bonus"):
+		modified += _passive_param_int(passive_data, "amount")
+	return modified
+
 func _can_bind_from_hand(state: Variant, hand_index: int, slot_index: int) -> bool:
+	if state.is_combat_over():
+		state.push_error("Cannot bind a card because combat is over.")
+		return false
+	if not state.is_player_turn:
+		state.push_error("Cannot bind a card outside the player's turn.")
+		return false
 	if slot_index < 0 or slot_index >= state.binding_slots.size():
 		state.push_error("Cannot bind into slot %d because it is out of range." % slot_index)
 		return false
@@ -122,45 +159,26 @@ func _can_bind_from_hand(state: Variant, hand_index: int, slot_index: int) -> bo
 	if page_id == "":
 		state.push_error("Cannot bind a card with an empty page id.")
 		return false
+	if state.player_ink < int(selected_card.cost):
+		state.push_error("Not enough ink to bind '%s'." % page_id)
+		return false
 	return true
 
 func _count_deck_cards(state: Variant) -> int:
 	return state.hand.size() + state.draw_pile.size() + state.discard_pile.size()
 
-func _count_matching_cards(zone: Array[Variant], page_id: String) -> int:
-	var count: int = 0
-	for card_variant: Variant in zone:
-		if _matches_page_id(card_variant, page_id):
-			count += 1
-	return count
+func _passive_param_int(passive_data: Dictionary, key: String) -> int:
+	var params_variant: Variant = passive_data.get("params", {})
+	if typeof(params_variant) != TYPE_DICTIONARY:
+		return 0
+	var params: Dictionary = params_variant
+	return maxi(0, int(params.get(key, 0)))
 
-func _remove_card_from_hand_for_binding(state: Variant, page_id: String, selected_uid: int) -> Variant:
-	var bound_card: Variant = null
-	var index: int = state.hand.size() - 1
-	while index >= 0:
-		var card_variant: Variant = state.hand[index]
-		if _matches_page_id(card_variant, page_id):
-			var removed_card: Variant = state.hand[index]
-			state.hand.remove_at(index)
-			if bound_card == null and int(removed_card.uid) == selected_uid:
-				bound_card = removed_card
-			else:
-				state.removed_from_run.append(removed_card)
-		index -= 1
-
-	return bound_card
-
-func _remove_matching_cards_to_removed(zone: Array[Variant], page_id: String, removed_zone: Array[Variant]) -> void:
-	var index: int = zone.size() - 1
-	while index >= 0:
-		var card_variant: Variant = zone[index]
-		if _matches_page_id(card_variant, page_id):
-			var removed_card: Variant = zone[index]
-			zone.remove_at(index)
-			removed_zone.append(removed_card)
-		index -= 1
-
-func _matches_page_id(card_variant: Variant, page_id: String) -> bool:
-	if card_variant == null:
-		return false
-	return String(card_variant.page_id) == page_id
+func _damage_all_enemies(state: Variant, amount: int) -> void:
+	var damage: int = maxi(0, amount)
+	if damage <= 0:
+		return
+	for enemy_index: int in range(state.enemies.size()):
+		if not state.is_enemy_alive(enemy_index):
+			continue
+		state.apply_damage_to_enemy(enemy_index, damage)
