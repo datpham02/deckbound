@@ -17,7 +17,7 @@
 | Tool | Purpose | Policy |
 |---|---|---|
 | Godot 4.x | Game runtime, scenes, UI, animation playback, particles, shaders, asset integration | Primary engine; verify exact project version before configuring |
-| Krita | Paintovers, cleanup, masks, texture edits, card art and background corrections | Primary 2D art editor |
+| Krita | Optional hand fixes: cleanup, masks, corrections | Optional editor (deckbound PR #20); not part of the default pipeline |
 | Blender | Optional 3D blockouts, pose references, turnarounds and controlled renders | Use only where it saves time or improves consistency |
 | Spine 2D | Optional skeletal rigging/animation for recurring characters and enemies | Adopt only after a short import/export proof of concept in the actual Godot project |
 | Git + Git LFS (if needed) | Versioning source art and large binary assets | Follow existing repository conventions; do not initialize or reconfigure without approval |
@@ -25,7 +25,7 @@
 
 ### Image generation
 
-**Board decision 2026-11-22: AI makes the final art.** The local ComfyUI (D1: FLUX.1 schnell and SDXL, text-to-image only) produces final illustrations as well as concepts. A generated image becomes final art through selection, regeneration for consistency and scripted operations (colour-key, trim, resize, grade, sprite sheets: `art-ops`), not through a required human paintover in Krita. Krita stays available for optional hand fixes. Every asset still passes the review stages its Task names (at least `qa`, and Director review for originality and the Art Bible) and Board approval by eye. Known trade-off accepted by the Board: purely AI-generated images may get no copyright protection in some jurisdictions.
+**Board decision 2026-11-22: AI makes the final art.** The local ComfyUI (D1: FLUX.1 schnell and SDXL) produces final illustrations as well as concepts: new images through `comfy-draft.py` (text prompts only), edits of Deckbound's own art through `comfy-edit.py` (deckbound PR #27). A generated image becomes final art through selection, regeneration for consistency and scripted operations (colour-key, trim, resize, grade, sprite sheets: `art-ops`), not through a required human paintover in Krita. Krita stays available for optional hand fixes. Every asset still passes the review stages its Task names (at least `qa`, and Director review for originality and the Art Bible) and Board approval by eye. Known trade-off accepted by the Board: purely AI-generated images may get no copyright protection in some jurisdictions.
 
 Do not assume Claude Code itself is the image generator. Claude Code should orchestrate prompts, files, validation and integration around a separately selected image-generation tool.
 
@@ -44,7 +44,7 @@ If the integration or license cost is not justified, use Godot's built-in 2D ske
 
 Aim for these high-level qualities:
 - Dark fantasy atmosphere with readable silhouettes.
-- Painterly, hand-illustrated character and card art.
+- House style A Ink Cel (Art Bible §3A): hand-drawn look, bold uneven ink outline, flat cel shading in two or three tones, for character, enemy and card art.
 - Restrained, coherent palette and deliberate value contrast.
 - Distinctive shapes and silhouettes for enemies, heroes and relics.
 - Clear focal hierarchy: gameplay information first, decoration second.

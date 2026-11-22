@@ -18,7 +18,7 @@ Status: **proposed** (SOU-56). Applies decision D1 from the M1 plan: local Comfy
 | Use | Model | Why |
 |---|---|---|
 | Fast composition and silhouette exploration (many seeds) | FLUX.1 schnell | few steps (typically 1-4), quick iteration |
-| Painterly texture and mood, background and card-art drafts | SDXL | more control over style words and negative prompts |
+| House style A Ink Cel (Art Bible §3A): characters, enemies, cards, backgrounds | FLUX.1 schnell (recipe below, validated in SOU-81) | the recipe was validated with FLUX; SDXL is needed for `comfy-edit.py inpaint` |
 
 Either may be used for any piece; record which.
 
@@ -44,7 +44,7 @@ The traits are in Art Bible §3A; the validation is in `docs/art/directions/styl
 
 ## Provenance record (copy into the spec)
 ```
-Origin: generated (+ scripted cleanup; + paintover if any)
+Origin: generated + scripted cleanup (comfy-draft) | own-art edit via comfy-edit | original
 Tool: ComfyUI <version>, art-ops (Krita <version> if used)
 Model: <FLUX.1 schnell | SDXL base> <file name>, licence <name and link>, checked <date>
 Settings: seed <n>, steps <n>, sampler <name>, size <W x H>, workflow <file>

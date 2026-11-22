@@ -29,6 +29,7 @@
 
 ## Look constraints
 - Palette roles: ink, stone, paper, Wax, Danger for the reaching hands' highlight.
+- Style: A Ink Cel (ART-BIBLE §3A): bold uneven ink outline, two or three flat tones per surface, no gradients or soft volume.
 - Lighting: warm from the upper left, cool ambient.
 - Silhouette: tall and thin with long hands (ART-BIBLE §5), clearly different from the hero and from `enemy_attacker`.
 - Minimum detail: nothing under 3 px.
@@ -49,7 +50,7 @@
 - Import notes: confirm with `gameplay-programmer`.
 
 ## Provenance (fill when made)
-- Origin: generated draft + paintover
+- Origin: generated + scripted cleanup (comfy-draft, art-ops); own-art edits via comfy-edit if used
 - Tool and version: _pending_
 - Model file name and licence: _pending_
 - Generation settings: _pending_

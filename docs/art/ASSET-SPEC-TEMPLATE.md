@@ -55,13 +55,13 @@ Status flow: `planned → concept → review → approved → integrated → ver
 - Import notes (confirm with gameplay-programmer; no project settings changed here):
 
 ## Provenance (required before review)
-- Origin: original / generated draft + paintover / other (give source and licence)
+- Origin: generated + scripted cleanup / own-art edit via comfy-edit / original / other (give source and licence)
 - Tool and version (ComfyUI, model, Krita):
 - Model file name and licence:
 - Generation settings (seed, steps, sampler, size, workflow file):
 - Prompt text (original design words only):
 - Reference images used as generator input: none (must always be none)
-- Editing steps (Krita layers, paintover, cleanup):
+- Editing steps (art-ops commands, comfy-edit runs, optional Krita fixes):
 - Licence notes:
 - Originality check (vision pillar 5):
 
