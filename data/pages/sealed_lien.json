@@ -1,0 +1,20 @@
+{
+  "id": "sealed_lien",
+  "name": "Sealed Lien",
+  "cost": 2,
+  "compact": {
+    "play": "Deal 7, gain 4 Guard",
+    "bind": "Gain Guard: 1 to all"
+  },
+  "play_text": "Deal 7 damage to an enemy and gain 4 Guard.",
+  "bind_text": "Whenever you gain Guard, deal 1 damage to each enemy.",
+  "target": "enemy",
+  "pool": true,
+  "play_effects": [
+    { "id": "damage", "params": { "amount": 7, "target": "enemy" } },
+    { "id": "guard", "params": { "amount": 4 } }
+  ],
+  "bind_passives": [
+    { "id": "on_guard_gain_damage_all", "params": { "amount": 1 } }
+  ]
+}

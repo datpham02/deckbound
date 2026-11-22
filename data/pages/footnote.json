@@ -1,0 +1,19 @@
+{
+  "id": "footnote",
+  "name": "Footnote",
+  "cost": 0,
+  "compact": {
+    "play": "Draw 1",
+    "bind": "Keep highest-cost page"
+  },
+  "play_text": "Draw 1 page.",
+  "bind_text": "At the end of your turn, your highest-cost page stays in your hand instead of being discarded (leftmost if tied).",
+  "target": "none",
+  "pool": true,
+  "play_effects": [
+    { "id": "draw", "params": { "count": 1 } }
+  ],
+  "bind_passives": [
+    { "id": "retain_highest_cost" }
+  ]
+}

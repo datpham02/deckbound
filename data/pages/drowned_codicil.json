@@ -1,0 +1,19 @@
+{
+  "id": "drowned_codicil",
+  "name": "Drowned Codicil",
+  "cost": 3,
+  "compact": {
+    "play": "Deal 20",
+    "bind": "6 to all at fight start"
+  },
+  "play_text": "Deal 20 damage to an enemy.",
+  "bind_text": "At the start of each combat, deal 6 damage to each enemy.",
+  "target": "enemy",
+  "pool": true,
+  "play_effects": [
+    { "id": "damage", "params": { "amount": 20, "target": "enemy" } }
+  ],
+  "bind_passives": [
+    { "id": "start_combat_damage_all", "params": { "amount": 6 } }
+  ]
+}

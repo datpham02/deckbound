@@ -1,0 +1,19 @@
+{
+  "id": "ledger_of_debts",
+  "name": "Ledger of Debts",
+  "cost": 2,
+  "compact": {
+    "play": "Deal 1 per discard page",
+    "bind": "Reshuffle: gain 5 Guard"
+  },
+  "play_text": "Deal 1 damage to an enemy for each page in your discard.",
+  "bind_text": "Whenever your discard is shuffled into your deck, gain 5 Guard.",
+  "target": "enemy",
+  "pool": true,
+  "play_effects": [
+    { "id": "damage_per_discard_page", "params": { "per": 1, "target": "enemy" } }
+  ],
+  "bind_passives": [
+    { "id": "on_reshuffle_guard", "params": { "amount": 5 } }
+  ]
+}

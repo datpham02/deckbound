@@ -1,0 +1,19 @@
+{
+  "id": "tally_mark",
+  "name": "Tally Mark",
+  "cost": 1,
+  "compact": {
+    "play": "Gain 2 Ink",
+    "bind": "1 more Ink each turn"
+  },
+  "play_text": "Gain 2 Ink.",
+  "bind_text": "Gain 1 more Ink at the start of each turn.",
+  "target": "none",
+  "pool": true,
+  "play_effects": [
+    { "id": "ink", "params": { "amount": 2 } }
+  ],
+  "bind_passives": [
+    { "id": "turn_ink", "params": { "amount": 1 } }
+  ]
+}

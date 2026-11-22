@@ -1,0 +1,19 @@
+{
+  "id": "torn_margin",
+  "name": "Torn Margin",
+  "cost": 1,
+  "compact": {
+    "play": "Draw 2",
+    "bind": "Draw 1 more each turn"
+  },
+  "play_text": "Draw 2 pages.",
+  "bind_text": "Draw 1 more page at the start of each turn.",
+  "target": "none",
+  "pool": true,
+  "play_effects": [
+    { "id": "draw", "params": { "count": 2 } }
+  ],
+  "bind_passives": [
+    { "id": "turn_draw", "params": { "count": 1 } }
+  ]
+}

@@ -1,0 +1,19 @@
+{
+  "id": "knotted_thread",
+  "name": "Knotted Thread",
+  "cost": 1,
+  "compact": {
+    "play": "3 Guard per binding",
+    "bind": "Fray gives 6 Guard"
+  },
+  "play_text": "Gain 3 Guard for each binding you have.",
+  "bind_text": "Whenever another binding of yours is frayed, gain 6 Guard.",
+  "target": "none",
+  "pool": true,
+  "play_effects": [
+    { "id": "guard_per_binding", "params": { "per": 3 } }
+  ],
+  "bind_passives": [
+    { "id": "on_other_fray_guard", "params": { "amount": 6 } }
+  ]
+}
