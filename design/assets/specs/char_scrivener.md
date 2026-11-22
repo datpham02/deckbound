@@ -115,6 +115,15 @@ Not achieved:
 - D2 fallback (static figure + Godot transforms) is available; Director and the Board decide.
 - Originality check: _pending (director)_
 
+## Production result (SOU-64, run 2, comfy-edit inpaint)
+Images used this run: 9 (total 25 of 64). All SDXL inpaint, `sd_xl_base_1.0.safetensors` (CreativeML Open RAIL++-M), input `char_scrivener_flux_s6302.png` (our own art), 30 steps, cfg 7.0, euler/normal, `outside_mask_changed: 0` every run. Masks: `art_src/characters/char_scrivener/masks/`.
+- s8101 (denoise 1.0, mask `lantern_old.png`, prompt "perfectly flat uniform light grey backdrop, empty, plain"): removed the old right-side lantern and chain. Worked; faint amber tint left inside the cloak edge.
+- s8102 (mask `glow_fix.png`, "near-black wool cloak edge ... no glow"): rejected, fuzzy dark blob at the cloak edge.
+- s8103 (mask `glow_fix2.png`, flat backdrop prompt, input s8101 result): removed most of the glow. Kept.
+- s8201-s8203 (mask `lantern_new.png`, prompt: pale hand gripping an iron hook, amber lantern hanging, flat backdrop) and s8301-s8303 (mask `lantern_new2.png`, prompt: glowing amber glass lantern, flat backdrop): **no lantern in any of the six**; the model extends the cloak (one a black box) instead. Sheets: `assets/slice/review/char_scrivener/inpaint_lantern_attempt1.png`, `inpaint_lantern_attempt2.png`.
+- **Tool capability failure: lantern on a hook in the back hand, outside the cloak edge** (and by the same mechanism the missing cords and the binding states) — SDXL inpaint does not add a new object from a text prompt into a mostly empty mask; two attempts failed (stop condition 4). What would fix it: FLUX img2img on a rough layout, or a regenerated master that already has the lantern at the left edge (comfy-draft), after which inpaint is used only to remove and repaint existing areas.
+- Parts atlas, hidden-part painting and binding states were not started: they depend on a master with the lantern, three cords and feet. The Task is not `art-ready`.
+
 ## Acceptance checklist
 - [ ] Dimensions, alpha, pivot, naming match this spec
 - [ ] Readable at 25% screen height on a target-class phone (checked in combat by SOU-61)
