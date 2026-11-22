@@ -40,13 +40,13 @@
 - Reason and integration cost: Control nodes with textures, per pipeline §3.
 
 ## Files
-- Editable source: `art_src/ui/ui_combat_composition.kra`
+- Source deliverables (replace the Krita source): the selected generations (raw, unkeyed) and the per-element PNGs, kept under `art_src/ui/ui_combat_composition/` with provenance. Krita stays optional (deckbound PR #20); a `.kra` file is not required.
 - Export: `assets/slice/ui/ui_combat_atlas.png`; mockup `assets/slice/ui/ui_combat_mockup_2400x1080.png` (review only)
 - Godot resource path and theme: set by `gameplay-programmer` and `ui-designer`; this spec changes no scene or theme.
 - Import notes: confirm with `gameplay-programmer`.
 
 ## Provenance (fill when made)
-- Origin: original (drawn in Krita); generator drafts only if recorded per COMFYUI-WORKFLOW.md
+- Origin: generated + scripted cleanup (comfy-draft, art-ops); own-art edits via comfy-edit if used; or original. Record per COMFYUI-WORKFLOW.md
 - Tool and version: _pending_
 - Model file name and licence: n/a unless a generator is used
 - Generation settings: n/a unless a generator is used
