@@ -1,6 +1,6 @@
 # Deckbound Art Bible: Outline
 
-Status: **Phase 1 wording, proposed** (SOU-56, M1 T18a; outline from SOU-33). Sections 2, 3 and 5 now carry Phase 1 wording and starting palette values. Nothing here is approved: `director` reviews, then the Board approves, with the visual target pack ([TARGET-PACK-PLAN.md](TARGET-PACK-PLAN.md)) before the slice scales (pipeline §5 Step 1). Values stay **(proposed)** until a readability test on a target-class phone. `game-designer` and `game-artist` propose the direction; `director` approves it (pipeline §6); the Board approves the visual target pack and budgets.
+Rendering style: **A Ink Cel** is the house style (§3A, Board 2026-11-22; validated in SOU-81, awaiting review). Status: **Phase 1 wording, proposed** (SOU-56, M1 T18a; outline from SOU-33). Sections 2, 3 and 5 now carry Phase 1 wording and starting palette values. Apart from the rendering style in §3A, nothing here is approved: `director` reviews, then the Board approves, with the visual target pack ([TARGET-PACK-PLAN.md](TARGET-PACK-PLAN.md)) before the slice scales (pipeline §5 Step 1). Values stay **(proposed)** until a readability test on a target-class phone. `game-designer` and `game-artist` propose the direction; `director` approves it (pipeline §6); the Board approves the visual target pack and budgets.
 Companions: [ART-PIPELINE.md](ART-PIPELINE.md), [ART-PIPELINE-AUDIT.md](ART-PIPELINE-AUDIT.md), [TOOL-DECISIONS.md](TOOL-DECISIONS.md), [../concept.md](../concept.md), [../vision.md](../vision.md).
 
 Numbers marked **(proposed)** are starting values to be confirmed by a readability test on a target-class Android phone in Phase 1. Numbers marked **(from concept)** are fixed by `docs/concept.md`.
@@ -27,7 +27,7 @@ Each art pillar names the design consequence, the rule, and what it rules out. P
 ## 3. Mood, palette and value structure
 
 ### Anchor palette **(proposed, 12 colours)**
-Final values are confirmed in the target pack and the phone test. Painted art may blend between anchors but stays inside their hue families.
+Final values are confirmed in the target pack and the phone test. Art may use flat tones that step between anchors (two or three per surface, §3A) but stays inside their hue families; it does not blend them in gradients.
 
 | Role | Hex | Use |
 |---|---|---|
@@ -42,7 +42,7 @@ Final values are confirmed in the target pack and the phone test. Painted art ma
 | Bind accent | `#4FA3B8` | Bind face marks (blue-teal) |
 | Danger | `#A8324A` | fray and sever telegraphs, damage |
 | Guard | `#7C9A6D` | guard, safe states (moss) |
-| Wax | `#8C2F2B` | accents on seals and cords, never state coding |
+| Wax | `#8C2F2B` | accents on seals only, never on cords (cords are Bind, §3A) and never state coding |
 
 ### Value structure (principles)
 - Background sits two value steps darker than characters; characters sit one step darker than interactive elements.
@@ -57,6 +57,39 @@ Final values are confirmed in the target pack and the phone test. Painted art ma
 ### Lighting
 - One dominant warm light per scene (lantern), cool ambient, light direction from the upper left in screen space, consistent across hero, enemies, background and card art. Exact angle fixed in the target pack.
 - Per-floor palette variation limit: a hue shift of at most one anchor family per floor. First playable has one floor.
+
+## 3A. Rendering style: A Ink Cel
+
+House style for every visual asset (characters, enemies, props, cards, backgrounds, icons). Decided by `director` and approved by the Board on 2026-11-22 (SOU-79); the recipe was validated on 3 subjects (SOU-81, evidence and results in [directions/style.md](directions/style.md), "Validation"). It sets how things are drawn; the palette roles (§3), silhouette rules (§5) and phone rules (§4) still apply and win on any conflict about meaning.
+
+| Trait | Rule |
+|---|---|
+| Line | One bold, uneven, hand-drawn near-black ink outline (Ink `#1A1426` family), roughly 2 to 4 px on a 1080 px-high screen figure, closed contours, weight varies a little along the stroke. Nothing thinner than 3 px at on-screen scale (§4.4); the lantern hook and loose threads are drawn thicker than the generator's first result. |
+| Shading | Flat cel shading: **two or three flat tones per surface** (base, one shadow, at most one light). Each tone is a flat fill with a hard edge. |
+| Proportions | Stylised and exaggerated, one exaggerated shape feature per character (§5); no realistic anatomy. |
+| Texture | Clean flat colour. No paper grain, brush grain, noise or photographic surface texture. |
+| Palette by role | Large areas in Ink, Stone and Paper. **Amber (Lantern warm) is the one warm accent**, used for the lantern and its light only. Play (copper) marks the Play face and Bind (blue-teal) marks the Bind face and the **cords**; Danger and Wax are the only reds. **Cords are Bind blue-teal, never red.** Red is for Danger (fray, sever) and Wax (seals) only. Skin, leather and wood are muted, desaturated grey or tan tones inside the Stone and Paper hue families only; they never sit in the Lantern or Play hue, so amber stays the one warm accent and copper stays the Play mark. No saturated colour outside the roles. |
+| Light | One warm key from the upper left, cool ambient, and a thin **cool rim light on the right edge** (§3 Lighting). The rim is a flat sliver, not a glow. |
+| Forbidden | Glossy or soft volume, gradients, soft glow halos, depth of field, photoreal or physically based lighting, realistic texture, a baked cast or foot shadow, any text, signature, handwriting or character-like glyph (an abstract seal emblem is allowed). |
+
+### Style recipe words (reproduce with `comfy-draft.py --model flux`, 832 x 1216)
+Prompt form: `<STYLE>. <SUBJECT>. Warm light from the upper left, cool ambient. Plain flat uniform light grey background, no shadow on the ground, no floor, no text, no signature.`
+
+**STYLE:** "2D hand-drawn illustration, bold uneven black ink outlines, flat cel shading with two or three flat tones, stylised exaggerated proportions, clean flat colour, muted dark palette with one warm amber accent, no 3D rendering"
+
+**SUBJECT** is the asset's own design from its spec, written with the shape and the held items first, the colour by palette role ("blue-teal" cords, "stone-grey" skin, "dark red wax seal with no markings") and one sentence for pose and facing. Worked examples (validated) are in [directions/style.md](directions/style.md), "Recipe tested". Prompts describe Deckbound's own design and general style traits only: no other game, studio, artist or character is named, and no outside image is input (`AGENTS.md`).
+
+### Conditions carried from the decision (all binding)
+- **(a)** The Scrivener prompt states the Bell Cloak mass and flared hem **first** (the cloak is "one huge near-black bell-shaped cloak: a narrow hood on top, sloping sides and a very wide flared hem"), and the image is **judged on the silhouette cell** (270 px flat black), not on the colour cell. Validation note: the generator still returns a tall cone about 7 heads tall, not the spec's 5 heads; the production parts correct the proportion.
+- **(b)** The ink line is near-black on a near-black cloak and gives no separation, so the cloak edge relies on the **cool rim light on the right** and the **lighter Bind-teal cords** (`directions/char_scrivener.md`, direction B). Do not rely on the line to separate cloak from `#1B2026`.
+- **(c)** Play, Bind and Danger accents are added **by palette role** (§3), with amber as the one warm accent; no accent is chosen by taste.
+- **(1)** Cords use the Bind role colour (blue-teal), never red; red belongs to Danger and Wax.
+- **(2)** A recipe is proven on **3 subjects x 4 seeds** and judged on the median and the worst result before it is used (sampling rule, studio decision D8). Re-run it on a new subject class (a background, a card, an icon) before relying on it there: validation covered one hero and two enemies only.
+- **(3)** **Every image gets a signature/text check** (`COMFYUI-WORKFLOW.md` step 5); `qa` checks it again. In the validation 8 of 19 images carried a mark, so expect to generate about twice as many seeds as the clean images wanted. A marked image is discarded, never edited and shipped.
+- **(4)** **Spec compliance is separate from the style.** A good-looking image that breaks its spec fails: the Scrivener is a bell, not a column; the lantern hangs from a hook in the **back** hand outside the cloak edge, not in the front hand under the book; the attacker's mallet is **raised**; no foot shadow is baked in. Judge style and spec as separate columns.
+
+### Known limits of the recipe (SOU-81 validation)
+No baked foot shadow could be prompted away (9 of 11 committed images keep one), the generator draws a tail on most enemies, and thin parts (hook wire, threads) come out under 3 px. These are production fixes by selection, `art-ops` and `comfy-edit`, not style changes.
 
 ## 4. Phone-screen rules
 
@@ -107,12 +140,12 @@ These apply to every asset. Display facts are **(from concept)** unless marked.
 - Spread: two-page open book, Play on the left page, Bind on the right, shared Ink cost at the spine **(from concept)**.
 - Frame and layout art as 9-slice or layered pieces, drawn for both faces at their two sizes. Frame sizes are a `ui-designer` deliverable (audit F9).
 - Illustration composition rules: subject inside a safe focal region, readable when mostly covered by text (compact), full at spread size. Illustration authored at spread size, no larger **(from concept)**.
-- Card-art production method: original generated illustration, selected and cleaned up by script; Krita fixes optional (pipeline §3, Board 2026-11-22).
+- Card-art production method: original generated illustration in the A Ink Cel style (§3A), selected and cleaned up by script; Krita fixes optional (pipeline §3, Board 2026-11-22). `card_art_sample` predates the style and needs a restyle (`docs/art/directions/style.md`, Restyle list).
 - Card back, rarity or type cues: not defined yet. To be designed (if any) without relying on colour alone.
 
 ## 7. Environments and UI
 
-- Combat background: layered, parallax only where it adds value. Lanes for the Scrivener (left third), the play area, and enemies (right two thirds) stay clear of busy detail **(layout from concept)**.
+- Combat background: drawn in A Ink Cel (§3A), so flat tones and an ink line, no photographic stone or depth of field; layered, parallax only where it adds value. Lanes for the Scrivener (left third), the play area, and enemies (right two thirds) stay clear of busy detail **(layout from concept)**.
 - Map, rest, reward and run-summary screens: style notes and screen list, restricted to the first-playable scope.
 - UI frames, buttons, bind slots, counters: Godot Control nodes with original decorative textures (pipeline §3). Pressed, disabled and highlighted states included.
 - Typography: font selection pending. Every font must have a licence that permits embedding in a commercial Android app and must be recorded. No bundled font from any external library is used unless its own licence allows it.
@@ -121,7 +154,7 @@ These apply to every asset. Display facts are **(from concept)** unless marked.
 
 - Runtime effects built with Godot particles, shaders and small sprites (pipeline §3). Fray and sever effects have priority and must be readable.
 - Caps per combat on particles, overdraw and full-screen shader passes, to keep 60 fps on a Mali-G52 / Adreno 610 class device **(from concept)**. Cap values: Phase 1 measurement.
-- Style: matches the painterly direction. PixelFX is used only where the Art Bible later allows it (see TOOL-DECISIONS).
+- Style: matches A Ink Cel (§3A): flat tones and a bold uneven ink line, no soft glow gradients. PixelFX is used only where the Art Bible later allows it (see TOOL-DECISIONS).
 - Implementation (shaders, runtime systems) belongs to `gameplay-programmer`. This section sets the visual target.
 
 ## 9. Technical art budget for Android
@@ -132,7 +165,7 @@ Detailed numbers are proposed in [TOOL-DECISIONS.md](TOOL-DECISIONS.md) ("Androi
 - Atlas pages at most 2048 x 2048 **(proposed)**, which is 16 MB uncompressed per page; the Scrivener parts atlas uses one such page (see its spec); compressed GPU textures (ASTC, ETC2 fallback) require the project setting and the per-texture `VRAM Compressed` import mode in audit F3.
 - Texture memory in combat at most 250 MB **(proposed)**. Art size of the first playable at most 60 MB **(proposed)**, inside the 100 MB download **(from concept)**.
 - Transparent versus opaque rules: opaque where possible, to limit overdraw. Premultiplied alpha policy to settle in Phase 1.
-- Mipmaps and texture filtering policy for painterly art on UI and scaled elements: to settle in Phase 1.
+- Mipmaps and texture filtering policy for illustrated (A Ink Cel) art on UI and scaled elements: to settle in Phase 1.
 - Source rule: never overwrite the only editable source with a flattened export (pipeline §4).
 
 ## 10. Files, naming and provenance
@@ -148,7 +181,8 @@ Pass / fail / not tested, never inferred (pipeline §6):
 - Dimensions, aspect, alpha, pivot, and naming match the spec.
 - Readable at gameplay scale on a target-class phone in landscape; silhouette clear against every intended background.
 - Inside the safe and gameplay-critical regions; touch targets at least 48 dp.
-- Palette, lighting and outline consistent with the references.
+- Palette, lighting and outline consistent with the references and with §3A (flat tones, ink line, no gradients, no glossy volume).
+- No signature, handwriting, letters or character-like glyph anywhere in the image (checked on every image, `COMFYUI-WORKFLOW.md` step 5).
 - Both card faces legible; no information relies on colour alone or on hover.
 - Size and memory within the budgets above.
 - Originality checked against the vision rule; provenance recorded.

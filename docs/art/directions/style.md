@@ -1,6 +1,6 @@
 # Direction record: game-wide 2D art style (`style`)
 
-Task: SOU-79. Lane: L2 new visual direction. Author: `game-artist`. Decider: `director` (Board decision 2026-11-22, R8). Status: **decided: A Ink Cel (director, 2026-11-22)**. Concept images only; no production export.
+Task: SOU-79. Lane: L2 new visual direction. Author: `game-artist`. Decider: `director` (Board decision 2026-11-22, R8). Status: **decided: A Ink Cel (director, 2026-11-22)**. Concept images only; no production export. House style recipe validated in SOU-81 (see "Validation"); written into the Art Bible §3A and `COMFYUI-WORKFLOW.md`.
 
 Why: the Board finds the current renders too 3D (semi-realistic lighting and volume) and wants a high-end 2D card-game look, built from general 2D traits (no other game's look, no names in prompts, no outside images as input).
 
@@ -108,6 +108,93 @@ Editing (review images only, `art-ops.py`, Task Workspace root; intermediates in
 - The enemy is a working design for the style test, not the approved `enemy_attacker` design.
 - Originality: no prompt names another work and no outside image was used; the style words are general. No formal originality check was run; that is for `director` and `qa`.
 - The generator sometimes adds signature-like marks; every committed image was checked and none show one. A production workflow should check each image.
+
+## Validation (SOU-81)
+Task: SOU-81. Lane: L1 documentation with a validation run; no production art. Question: does the A recipe hold across 3 subjects and several seeds when it follows the specs (Board conditions (1)-(4))? Answer: **yes on 2D and silhouette; spec compliance is partial and the signature rate is high**. Judged by `game-artist` (not an approval).
+
+### Recipe tested (final, after the one fix round)
+`<A STYLE>. <SUBJECT>. Warm light from the upper left, cool ambient. Plain flat uniform light grey background, no shadow on the ground, no floor, no text, no signature.` FLUX schnell via `comfy-draft.py --asset style_validation --model flux --width 832 --height 1216 --count N`, 4 steps, euler/simple, cfg 1.0, no negative prompt, no input image. A STYLE words are those in "Style recipes" above. Subjects (each a design from its spec):
+- **Scrivener (seeds 6101-6104):** "One figure standing upright, full body, facing right. The whole figure is one huge near-black bell-shaped cloak: a narrow hood on top, sloping sides and a very wide flared hem like a bell, about five heads tall. Small hood with a visible pale grey chin, pale grey hands, a thick closed pale contract book held at the chest. The back hand reaches out to the left of the cloak, clear of the cloak edge, gripping a short iron hook from which a small glowing amber lantern hangs at hip height. Three thin blue-teal cords tied around the cloak at shoulder, chest and hip, thin cool rim light on the right edge."
+- **`enemy_attacker` (seeds 6111-6116):** "One creature standing, full body, facing left, a broad low hunched brute with huge wide shoulders, a very small head sunk between the shoulders, short legs, long heavy arms, stone-grey skin, a stone-grey leather apron, a dark red wax seal with no markings on the chest, gripping a big wooden mallet raised high above its head, hostile stance, no tail."
+- **`enemy_frayer` (seeds 6121-6129):** "One creature standing, full body, facing left, a very tall thin gaunt figure in a tattered dark stone-grey robe, ash-grey skin, a very small narrow head, extremely long thin arms with long fingers, one long arm reaching far forward to the left with an open hand, loose frayed threads hanging from the fingers, a dark red wax seal with no markings on the chest, no tail."
+
+Round 1 used the same words without "no shadow on the ground, no floor", without "pale grey" and "stone-grey / ash-grey skin", and without "no tail" and "no markings" (its Scrivener subject said "back hand held out" and "no cast shadow, no ground"). Round 1 images are not committed.
+
+### Evidence (all under `assets/slice/review/style_validation/`)
+Per subject, a colour sheet of the clean seeds keyed onto `#1B2026` (figures at 580 px cell height, no labels, left to right in the seed order below) and a 270 px silhouette row on Stone light `#6B7780` (all figures 270 px tall, flat black):
+- `scrivener_sheet.png` (1600 x 580) seeds 6101, 6102, 6103, 6104; `scrivener_sil270.png` (1600 x 270)
+- `attacker_sheet.png` (1600 x 580) seeds 6111, 6114, 6115, 6116; `attacker_sil270.png` (1600 x 270)
+- `frayer_sheet.png` (1200 x 580) seeds 6123, 6124, 6127; `frayer_sil270.png` (1200 x 270)
+
+Only images with no signature or text are committed. Images with a mark were discarded, so the frayer sheet has 3 seeds, not 4: the budget (31 of 32 images) was reached before a fourth clean frayer seed.
+
+### Judging key
+P = pass, p = partial (a defect that the production workflow can correct), F = fail. "2D" = flat cel, no glossy volume, no gradients, no depth of field. "Palette" = colours by Art Bible role. "Silhouette" = reads at 270 px as the right figure with its gameplay shape. Per-image grades, committed images only:
+
+| Seed | 2D | Palette | Silhouette 270 | Spec compliance |
+|---|---|---|---|---|
+| **Scrivener** 6101 | P | p (stray orange cloak lining) | P (lantern outside; hem trails to one side) | p: bell trails, lantern on a chain from the front hand, no shadow |
+| 6102 | P | P | P (hook wire under 3 px) | P bell, P lantern on hook out left, F soft baked foot shadow |
+| 6103 | P | P | P (hook wire under 3 px) | P bell, p lantern ring held at the chest, F baked shadow |
+| 6104 | p (soft lantern glow) | P | P (hook wire under 3 px) | P bell, P lantern on hook outside cloak, no shadow |
+| **Attacker** 6111 | P | p (olive-brown apron, yellow teeth) | P (raised mallet) | P broad and low, P raised mallet, F baked shadow, p tail |
+| 6114 | P | p (red-brown apron) | P | p tall, P raised mallet, F shadow, p tail |
+| 6115 | P | p (brown skirt) | P | P broad and low, P mallet, F shadow |
+| 6116 | P | p (tan apron) | P | P broad, p small mallet, F shadow with hatching, p tail |
+| **Frayer** 6123 | P | P | P (reach left, thread under 3 px) | P tall and thin, P reach left, F shadow smudge, p tail |
+| 6124 | P | P | P | P tall and thin, p reach is a raised hand (arm points up, not left), p tail |
+| 6127 | p (soft grey gradient smudge on the long sleeve) | P | P | P tall and thin, P reach left, F shadow, p tail |
+
+### Results per subject (the bar)
+| Subject | 2D not 3D: median / worst | Palette roles: median / worst | Silhouette 270: median / worst | Spec compliance: median / worst | Signature or text (final recipe) |
+|---|---|---|---|---|---|
+| Scrivener | **P** / p (6104) | **P** / p (6101) | **P** / P | **p** / p (6101) | 0 of 4 |
+| `enemy_attacker` | **P** / P | **p-P** / p (all four, brown leather) | **P** / P | **p** / p (6116) | 2 of 6 |
+| `enemy_frayer` | **P** / p (6127) | **P** / P | **P** / P | **p** / p (6127, 6124) | 6 of 9 |
+
+Bar check (median 2D and palette pass for every subject; cords Bind-teal; silhouette reads at 270 px): **2D pass on all three; silhouette pass on all three; cords Bind-teal on all four Scrivener images (no red cord); palette pass on the Scrivener and the frayer; palette on the attacker passes on the median by `director`'s decision (SOU-81 review)**: the muted brown apron reads as a darkened, desaturated Paper tone. The worst, seed 6114 with a red-brown apron, sits too near Wax and would fail in production; the production prompt keeps "stone-grey apron, no brown". Stop condition 3 does not apply.
+
+Line weight and tone count were consistent across subjects: a 2-4 px uneven near-black outline on every figure and two to three flat tones per surface, with no shared gradient. The two exceptions are the soft glow on one lantern and the grey smudge on one sleeve.
+
+### Spec compliance notes (Board condition (4))
+- **Fixed by the recipe change:** the lantern now hangs from a hook outside the cloak edge in 3 of 4 Scrivener images (it was in the front hand under the book in SOU-79); the mallet is raised in 6 of 6 attacker images (it was held down); no figure is a flat column except 6101's trailing hem.
+- **Not fixed:** a baked foot shadow remains on 9 of 11 committed images (2 of 4 Scrivener, 4 of 4 attacker, 3 of 3 frayer, counting the frayer shadow smudges) even with "no shadow on the ground, no floor". The Scrivener silhouette is a tall A-shaped cone about 7 heads tall, not the spec's bell about 5 heads tall; the generator does not take a head count from the prompt. The hook wire and the frayer's thread are under 3 px at 270 px (spec minimum detail). Three of four attackers have a tail and all three frayers have a tail, which the specs do not mention. The frayer reach points left in 2 of 3.
+- **Production consequence:** these are all corrected in production by selecting, part-building and `art-ops`/`comfy-edit` (the spec's layered parts, a thick hook, no tail), not by the style. The recipe fixes the style; it does not give the specs' proportions.
+
+### Signature and text rate (Board condition (3))
+Every generated image was opened and checked for a signature, handwriting, letters or a character-like glyph. A mark means discard. Seal emblems that are abstract shapes (circle and cross, wave) were not counted.
+- Round 1 (original recipe), 12 images: **4 marked** (6103 Scrivener; 6112 and 6113 attacker, the latter with letter-like marks on the seal; 6122 frayer) = 33%.
+- Round 2 (fix recipe), 12 images: **4 marked** (attacker 6112 signature and 6113 seal letters; frayer 6121 and 6122) = 33%.
+- Replacement seeds, 7 images: **4 marked** (frayer 6125 "text" at the corner, 6126, 6128 signature, 6129 character glyph on the seal); attacker 6115 and 6116 clean.
+- **Final recipe (round 2 plus replacements), 19 images: 8 marked = 42%** (Scrivener 0 of 4, attacker 2 of 6, frayer 6 of 9). All 31 generated images: 12 marked = 39%. SOU-79 had 9 of 22 = 41%, so "no signature" in the prompt does not prevent it; the marks usually sit in the lower corner. None is committed.
+- Consequence: the workflow check (COMFYUI-WORKFLOW.md step 5) is mandatory, and a subject needs about twice as many seeds as the number of clean images wanted.
+
+### Tool capability failures
+- **Tool capability failure:** keyed cut-outs keep a pale cast-shadow ellipse and enclosed white fragments (visible on the frayer sleeves in `frayer_sheet.png`); the generator's backdrop was white or cream, not the grey the prompt asked for, so `key` has to take the corner colour — what would fix it: a mask-keyed erase in `art-ops`, or generation on a truly flat backdrop. This also blocks measuring the foot shadow exactly. It does not affect the style decision.
+- **Tool capability failure:** a signature or text mark cannot be removed once it is in the image except by inpainting; `comfy-edit.py inpaint` (SDXL) would work in principle but was not tried, because regenerating is cheaper at this size — what would fix it: a seed list with replacements, as used here.
+
+### Process and image count
+- **Images generated: 31 of the maximum 32.** FLUX 31, SDXL 0, `comfy-edit.py` 0. Round 1 12 (Scrivener 6101-6104, attacker 6111-6114, frayer 6121-6124), fix round 12 (same seeds), replacement seeds 7 (attacker 6115-6116, frayer 6125-6129). Committed images: 6 sheets showing 11 figures. Fix rounds: 1 of 1. Author runs: 1 of 2. Review rounds: 0 of 2.
+- Candidates, workflow JSON and provenance JSON per image are in `~/game-studio-workspace/staging/art/style_validation/` (not committed). Stems: `style_validation_flux_<stamp>_s<seed>_0`, stamps: round 1 Scrivener 20261122-135334, attacker 20261122-135452, frayer 20261122-135606; round 2 Scrivener 20261122-135759, attacker 20261122-135915, frayer 20261122-140031; replacements attacker 20261122-140233, frayer 20261122-140315 (6125-6127) and 20261122-140421 (6128-6129).
+- Provenance (common): ComfyUI 0.46.0, `flux1-schnell-fp8.safetensors`, Apache-2.0 (as verified 2026-11-22, `AGENTS.md` "Assets and licensing"), 4 steps, euler/simple, cfg 1.0, 832 x 1216, reference images used as input: none, no `comfy-edit` input. Prompts: see "Recipe tested".
+- Editing (review images only, `art-ops.py`, outputs in staging): `key <raw> <out> --tolerance 35 --soft 8` (corner colour), `trim`, `resize --size 400 270 --fit contain`, `grade --brightness 0` (silhouettes), `contact --cell 400 580 --bg 27 32 38 --no-labels` (colour) and `contact --cell 400 270 --bg 107 119 128 --no-labels` (silhouettes).
+- Which seeds are in the committed sheets (round 2 recipe): Scrivener 6101, 6102, 6103, 6104; attacker 6111, 6114, 6115, 6116; frayer 6123, 6124, 6127. Not committed because marked: round 2 attacker 6112 and 6113, frayer 6121 and 6122; replacements 6125, 6126, 6128, 6129; every round 1 image.
+
+## Restyle list (SOU-81, acceptance criterion 4)
+Judged against A Ink Cel (2D, bold uneven ink outline, two or three flat tones). Nothing is changed here; the Board decides any restyle Task. "No art yet" assets match A by definition once they are made with the recipe; their specs still describe a painterly look and should get one line pointing to the Art Bible section (spec edits are outside this Task).
+
+| Asset | State | Verdict | Note |
+|---|---|---|---|
+| `card_art_sample` (`assets/slice/cards/card_art_sample.png`, merged, art-ready) | made | **needs restyle** | Painterly semi-real cord and paper with soft gradients, cracks and depth; no outline, no flat tones |
+| `bg_combat_flooded_hall` (`assets/slice/backgrounds/bg_combat_flooded_hall.png`, merged, art-ready candidate) | made | **needs restyle** | Photographic stone, depth of field, soft gradients and water reflections; no line, many tones |
+| `char_scrivener` | spec only (planned, SOU-64) | matches A once made | The earlier direction images under `assets/slice/review/char_scrivener_direction/` are concept references and are superseded by this style; the spec must be made with the Art Bible recipe |
+| `enemy_attacker` | spec only (planned) | matches A once made | The SOU-79 working enemy is not this design |
+| `enemy_frayer` | spec only (planned) | matches A once made | |
+| `slot_icon_states` | spec only (planned) | matches A once made | Original drawn icons; use the A line weight and flat tones |
+| `ui_combat_composition` | spec only (planned) | matches A once made | Godot Control textures; use the A line and palette roles |
+| `vfx_fray` | spec only (planned) | matches A once made | Flat-toned frame VFX; PixelFX only with Board approval for this project |
+| `target_pack` pieces (`pack_*`) | planned, look references only | matches A once made | Same recipe |
+| Review images (`assets/slice/review/*`, including `style_direction/`) | concept and review evidence, not shipped | not applicable | Except the two made assets above, no approved visual asset exists |
 
 ## Decision
 **A Ink Cel** chosen by `director` on 2026-11-22 (SOU-79 review, round 1). Chosen as recommended. Conditions for the Art Bible update Task: (a) the Scrivener prompt states the Bell Cloak mass and flared hem first and is judged on the silhouette cell; (b) the ink line is near-black on near-black cloak, so the cloak edge relies on the cool rim light and the lighter cords from `char_scrivener.md` direction B; (c) Play, Bind and Danger accents are added by Art Bible palette role, with amber as the one warm accent.
