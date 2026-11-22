@@ -44,7 +44,7 @@
 - Frame order: row-major, idle first (frames 1-4), then fray_reach (5-10).
 
 ## Files
-- Editable source: `art_src/enemies/enemy_frayer.kra`
+- Source deliverables (replace the Krita source): the selected generations (raw, unkeyed) and the per-part or per-frame PNGs the asset needs, kept under `art_src/enemies/enemy_frayer/` with provenance. Krita stays optional (deckbound PR #20); a `.kra` file is not required.
 - Export: `assets/slice/enemies/enemy_frayer_sheet.png`
 - Godot resource path: set by `gameplay-programmer`.
 - Import notes: confirm with `gameplay-programmer`.

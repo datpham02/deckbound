@@ -40,13 +40,13 @@
 - Reason and integration cost: none beyond the texture.
 
 ## Files
-- Editable source: `art_src/icons/slot_icon_states.kra`
+- Source deliverables (replace the Krita source): the selected generations (raw, unkeyed) and the per-state PNGs, kept under `art_src/icons/slot_icon_states/` with provenance. Krita stays optional (deckbound PR #20); a `.kra` file is not required.
 - Export: `assets/slice/icons/slot_icon_states.png`
 - Godot resource path: set by `gameplay-programmer`.
 - Import notes: confirm with `gameplay-programmer`.
 
 ## Provenance (fill when made)
-- Origin: original (drawn in Krita). Generator drafts are not needed for a simple icon; if used, record per COMFYUI-WORKFLOW.md.
+- Origin: generated + scripted cleanup (comfy-draft, art-ops); own-art edits via comfy-edit if used; or original. Record per COMFYUI-WORKFLOW.md.
 - Tool and version: _pending_
 - Model file name and licence: n/a unless a generator is used
 - Generation settings: n/a unless a generator is used

@@ -3,7 +3,7 @@
 Status: **proposed** (SOU-56). Plan only; no images yet. Pipeline §5 Step 1 asks for a small pack of original examples that fixes the look before the slice is built. Board approves the pack before the slice scales (Art Bible §12).
 
 ## Purpose
-Seven pieces that together show: silhouette language, palette, lighting, linework and texture, card-art composition, icon style and UI readability. Each is a concept-level original, drafted with the [ComfyUI workflow](COMFYUI-WORKFLOW.md) (text prompts only) and painted over in Krita. The pack is a look reference. Slice pieces follow it; slice pieces are not the same files.
+Seven pieces that together show: silhouette language, palette, lighting, linework and texture, card-art composition, icon style and UI readability. Each is a concept-level original, generated with the [ComfyUI workflow](COMFYUI-WORKFLOW.md) in the house style (A Ink Cel, Art Bible §3A), with own-art edits via comfy-edit where needed; Krita fixes are optional. The pack is a look reference. Slice pieces follow it; slice pieces are not the same files.
 
 ## Pieces
 | # | Piece | Shows | Size (px) | Feeds slice spec |

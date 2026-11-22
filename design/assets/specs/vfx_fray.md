@@ -36,20 +36,20 @@
 - No baked text: yes.
 
 ## Animation (D2)
-- Approach: frame animation, hand-drawn sprites, with runtime scale and fade by Godot tween. A Godot particle burst may be added by `gameplay-programmer`. PixelFX is not used (painterly direction, and not allowed for this role until the Art Bible permits it).
+- Approach: frame animation, sprites in the house style, with runtime scale and fade by Godot tween. A Godot particle burst may be added by `gameplay-programmer`. PixelFX is not used (its pixel-art look does not fit the A Ink Cel outline-and-flat-tone style, Art Bible §3A, and it is not allowed for this role until the Art Bible permits it).
 - Reason and integration cost: 8 frames is small; one-shot.
 - States: `play` one-shot, 8 frames, 16 fps, 0.5 s (strands tense frames 1-2, snap frame 3, spread frames 4-6, fade frames 7-8).
 - Event markers (intent): `snap` on frame 3, the moment the slot icon switches to frayed.
 - Frame order: row-major.
 
 ## Files
-- Editable source: `art_src/vfx/vfx_fray.kra`
+- Source deliverables (replace the Krita source): the selected generations (raw, unkeyed) and the per-frame PNGs, kept under `art_src/vfx/vfx_fray/` with provenance. Krita stays optional (deckbound PR #20); a `.kra` file is not required.
 - Export: `assets/slice/vfx/vfx_fray_sheet.png`
 - Godot resource path: set by `gameplay-programmer`.
 - Import notes: confirm with `gameplay-programmer`.
 
 ## Provenance (fill when made)
-- Origin: original (drawn in Krita)
+- Origin: generated + scripted cleanup (comfy-draft, art-ops); own-art edits via comfy-edit if used; or original
 - Tool and version: _pending_
 - Model file name and licence: n/a
 - Generation settings: n/a
