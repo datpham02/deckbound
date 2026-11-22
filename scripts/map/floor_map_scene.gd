@@ -13,19 +13,26 @@ const CURRENT_NODE_COLOR: Color = Color(0.42, 0.86, 0.54)
 const VISITED_NODE_COLOR: Color = Color(0.63, 0.63, 0.66)
 const DISABLED_NODE_COLOR: Color = Color(0.45, 0.45, 0.48)
 const READY_NODE_COLOR: Color = Color(0.96, 0.96, 0.96)
+const DEFAULT_LEFT_MARGIN_FRACTION: float = 0.06
+const DEFAULT_RIGHT_MARGIN_FRACTION: float = 0.06
+const DEFAULT_TOP_MARGIN_FRACTION: float = 0.08
+const DEFAULT_BOTTOM_MARGIN_FRACTION: float = 0.08
 
 @export var preview_seed: int = 1337
 
-@onready var header_label: Label = $Header
-@onready var status_label: Label = $Status
-@onready var nodes_layer: Control = $Nodes
+@onready var header_label: Label = $SafeArea/Layout/Header
+@onready var status_label: Label = $SafeArea/Layout/Status
+@onready var nodes_layer: Control = $SafeArea/Layout/Nodes
 
 var floor_data: Dictionary = {}
 var map_data: Dictionary = {}
 var navigation: Variant = null
 var node_buttons: Dictionary = {}
+var node_draw_positions: Dictionary = {}
 
 func _ready() -> void:
+  nodes_layer.resized.connect(_on_nodes_layer_resized)
+  get_viewport().size_changed.connect(_on_viewport_size_changed)
   header_label.text = "Floor Map"
   navigation = FLOOR_MAP_NAVIGATION_SCRIPT.new()
   var built: bool = build_for_seed(preview_seed)
@@ -72,10 +79,12 @@ func _clear_buttons() -> void:
     if button != null:
       button.queue_free()
   node_buttons.clear()
+  node_draw_positions.clear()
 
 func _build_node_buttons() -> void:
   var touch: Dictionary = map_data.get("touch", {})
-  var node_diameter: float = float(touch.get("node_diameter", 88))
+  var node_diameter: float = float(touch.get("node_diameter", 128))
+  var button_size: Vector2 = Vector2(node_diameter, node_diameter)
 
   var nodes_variant: Variant = map_data.get("nodes", [])
   if typeof(nodes_variant) != TYPE_ARRAY:
@@ -89,19 +98,46 @@ func _build_node_buttons() -> void:
     var node: Dictionary = node_variant
     var node_id: String = String(node.get("id", ""))
     var node_type: String = String(node.get("type", "fight"))
-    var node_position: Vector2 = node.get("position", Vector2.ZERO)
-    var button_size: Vector2 = Vector2(node_diameter, node_diameter)
 
     var button: Button = Button.new()
     button.custom_minimum_size = button_size
     button.size = button_size
-    button.position = node_position - (button_size * 0.5)
     button.text = _short_label(node_type)
     button.focus_mode = Control.FOCUS_NONE
     button.pressed.connect(_on_node_pressed.bind(node_id))
 
     nodes_layer.add_child(button)
     node_buttons[node_id] = button
+
+  _layout_node_buttons()
+
+func _layout_node_buttons() -> void:
+  var layer_rect: Rect2 = Rect2(Vector2.ZERO, nodes_layer.size)
+  var button_rects: Dictionary = compute_node_button_rects(map_data, layer_rect)
+  var layer_origin: Vector2 = nodes_layer.get_global_rect().position - get_global_rect().position
+  node_draw_positions.clear()
+
+  for node_id_variant: Variant in node_buttons.keys():
+    var node_id: String = String(node_id_variant)
+    var button: Button = node_buttons[node_id]
+    if not button_rects.has(node_id):
+      button.visible = false
+      continue
+
+    var button_rect: Rect2 = button_rects[node_id]
+    button.visible = true
+    button.custom_minimum_size = button_rect.size
+    button.size = button_rect.size
+    button.position = button_rect.position
+    node_draw_positions[node_id] = layer_origin + button_rect.get_center()
+
+  queue_redraw()
+
+func _on_nodes_layer_resized() -> void:
+  _layout_node_buttons()
+
+func _on_viewport_size_changed() -> void:
+  call_deferred("_layout_node_buttons")
 
 func _on_node_pressed(node_id: String) -> void:
   var did_select: bool = navigation.select_node(node_id)
@@ -155,20 +191,16 @@ func _draw() -> void:
   if nodes.is_empty():
     return
 
-  var node_positions: Dictionary = {}
-  for node_variant: Variant in nodes:
-    if typeof(node_variant) != TYPE_DICTIONARY:
-      continue
-    var node: Dictionary = node_variant
-    node_positions[String(node.get("id", ""))] = node.get("position", Vector2.ZERO)
-
   var touch: Dictionary = map_data.get("touch", {})
   var line_width: float = float(touch.get("line_width", 3))
   for node_variant: Variant in nodes:
     if typeof(node_variant) != TYPE_DICTIONARY:
       continue
     var node: Dictionary = node_variant
-    var from_position: Vector2 = node.get("position", Vector2.ZERO)
+    var from_id: String = String(node.get("id", ""))
+    if not node_draw_positions.has(from_id):
+      continue
+    var from_position: Vector2 = node_draw_positions[from_id]
     var next_ids_variant: Variant = node.get("next_ids", [])
     if typeof(next_ids_variant) != TYPE_ARRAY:
       continue
@@ -176,10 +208,67 @@ func _draw() -> void:
     var next_ids: Array = next_ids_variant
     for next_id_variant: Variant in next_ids:
       var next_id: String = String(next_id_variant)
-      if not node_positions.has(next_id):
+      if not node_draw_positions.has(next_id):
         continue
-      var to_position: Vector2 = node_positions[next_id]
+      var to_position: Vector2 = node_draw_positions[next_id]
       draw_line(from_position, to_position, CONNECTION_COLOR, line_width, true)
+
+static func compute_node_button_rects(next_map_data: Dictionary, layer_rect: Rect2) -> Dictionary:
+  var button_rects: Dictionary = {}
+  var nodes_variant: Variant = next_map_data.get("nodes", [])
+  if typeof(nodes_variant) != TYPE_ARRAY:
+    return button_rects
+
+  var touch: Dictionary = next_map_data.get("touch", {})
+  var layout: Dictionary = next_map_data.get("layout", {})
+  var node_diameter: float = float(touch.get("node_diameter", 128))
+  var node_size: Vector2 = Vector2(node_diameter, node_diameter)
+  var content_rect: Rect2 = _compute_content_rect(layer_rect, layout, node_diameter)
+
+  var nodes: Array = nodes_variant
+  for node_variant: Variant in nodes:
+    if typeof(node_variant) != TYPE_DICTIONARY:
+      continue
+    var node: Dictionary = node_variant
+    var node_id: String = String(node.get("id", ""))
+    if node_id.strip_edges() == "":
+      continue
+    var normalized_position: Vector2 = node.get("position", Vector2(0.5, 0.5))
+    var clamped_position: Vector2 = Vector2(
+      clampf(normalized_position.x, 0.0, 1.0),
+      clampf(normalized_position.y, 0.0, 1.0)
+    )
+    var center: Vector2 = content_rect.position + Vector2(
+      clamped_position.x * content_rect.size.x,
+      clamped_position.y * content_rect.size.y
+    )
+    button_rects[node_id] = Rect2(center - (node_size * 0.5), node_size)
+
+  return button_rects
+
+static func _compute_content_rect(layer_rect: Rect2, layout: Dictionary, node_diameter: float) -> Rect2:
+  var left_margin: float = layer_rect.size.x * _layout_fraction(layout, "left_margin_fraction", DEFAULT_LEFT_MARGIN_FRACTION)
+  var right_margin: float = layer_rect.size.x * _layout_fraction(layout, "right_margin_fraction", DEFAULT_RIGHT_MARGIN_FRACTION)
+  var top_margin: float = layer_rect.size.y * _layout_fraction(layout, "top_margin_fraction", DEFAULT_TOP_MARGIN_FRACTION)
+  var bottom_margin: float = layer_rect.size.y * _layout_fraction(layout, "bottom_margin_fraction", DEFAULT_BOTTOM_MARGIN_FRACTION)
+  var center_padding: Vector2 = Vector2(node_diameter * 0.5, node_diameter * 0.5)
+
+  var content_origin: Vector2 = layer_rect.position + Vector2(left_margin, top_margin) + center_padding
+  var content_size: Vector2 = layer_rect.size - Vector2(
+    left_margin + right_margin + node_diameter,
+    top_margin + bottom_margin + node_diameter
+  )
+  content_size.x = maxf(0.0, content_size.x)
+  content_size.y = maxf(0.0, content_size.y)
+  return Rect2(content_origin, content_size)
+
+static func _layout_fraction(layout: Dictionary, key: String, fallback: float) -> float:
+  if not layout.has(key):
+    return fallback
+  var value: Variant = layout[key]
+  if typeof(value) == TYPE_FLOAT or typeof(value) == TYPE_INT:
+    return float(value)
+  return fallback
 
 func _short_label(node_type: String) -> String:
   match node_type:

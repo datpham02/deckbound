@@ -2,13 +2,15 @@
   "schema_version": 1,
   "seed_offset": 173,
   "layout": {
-    "origin_x": 180,
-    "origin_y": 140,
-    "column_spacing": 300,
-    "row_spacing": 132
+    "left_margin_fraction": 0.06,
+    "right_margin_fraction": 0.06,
+    "top_margin_fraction": 0.08,
+    "bottom_margin_fraction": 0.08,
+    "row_spacing_fraction": 1.0,
+    "slot_spacing_fraction": 0.32
   },
   "touch": {
-    "node_diameter": 92,
+    "node_diameter": 128,
     "line_width": 4
   },
   "branching": {

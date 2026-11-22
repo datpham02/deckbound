@@ -14,6 +14,7 @@ static func generate(floor_data: Dictionary, seed: int) -> Dictionary:
   var nodes: Array[Dictionary] = []
   var row_node_ids: Array = []
   var node_index_by_id: Dictionary = {}
+  var row_count: int = rows.size()
 
   for row_index: int in range(rows.size()):
     var row: Dictionary = rows[row_index]
@@ -22,7 +23,7 @@ static func generate(floor_data: Dictionary, seed: int) -> Dictionary:
     var ids_for_row: Array[String] = []
     for node_slot: int in range(node_count):
       var node_id: String = "r%dn%d" % [row_index, node_slot]
-      var node_position: Vector2 = _node_position(layout, row_index, node_slot, node_count)
+      var node_position: Vector2 = _node_position(layout, row_index, node_slot, node_count, row_count)
       var node: Dictionary = {
         "id": node_id,
         "row_index": row_index,
@@ -92,26 +93,34 @@ static func generate(floor_data: Dictionary, seed: int) -> Dictionary:
     "seed": map_seed,
     "nodes": nodes,
     "rows": rows.duplicate(true),
+    "layout": layout.duplicate(true),
     "row_node_ids": row_node_ids,
     "start_node_id": start_node_id,
     "boss_node_id": boss_node_id,
     "touch": touch.duplicate(true)
   }
 
-static func _node_position(layout: Dictionary, row_index: int, node_slot: int, node_count: int) -> Vector2:
-  var origin_x: float = float(layout.get("origin_x", 0))
-  var origin_y: float = float(layout.get("origin_y", 0))
-  var column_spacing: float = float(layout.get("column_spacing", 280))
-  var row_spacing: float = float(layout.get("row_spacing", 120))
-  var x: float = origin_x + (column_spacing * float(row_index))
+static func _node_position(
+  layout: Dictionary,
+  row_index: int,
+  node_slot: int,
+  node_count: int,
+  row_count: int
+) -> Vector2:
+  var row_spacing_fraction: float = float(layout.get("row_spacing_fraction", 1.0))
+  var slot_spacing_fraction: float = float(layout.get("slot_spacing_fraction", 0.3))
+
+  var base_x: float = 0.5
+  if row_count > 1:
+    base_x = float(row_index) / float(row_count - 1)
+  var x: float = 0.5 + ((base_x - 0.5) * row_spacing_fraction)
 
   if node_count <= 1:
-    return Vector2(x, origin_y)
+    return Vector2(clampf(x, 0.0, 1.0), 0.5)
 
-  var row_span: float = row_spacing * float(node_count - 1)
-  var top_y: float = origin_y - (row_span * 0.5)
-  var y: float = top_y + (row_spacing * float(node_slot))
-  return Vector2(x, y)
+  var centered_slot: float = float(node_slot) - (float(node_count - 1) * 0.5)
+  var y: float = 0.5 + (centered_slot * slot_spacing_fraction)
+  return Vector2(clampf(x, 0.0, 1.0), clampf(y, 0.0, 1.0))
 
 static func _primary_target_index(from_index: int, from_count: int, to_count: int) -> int:
   if to_count <= 1:

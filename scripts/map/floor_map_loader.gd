@@ -3,6 +3,7 @@ extends RefCounted
 
 const ALLOWED_ROW_TYPES: PackedStringArray = ["start", "fight", "rest", "warden", "boss"]
 const EXPECTED_SCHEMA_VERSION: int = 1
+const MIN_NODE_DIAMETER: int = 128
 
 static func load_from_path(file_path: String) -> Dictionary:
   if not FileAccess.file_exists(file_path):
@@ -79,33 +80,58 @@ static func _require_layout(root: Dictionary, file_path: String) -> Dictionary:
     return _failure("%s :: $.layout :: Expected Dictionary." % file_path)
 
   var layout: Dictionary = root["layout"]
-  var origin_x_result: Dictionary = _require_int(layout, "origin_x", file_path, "$.layout.origin_x")
-  if not bool(origin_x_result["ok"]):
-    return origin_x_result
-  var origin_y_result: Dictionary = _require_int(layout, "origin_y", file_path, "$.layout.origin_y")
-  if not bool(origin_y_result["ok"]):
-    return origin_y_result
-  var column_spacing_result: Dictionary = _require_int(layout, "column_spacing", file_path, "$.layout.column_spacing")
-  if not bool(column_spacing_result["ok"]):
-    return column_spacing_result
-  var row_spacing_result: Dictionary = _require_int(layout, "row_spacing", file_path, "$.layout.row_spacing")
+  var left_margin_result: Dictionary = _require_float(layout, "left_margin_fraction", file_path, "$.layout.left_margin_fraction")
+  if not bool(left_margin_result["ok"]):
+    return left_margin_result
+  var right_margin_result: Dictionary = _require_float(layout, "right_margin_fraction", file_path, "$.layout.right_margin_fraction")
+  if not bool(right_margin_result["ok"]):
+    return right_margin_result
+  var top_margin_result: Dictionary = _require_float(layout, "top_margin_fraction", file_path, "$.layout.top_margin_fraction")
+  if not bool(top_margin_result["ok"]):
+    return top_margin_result
+  var bottom_margin_result: Dictionary = _require_float(layout, "bottom_margin_fraction", file_path, "$.layout.bottom_margin_fraction")
+  if not bool(bottom_margin_result["ok"]):
+    return bottom_margin_result
+  var row_spacing_result: Dictionary = _require_float(layout, "row_spacing_fraction", file_path, "$.layout.row_spacing_fraction")
   if not bool(row_spacing_result["ok"]):
     return row_spacing_result
+  var slot_spacing_result: Dictionary = _require_float(layout, "slot_spacing_fraction", file_path, "$.layout.slot_spacing_fraction")
+  if not bool(slot_spacing_result["ok"]):
+    return slot_spacing_result
 
-  var column_spacing: int = int(column_spacing_result["value"])
-  var row_spacing: int = int(row_spacing_result["value"])
-  if column_spacing <= 0:
-    return _failure("%s :: $.layout.column_spacing :: Expected column_spacing > 0." % file_path)
-  if row_spacing <= 0:
-    return _failure("%s :: $.layout.row_spacing :: Expected row_spacing > 0." % file_path)
+  var left_margin_fraction: float = float(left_margin_result["value"])
+  var right_margin_fraction: float = float(right_margin_result["value"])
+  var top_margin_fraction: float = float(top_margin_result["value"])
+  var bottom_margin_fraction: float = float(bottom_margin_result["value"])
+  var row_spacing_fraction: float = float(row_spacing_result["value"])
+  var slot_spacing_fraction: float = float(slot_spacing_result["value"])
+
+  if left_margin_fraction < 0.0 or left_margin_fraction >= 1.0:
+    return _failure("%s :: $.layout.left_margin_fraction :: Expected value in [0.0, 1.0)." % file_path)
+  if right_margin_fraction < 0.0 or right_margin_fraction >= 1.0:
+    return _failure("%s :: $.layout.right_margin_fraction :: Expected value in [0.0, 1.0)." % file_path)
+  if top_margin_fraction < 0.0 or top_margin_fraction >= 1.0:
+    return _failure("%s :: $.layout.top_margin_fraction :: Expected value in [0.0, 1.0)." % file_path)
+  if bottom_margin_fraction < 0.0 or bottom_margin_fraction >= 1.0:
+    return _failure("%s :: $.layout.bottom_margin_fraction :: Expected value in [0.0, 1.0)." % file_path)
+  if (left_margin_fraction + right_margin_fraction) >= 1.0:
+    return _failure("%s :: $.layout :: left/right margins must sum to less than 1.0." % file_path)
+  if (top_margin_fraction + bottom_margin_fraction) >= 1.0:
+    return _failure("%s :: $.layout :: top/bottom margins must sum to less than 1.0." % file_path)
+  if row_spacing_fraction <= 0.0 or row_spacing_fraction > 1.0:
+    return _failure("%s :: $.layout.row_spacing_fraction :: Expected value in (0.0, 1.0]." % file_path)
+  if slot_spacing_fraction <= 0.0 or slot_spacing_fraction > 0.5:
+    return _failure("%s :: $.layout.slot_spacing_fraction :: Expected value in (0.0, 0.5]." % file_path)
 
   return {
     "ok": true,
     "value": {
-      "origin_x": int(origin_x_result["value"]),
-      "origin_y": int(origin_y_result["value"]),
-      "column_spacing": column_spacing,
-      "row_spacing": row_spacing
+      "left_margin_fraction": left_margin_fraction,
+      "right_margin_fraction": right_margin_fraction,
+      "top_margin_fraction": top_margin_fraction,
+      "bottom_margin_fraction": bottom_margin_fraction,
+      "row_spacing_fraction": row_spacing_fraction,
+      "slot_spacing_fraction": slot_spacing_fraction
     }
   }
 
@@ -125,8 +151,10 @@ static func _require_touch(root: Dictionary, file_path: String) -> Dictionary:
 
   var node_diameter: int = int(node_diameter_result["value"])
   var line_width: int = int(line_width_result["value"])
-  if node_diameter <= 0:
-    return _failure("%s :: $.touch.node_diameter :: Expected node_diameter > 0." % file_path)
+  if node_diameter < MIN_NODE_DIAMETER:
+    return _failure(
+      "%s :: $.touch.node_diameter :: Expected node_diameter >= %d." % [file_path, MIN_NODE_DIAMETER]
+    )
   if line_width <= 0:
     return _failure("%s :: $.touch.line_width :: Expected line_width > 0." % file_path)
 
@@ -177,8 +205,8 @@ static func _require_rows(root: Dictionary, file_path: String) -> Dictionary:
     return _failure("%s :: $.rows :: Expected Array." % file_path)
 
   var rows_variant: Array = root["rows"]
-  if rows_variant.size() < 5:
-    return _failure("%s :: $.rows :: Expected at least 5 rows." % file_path)
+  if rows_variant.is_empty():
+    return _failure("%s :: $.rows :: Expected at least one row." % file_path)
 
   var rows: Array[Dictionary] = []
   var warden_row_count: int = 0
@@ -237,19 +265,6 @@ static func _require_rows(root: Dictionary, file_path: String) -> Dictionary:
   if rest_row_count < 1:
     return _failure("%s :: $.rows :: Expected at least one rest row." % file_path)
 
-  if rows.size() < 4:
-    return _failure("%s :: $.rows :: Expected enough rows to contain intro fights." % file_path)
-  for intro_row_index: int in [1, 2, 3]:
-    if intro_row_index >= rows.size():
-      break
-    if String(rows[intro_row_index]["type"]) != "fight":
-      return _failure(
-        "%s :: $.rows[%d].type :: Intro rows 1-3 must be 'fight' to satisfy encounter coverage." % [
-          file_path,
-          intro_row_index
-        ]
-      )
-
   for mid_row_index: int in range(1, rows.size() - 1):
     var mid_type: String = String(rows[mid_row_index]["type"])
     if mid_type == "start":
@@ -276,6 +291,18 @@ static func _require_int(data: Dictionary, key: String, file_path: String, field
     return _failure("%s :: %s :: Expected int, got non-integer float." % [file_path, field_path])
 
   return _failure("%s :: %s :: Expected int, got %s." % [file_path, field_path, type_string(typeof(value))])
+
+static func _require_float(data: Dictionary, key: String, file_path: String, field_path: String) -> Dictionary:
+  if not data.has(key):
+    return _failure("%s :: %s :: Missing required field." % [file_path, field_path])
+
+  var value: Variant = data[key]
+  if typeof(value) == TYPE_FLOAT:
+    return {"ok": true, "value": float(value)}
+  if typeof(value) == TYPE_INT:
+    return {"ok": true, "value": float(value)}
+
+  return _failure("%s :: %s :: Expected float, got %s." % [file_path, field_path, type_string(typeof(value))])
 
 static func _require_string(data: Dictionary, key: String, file_path: String, field_path: String) -> Dictionary:
   if not data.has(key):

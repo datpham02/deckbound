@@ -4,7 +4,8 @@ const FLOOR_MAP_LOADER_SCRIPT := preload("res://scripts/map/floor_map_loader.gd"
 
 func test() -> void:
   _test_valid_floor_map_loads()
-  _test_intro_rows_must_be_fights()
+  _test_non_fight_intro_rows_are_allowed()
+  _test_rejects_small_touch_target()
   _test_requires_exactly_one_warden_row()
 
 func _test_valid_floor_map_loads() -> void:
@@ -19,17 +20,25 @@ func _test_valid_floor_map_loads() -> void:
   assert_equal(String(rows[6]["type"]), "warden", "Expected warden row at index 6.")
   assert_equal(int(floor_data["branching"]["extra_connection_chance_percent"]), 45, "Expected branching chance from JSON.")
 
-func _test_intro_rows_must_be_fights() -> void:
-  var path: String = _create_fixture_path("bad_intro")
+func _test_non_fight_intro_rows_are_allowed() -> void:
+  var path: String = _create_fixture_path("non_fight_intro")
   var payload: Dictionary = _valid_floor_payload()
   payload["rows"][2]["type"] = "rest"
   _write_json(path, payload)
 
   var result: Dictionary = FLOOR_MAP_LOADER_SCRIPT.load_from_path(path)
-  assert_true(not bool(result.get("ok", false)), "Expected invalid intro rows to fail.")
+  assert_true(bool(result.get("ok", false)), "Expected non-fight intro row to load for data-driven tuning.")
+
+func _test_rejects_small_touch_target() -> void:
+  var path: String = _create_fixture_path("small_touch_target")
+  var payload: Dictionary = _valid_floor_payload()
+  payload["touch"]["node_diameter"] = 120
+  _write_json(path, payload)
+
+  var result: Dictionary = FLOOR_MAP_LOADER_SCRIPT.load_from_path(path)
+  assert_true(not bool(result.get("ok", false)), "Expected small touch target to fail validation.")
   var error_message: String = str(result.get("error", ""))
-  assert_true(error_message.find("$.rows[2].type") != -1, "Error should point at the invalid intro row.")
-  assert_true(error_message.find("Intro rows 1-3 must be 'fight'") != -1, "Error should explain intro fight requirement.")
+  assert_true(error_message.find("node_diameter >= 128") != -1, "Error should mention the minimum node diameter.")
 
 func _test_requires_exactly_one_warden_row() -> void:
   var path: String = _create_fixture_path("double_warden")
@@ -47,13 +56,15 @@ func _valid_floor_payload() -> Dictionary:
     "schema_version": 1,
     "seed_offset": 173,
     "layout": {
-      "origin_x": 180,
-      "origin_y": 140,
-      "column_spacing": 300,
-      "row_spacing": 132
+      "left_margin_fraction": 0.06,
+      "right_margin_fraction": 0.06,
+      "top_margin_fraction": 0.08,
+      "bottom_margin_fraction": 0.08,
+      "row_spacing_fraction": 1.0,
+      "slot_spacing_fraction": 0.32
     },
     "touch": {
-      "node_diameter": 92,
+      "node_diameter": 128,
       "line_width": 4
     },
     "branching": {
