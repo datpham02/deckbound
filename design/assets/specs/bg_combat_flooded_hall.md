@@ -23,7 +23,7 @@
 
 ## Budget
 - Texture memory: 2640 x 1080 x 4 = about 11.4 MB uncompressed (about 2.9 MB as ASTC 4x4, estimate; confirmed by `gameplay-programmer`).
-- File size target: PNG at most 3.5 MB.
+- File size target: PNG at most 3.5 MB. Actual: 1,309,779 bytes (1.31 MB), inside budget.
 - Atlas: stands alone (over 2048 wide, so it is not packed; needs a note for `gameplay-programmer` on texture limits).
 - Frame count: 1.
 
@@ -57,15 +57,16 @@
 - Licence notes: model output, no input images; licence per AGENTS.md "Assets and licensing".
 - Originality check: _pending (director)_
 - Evidence: `assets/slice/review/bg_combat_flooded_hall/contact.png` (round 0 | round 1 | final)
-- Known limitations: lantern is mid-height on the left wall, not at the top; hue is cooler teal than the neutral Stone anchors; the PNG has an alpha channel (all 255); the numeric value range was not measured (no approved tool).
+- Known limitations: lantern is mid-height on the left wall, not at the top; hue is cooler teal than the neutral Stone anchors; the PNG has an alpha channel (all 255); the numeric value range was not measured. Tool capability failure: no approved tool measures the value range (`art-ops` has only info/crop/resize/key/trim/canvas/sheet/grade/contact; none reports luminance or a histogram) - a `stats` or `histogram` command in `art-ops` (mean luminance and percentiles, compared to the Art Bible section 3 anchors) would fix it. Judged by eye on `contact.png`: clearly darker than the character anchors.
 
 ## Acceptance checklist
-- [ ] 2640 x 1080 opaque; centre 1920 x 1080 holds the composition
-- [ ] Hero and both commons keep a clear silhouette against it
-- [ ] Holds at 16:9, 20:9 and 22:9 with no letterbox
-- [ ] Size and memory inside budget
-- [ ] Provenance complete
-- [ ] Originality check passed
+- [x] 2640 x 1080 opaque (alpha all 255); `art-ops info`: 2640x1080 mode=RGBA alpha_bbox=(0, 0, 2640, 1080). Centre composition judged by eye on `contact.png`
+- [ ] Value range two steps darker than characters: UNVERIFIED - no approved tool measures it (see Known limitations); by eye only
+- [ ] Hero and both commons keep a clear silhouette against it: UNVERIFIED - deferred to SOU-61: readability of the Scrivener, enemies and telegraphs over this background
+- [ ] Holds at 16:9, 20:9 and 22:9 with no letterbox: UNVERIFIED - deferred to SOU-61: crops in the engine
+- [x] Size and memory inside budget (1,309,779 bytes of 3.5 MB; 11.4 MB texture memory estimate)
+- [x] Provenance complete
+- [ ] Originality check passed: pending (director)
 
 ## Out of scope
 Parallax layers, props, other screens, shaders.
