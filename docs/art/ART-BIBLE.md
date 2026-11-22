@@ -1,6 +1,6 @@
 # Deckbound Art Bible: Outline
 
-Rendering style: **A Ink Cel** is the house style (§3A, Board 2026-11-22; validated in SOU-81, awaiting review). Status: **Phase 1 wording, proposed** (SOU-56, M1 T18a; outline from SOU-33). Sections 2, 3 and 5 now carry Phase 1 wording and starting palette values. Nothing here is approved: `director` reviews, then the Board approves, with the visual target pack ([TARGET-PACK-PLAN.md](TARGET-PACK-PLAN.md)) before the slice scales (pipeline §5 Step 1). Values stay **(proposed)** until a readability test on a target-class phone. `game-designer` and `game-artist` propose the direction; `director` approves it (pipeline §6); the Board approves the visual target pack and budgets.
+Rendering style: **A Ink Cel** is the house style (§3A, Board 2026-11-22; validated in SOU-81, awaiting review). Status: **Phase 1 wording, proposed** (SOU-56, M1 T18a; outline from SOU-33). Sections 2, 3 and 5 now carry Phase 1 wording and starting palette values. Apart from the rendering style in §3A, nothing here is approved: `director` reviews, then the Board approves, with the visual target pack ([TARGET-PACK-PLAN.md](TARGET-PACK-PLAN.md)) before the slice scales (pipeline §5 Step 1). Values stay **(proposed)** until a readability test on a target-class phone. `game-designer` and `game-artist` propose the direction; `director` approves it (pipeline §6); the Board approves the visual target pack and budgets.
 Companions: [ART-PIPELINE.md](ART-PIPELINE.md), [ART-PIPELINE-AUDIT.md](ART-PIPELINE-AUDIT.md), [TOOL-DECISIONS.md](TOOL-DECISIONS.md), [../concept.md](../concept.md), [../vision.md](../vision.md).
 
 Numbers marked **(proposed)** are starting values to be confirmed by a readability test on a target-class Android phone in Phase 1. Numbers marked **(from concept)** are fixed by `docs/concept.md`.
@@ -42,7 +42,7 @@ Final values are confirmed in the target pack and the phone test. Art may use fl
 | Bind accent | `#4FA3B8` | Bind face marks (blue-teal) |
 | Danger | `#A8324A` | fray and sever telegraphs, damage |
 | Guard | `#7C9A6D` | guard, safe states (moss) |
-| Wax | `#8C2F2B` | accents on seals and cords, never state coding |
+| Wax | `#8C2F2B` | accents on seals only, never on cords (cords are Bind, §3A) and never state coding |
 
 ### Value structure (principles)
 - Background sits two value steps darker than characters; characters sit one step darker than interactive elements.
@@ -68,7 +68,7 @@ House style for every visual asset (characters, enemies, props, cards, backgroun
 | Shading | Flat cel shading: **two or three flat tones per surface** (base, one shadow, at most one light). Each tone is a flat fill with a hard edge. |
 | Proportions | Stylised and exaggerated, one exaggerated shape feature per character (§5); no realistic anatomy. |
 | Texture | Clean flat colour. No paper grain, brush grain, noise or photographic surface texture. |
-| Palette by role | Large areas in Ink, Stone and Paper. **Amber (Lantern warm) is the one warm accent**, used for the lantern and its light only. Play (copper) marks the Play face and Bind (blue-teal) marks the Bind face and the **cords**; Danger and Wax are the only reds. **Cords are Bind blue-teal, never red.** Red is for Danger (fray, sever) and Wax (seals) only. Skin, leather and wood are muted, desaturated earth or grey tones inside the Stone, Paper and Lantern/Play hue families; no saturated colour outside the roles. |
+| Palette by role | Large areas in Ink, Stone and Paper. **Amber (Lantern warm) is the one warm accent**, used for the lantern and its light only. Play (copper) marks the Play face and Bind (blue-teal) marks the Bind face and the **cords**; Danger and Wax are the only reds. **Cords are Bind blue-teal, never red.** Red is for Danger (fray, sever) and Wax (seals) only. Skin, leather and wood are muted, desaturated grey or tan tones inside the Stone and Paper hue families only; they never sit in the Lantern or Play hue, so amber stays the one warm accent and copper stays the Play mark. No saturated colour outside the roles. |
 | Light | One warm key from the upper left, cool ambient, and a thin **cool rim light on the right edge** (§3 Lighting). The rim is a flat sliver, not a glow. |
 | Forbidden | Glossy or soft volume, gradients, soft glow halos, depth of field, photoreal or physically based lighting, realistic texture, a baked cast or foot shadow, any text, signature, handwriting or character-like glyph (an abstract seal emblem is allowed). |
 
