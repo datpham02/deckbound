@@ -170,6 +170,35 @@ Files: `c1.png`, `c1_sil270.png`, `c1_context.png` and the same for `c2`, `c3`.
 
 All three fail the same items from the brief: **no contract-book, no three teal cords at shoulder, chest and hip, no hanging lantern**. SDXL follows the dark-fantasy mood and colour but ignores object lists. The book, lantern and cords would be added at step 2 (inpaint) or by choosing seeds again. Recommendation: **c2** (ochre): best value against the field, closest rest pose, rope cords hang as bindings, a clear flat-colour read.
 
+## Round 3, step 2a: c2_final (identity fix on the Board's pick, c2)
+
+Board pick: **c2**; budget: the round-3 allowance of 20 images overrides the old cap. Round 3 has used **16 of 20** (8 concepts, 8 inpaint). Total with rounds 1 and 2: 44 to 47 by the old count, which is why the Board's override was needed.
+
+Input: `hero_c2` seed 6203 (own art, provenance above), 832 x 1216. Base for all inpaints: the original image, then each result as the next input.
+
+| Step | Tool | Mask | Prompt (no negative option in `inpaint`) | Seeds / denoise | Result |
+|---|---|---|---|---|---|
+| Book, try 1 | `comfy-edit inpaint` SDXL | rect 590,520 200x190, feather 3 (`candidates/m_book.png`) | a thick leather bound contract book with torn page edges and a short iron chain, held in a dark gloved hand at hip height, bold thick uneven dark brown ink outline, flat colour with a single hard-edged shadow tone, dark fantasy game art, plain light grey background | 7101, 7102 / 0.9 | smudges, no book |
+| Book, try 2 | inpaint | rect 560,470 272x290, feather 2 (`m_book2.png`) | a large thick closed leather contract book with a metal clasp and torn paper page edges, a hand in a dark glove gripping it at hip height, a short iron chain hanging from it, bold thick uneven dark brown ink outline, flat ochre and brown colour with one hard shadow tone, dark fantasy game art, plain grey background | **7201** / 1.0 (7202 failed: a thin sliver) | **book with chain in a gloved hand: kept** (`candidates/book_try2.png`) |
+| Lantern, tries 1 and 2 | inpaint on 7201 | rect 60,640 150x200 and rect 30,630 210x270 | a small / a large brass hanging lantern with a glowing amber glass window and a ring handle, hanging on a short cord, bold outline, flat colour, one hard shadow tone | 7301, 7302 and 7401, 7402 / 1.0 | blobs or a streak, no lantern: **rejected** (`lantern_try.png`, `lantern_try2.png`) |
+
+The inpaint outputs report `outside_mask_changed: 0`. SDXL inpaint worked once for a big, simple object (the book) and failed four times for the small lantern.
+
+**Lantern and cords: drawn deterministically with `art-ops`** (no generation). `contact --bg` for flat colour fields, `mask --rect/--ellipse/--polygon` for shapes, `compose --mask` to place them, on the book inpaint (7201):
+- three Bind-teal cords (40,190,175) with a dark (45,33,28) outline grown 4 px: shoulder polygon 528,352 578,392 566,410 516,372; chest polygon 395,402 505,412 503,430 393,420; hip polygon 340,478 515,492 512,512 338,498 (over the belt);
+- a lantern hung from the end of the existing rope: cord rect 126,610 8x80, ring ellipse 116,662 28x28, cap polygon 100,700 160,700 148,682 112,682, body rect 92,700 76x120 (dark outline), brass rect 99,707 62x106 (205,150,55), amber window rect 113,726 34x70 (255,195,70).
+Result `c2_final_src.png`; matte (`comfy-edit matte`, default gate passed), `trim --pad 8`, grey and context steps as in step 1: `c2_final.png`, `c2_final_sil270.png`, `c2_final_context.png`.
+
+Honest verdict on c2_final:
+- **Identity now present:** hood, face in shadow, weathered ochre cloak, **book with chain at the front hand, hip height**, **lantern from the back hand outside the cloak**, **three teal cords at shoulder, chest and hip**, no blade, facing right.
+- **Quality gaps:** the lantern and the cords are flat geometric shapes with straight edges, so they do not carry the hand-inked uneven outline of the figure; they look pasted on. The cords are straight bars, not tied. The book is more realistic and lit than the cloak (a bright page edge). The cloak and the coat still lean to brown, so the cord teal separates well, and the lantern amber is the single warm accent.
+- **Outline weight** (Board answer 3) is not yet measured or normalised.
+- At 345 px in `c2_final_context.png` the figure reads: hooded column, lantern, book and teal bars are all visible.
+
+## Step 2b (layered parts): NOT done, stopped
+
+Why: 4 images remain in the round-3 allowance. Per-part crop and inpaint of hidden areas needs about 12 inpaints for the 21 blueprint parts, and my one-in-five hit rate for inpaint (book worked, lantern never) means more. Starting it would spend the last 4 images and leave no `parts/`, no `parts_assembled.png`, no rotate check. Also the Bible §15 and §11 lines are unchanged, as they must describe a recipe that has not worked end to end.
+
 ## Bible
 
 §16 and §11 (parts principle) are as in round 1. I did **not** change §15 or add the "parts sheet from a blocked-in template" line to §11: the recipe did not work, so writing it into the Bible would state something untested. Say if you still want them added.
