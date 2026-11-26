@@ -46,7 +46,7 @@ slice_assets:
     class: enemy
     owner: game-artist
     priority: high
-    status: planned
+    status: concept
     spec: design/assets/specs/enemy_frayer.md
     source: art_src/enemies/enemy_frayer/
     export: assets/slice/enemies/enemy_frayer_sheet.png
@@ -54,7 +54,7 @@ slice_assets:
     budget_mb_uncompressed: 12.6
     pivot: bottom_center
     animation: {approach: frame, states: [idle, fray_reach], frames: 10}
-    provenance: {origin: generated_plus_scripted_cleanup, recorded: false}
+    provenance: {origin: generated_plus_scripted_cleanup, recorded: true}
 
   - id: card_art_sample
     name: Card illustration sample
