@@ -34,7 +34,7 @@ Either may be used for any piece; record which.
 9. Fill the provenance block in the spec: tool and version, model file and licence, seed, steps, sampler, size, workflow file name, prompt, the input images ("none" for `comfy-draft.py`; for `comfy-edit.py` the template, denoise, input path and SHA256, mask SHA256), Krita steps.
 
 ## House-style recipe: A Ink Cel (Board 2026-11-22; validated in SOU-81)
-The traits are in Art Bible §3A; the validation is in `docs/art/directions/style.md`. How to use it:
+The recipe is in Art Bible v2 §15 (ComfyUI style recipe v2, to be tested). How to use it:
 1. Prompt form: `<STYLE>. <SUBJECT>. Warm light from the upper left, cool ambient. Plain flat uniform light grey background, no shadow on the ground, no floor, no text, no signature.` STYLE: "2D hand-drawn illustration, bold uneven black ink outlines, flat cel shading with two or three flat tones, stylised exaggerated proportions, clean flat colour, muted dark palette with one warm amber accent, no 3D rendering".
 2. SUBJECT comes from the asset spec, shape and held items first, colours **by palette role** (cords "blue-teal", never red; "dark red wax seal with no markings"; "stone-grey" skin and apron). Scrivener: state the bell mass and flared hem first and put the lantern on a hook in the back hand outside the cloak. Enemies: state the exaggerated shape and the weapon or reach pose from the spec; add "no tail" unless the design has one.
 3. FLUX schnell through `comfy-draft.py --model flux --width 832 --height 1216 --seed N --count 2-4`, 4 steps, euler/simple, cfg 1.0. Use a fixed seed list per subject and record it.

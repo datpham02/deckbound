@@ -44,7 +44,7 @@ If the integration or license cost is not justified, use Godot's built-in 2D ske
 
 Aim for these high-level qualities:
 - Dark fantasy atmosphere with readable silhouettes.
-- House style A Ink Cel (Art Bible §3A): hand-drawn look, bold uneven ink outline, flat cel shading in two or three tones, for character, enemy and card art.
+- House style per [Art Bible v2](ART-BIBLE.md) (§2 to §3): bold uneven outline on characters only, flat cel shading with one shadow tone, exaggerated cartoon proportions, actors lighter and more saturated than the stage, for character, enemy and card art.
 - Restrained, coherent palette and deliberate value contrast.
 - Distinctive shapes and silhouettes for enemies, heroes and relics.
 - Clear focal hierarchy: gameplay information first, decoration second.
@@ -74,6 +74,7 @@ Referencing Slay the Spire 2 (and other games) for visual study **is allowed and
 - Tracing, paintover or photo-bashing on top of reference images.
 - Feeding reference images into image-generation tools as input, style reference or training data.
 - Reusing names, card text, character designs, icons, symbols or UI layouts one-to-one.
+- Using images, renders or data from sites or repositories that redistribute files extracted from a game (for example spire-codex.com), even when they are publicly reachable.
 
 Each moodboard/reference sheet records its sources (URL or "own capture, legally owned copy, date") in `design/assets/references/`.
 
@@ -133,7 +134,7 @@ Claude must:
 3. Report missing tools, extensions, runtimes or licensing dependencies.
 4. Avoid installing tools, changing global configuration, changing project settings or modifying runtime code without explicit approval.
 
-Deliverable: `ART-PIPELINE-AUDIT.md`.
+Deliverable: an audit note (the earlier audit file was removed in the SOU-97 art reset; `TOOL-DECISIONS.md` keeps the tool decisions).
 
 ### Step 1 — Establish visual direction
 
