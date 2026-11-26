@@ -126,7 +126,7 @@ These apply to every asset. Display facts are **(from concept)** unless marked.
 
 - Proportions and silhouette rules for the Scrivener (hero) and for enemy classes: plain attacker, binding-frayer, deck-fouler, boss (first playable list **from concept**).
 - Binding visualisation: how a bound page appears worn on the hero, in three states (intact, frayed, severed), and in the bind slot icon.
-- Facing: hero faces right, enemies face left **(from concept)**.
+- Facing: hero faces right, enemies face left **(from concept)**. Enemies use a three-quarter view, with the body turned toward the player and the face and action toward the left; not a side profile (Board 2026-11-26).
 - Telegraph art: action icon plus number above each enemy's head; a fray or sever draws a line to the threatened slot.
 - Rig vs frame animation per asset class: follows [TOOL-DECISIONS.md](TOOL-DECISIONS.md) (b): skeletal only for the Scrivener and bosses **(from concept)**, short frame loops for common enemies.
 - Animation timing principles: anticipation, impact, recoil, recovery. Frame-rate targets and durations in asset specs. Nothing may drop animation below 30 fps on the target device **(from concept)**.

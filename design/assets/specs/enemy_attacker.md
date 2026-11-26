@@ -11,7 +11,7 @@
 | Approval state | not approved (approver: director, then Board) |
 
 ## Use
-- Gameplay use: common enemy with a plain attack, in the right two thirds, facing left.
+- Gameplay use: common enemy with a plain attack, in the right two thirds, facing left in a three-quarter view (see Look constraints).
 - Size on screen: about 380 px tall on the canvas (about 35% of screen height).
 - Region: inside the 16:9 core.
 
@@ -31,6 +31,7 @@
 - Palette roles: ink, stone, paper, Wax, Danger for the strike highlight.
 - Style: A Ink Cel (ART-BIBLE §3A): bold uneven ink outline, two or three flat tones per surface, no gradients or soft volume.
 - Lighting: warm from the upper left, cool ambient.
+- View: three-quarter, with the body turned about 30-45 degrees toward the viewer and the face and the action toward the left (Board decision 2026-11-26). Not a side profile, not straight-on. Prompts state the view explicitly; a bare "facing left" produced side profiles. The current slice sheet (SOU-65) was made before this decision; whether it needs a redo is a separate Board decision.
 - Silhouette: broad and low (ART-BIBLE §5), clearly different from the hero and from `enemy_frayer`.
 - Minimum detail: nothing under 3 px.
 - Colour is not the only carrier: the attack reads from the wind-up pose and raised weapon shape.
