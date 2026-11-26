@@ -11,7 +11,7 @@
 | Approval state | not approved (approver: director, then Board) |
 
 ## Use
-- Gameplay use: common enemy that frays bindings; its action reaches toward the bind slots on the left. Facing left.
+- Gameplay use: common enemy that frays bindings; its action reaches toward the bind slots on the left. Facing left, in a three-quarter view (see Look constraints).
 - Size on screen: about 420 px tall on the canvas (about 39% of screen height).
 - Region: inside the 16:9 core.
 
@@ -31,6 +31,7 @@
 - Palette roles: ink, stone, paper, Wax, Danger for the reaching hands' highlight.
 - Style: A Ink Cel (ART-BIBLE §3A): bold uneven ink outline, two or three flat tones per surface, no gradients or soft volume.
 - Lighting: warm from the upper left, cool ambient.
+- View: three-quarter, with the body turned about 30-45 degrees toward the viewer and the face and the action toward the left (Board decision 2026-11-26). Not a side profile, not straight-on. Prompts state the view explicitly; a bare "facing left" produced side profiles.
 - Silhouette: tall and thin with long hands (ART-BIBLE §5), clearly different from the hero and from `enemy_attacker`.
 - Minimum detail: nothing under 3 px.
 - Colour is not the only carrier: the fray action reads from the long reaching arm pointing left.
