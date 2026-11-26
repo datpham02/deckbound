@@ -140,6 +140,36 @@ B. **Part-by-part txt2img on the grey backdrop** (one generation per part with t
 C. **Design the look from whole-figure tests first** (the Board's "design variants"), then make the parts from the chosen design by method B. This reverses the Board's REDO 2 order, so I need your decision.
 D. Stop the generated-parts route and plan the hero as a hand-built (vector or paint-over) rig.
 
+## Round 3, step 1: concepts (Board option C, "Concept, then layered parts")
+
+Status: step 1 done, **stopped for the Board's pick.** Step 2 (layered parts) not started.
+
+Images this step: 8 (SDXL txt2img via `comfy-draft.py`, `sd_xl_base_1.0`, 832 x 1216). Running total: 28 to 31 before, so **36 to 39** (cap 40; the round-3 budget of 20 allows more, but the hard cap of 40 now leaves only 1 to 4 images, which is too few for step 2's inpainting, so I need the Board to say which count rules).
+
+Shared positive prompt (the `hero_r2a` words, with the book at the hip, the lantern hanging, a rest pose and a colour pair per concept): `stylised dark fantasy game hero, bold thick uneven dark brown hand-inked outline, flat colour fills with a single hard-edged shadow tone, muted dark palette with one saturated accent colour, clean simple shapes, strong readable silhouette, full body, three-quarter view facing right, plain flat light grey background, no ground shadow. A hooded scribe with a deep hood and the face in shadow, a heavy weathered <CLOAK> cloak over a long <COAT> ink-stained scribe's coat, a thick contract-book with torn pages chained and strapped at the left hip, a small brass lantern hanging free from the belt, three bright teal cords tied around the shoulder, chest and hip, standing upright rest pose, arms slightly away from the body, legs apart, nothing crossing in front of the torso`
+
+Negative, all: `sword, blade, dagger, weapon, armor, monochrome, black and white, glasses, bald, cartoon nose, caricature, comic strip, chibi, cute, modern clothing, walking, thin lines, sketch, realistic, photo, 3d render, gradient shading, soft airbrush, painterly texture, text, watermark, signature, background scenery, multiple figures, cropped, extra limbs`
+
+| Asset | CLOAK / COAT | Seeds | Kept |
+|---|---|---|---|
+| hero_c1 | crimson red / cream | 6101, 6102, 6103 | **6101** (6102 was the better figure but its dark backdrop failed the matte gate at 3.5 % leftover) |
+| hero_c2 | mustard ochre yellow / dark slate blue | 6201, 6202, 6203 | **6203** |
+| hero_c3 | pale bone white / oxblood red | 6301, 6302 | **6302** (6301 was the better figure, a white hood; it failed the matte gate at 1.7 %). The model gave a red cloak, not bone. |
+
+Matte: `comfy-edit.py matte` defaults; I did not raise `--max-leftover`. Then `trim --pad 8`, `canvas 832x1216` and `compose` on grey (214,214,214) for `cN.png`; `resize` to 270 px, `mask --from-alpha --invert` for `cN_sil270.png` (1000 x 270 canvas); 345 px tall on the 2400 x 1080 field (38,66,72), feet on y 648, enemy box and ground line as in round 1, for `cN_context.png`. Candidate sheet of all 8: `candidates/r3_all.png`. Signature/text check on the three kept images at full size: no mark.
+
+Files: `c1.png`, `c1_sil270.png`, `c1_context.png` and the same for `c2`, `c3`.
+
+| | c1 crimson | c2 ochre | c3 red + staff-lantern |
+|---|---|---|---|
+| Identity | deep hood, face black, torn crimson cloak and long ribbons, belt wraps, gloves. **No book, no lantern, no clear teal cords** | deep hood, ochre cloak, rope cords hanging from the belt (read as bindings), open hand. **No book, no lantern** | hood, wrapped coat, lantern on a staff (hand-held, not hanging), cloak. **No book, no clear teal cords** |
+| Silhouette at 270 px | hood on a column, ribbons make it wide at the hem: strong | hood and sloping cloak, open arms: strong, reads as a person | tall staff and lantern make the most unusual, clear shape |
+| Rig-readiness | front view, arms near the body, ribbons cross it | three-quarter, arm out, legs apart: closest to the rest pose | arm on a staff, cloak hides the legs |
+| Value vs the field | red is dark: weaker than c2 | ochre reads clearly | dark red and brown: weakest |
+| Facing right | front | right | front |
+
+All three fail the same items from the brief: **no contract-book, no three teal cords at shoulder, chest and hip, no hanging lantern**. SDXL follows the dark-fantasy mood and colour but ignores object lists. The book, lantern and cords would be added at step 2 (inpaint) or by choosing seeds again. Recommendation: **c2** (ochre): best value against the field, closest rest pose, rope cords hang as bindings, a clear flat-colour read.
+
 ## Bible
 
 §16 and §11 (parts principle) are as in round 1. I did **not** change §15 or add the "parts sheet from a blocked-in template" line to §11: the recipe did not work, so writing it into the Bible would state something untested. Say if you still want them added.
