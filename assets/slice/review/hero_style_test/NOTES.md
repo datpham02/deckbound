@@ -70,3 +70,77 @@ I did not generate parts (0 of the 21 images left in budget used). Two blockers,
 Not done because of this: `parts/`, `parts_sheet.png`, `parts_assembled.png`, `parts_rotate_check.png`. A separate risk, not yet tested: whether text-only prompts can give separate parts that match the design target. I expect that to be the hard part.
 
 Ask: `gameplay-programmer` adds `flip` (horizontal) and `rotate` (degrees about a pivot, transparent fill, bicubic) to `art-ops` (shared pipeline code, not mine), or the Board tells me another approved route. Then I run the parts test, with 21 images left and 2 runs.
+
+(Round 1 is superseded: `flip` and `rotate` were installed and the Board rejected round 1 as not fitting the genre. Its images are now in `candidates/round1/`.)
+
+---
+
+# Round 2: parts-first (Board "REDO 2")
+
+Status: **method test stopped at the stop condition.** The parts-sheet render did not give clean, consistent parts within the budget I spent. No variant, no assembled figure and no rotate check exist. That is the test's answer for this method, see "Verdict".
+
+## Image count
+
+Round 1: 19. Round 2 before the parts method: 5 confirmed (SDXL `hero_r2a` x3, `hero_r2b` x2) plus one FLUX call (`hero_r2c`, 3 images) that was cut off by a stopped session and whose output I could not inspect. Parts-sheet renders: 4. **Total 28 if the cut-off call made nothing, 31 if it made 3.** Both are under 40; the Board counted 4 for round 2 at its stop. Staging folders: `hero_r2a`, `hero_r2b`, `hero_r2c`, `hero_sheet_a`.
+
+## Rig blueprint (working scale, px)
+
+Sheet 1024 x 896. Rest pose: standing, three-quarter view facing right, arms a little away from the body, legs apart, nothing across the torso. Cell = part size, top-left on the sheet. Pivot is the joint the part rotates about, relative to the part's top-left.
+
+| Part | Size | Cell (x,y) | Pivot | Joins |
+|---|---|---|---|---|
+| head_hood | 130x150 | 30,40 | 65,135 | torso top (neck) |
+| torso | 130x170 | 190,40 | 65,150 | hips (root) |
+| cloak_back | 190x330 | 350,40 | 95,20 | shoulders |
+| cloak_front | 170x270 | 580,40 | 85,20 | shoulders |
+| book | 130x160 | 790,40 | 65,80 | near hand (grip) |
+| lantern | 60x120 | 950,40 | 30,10 | hip hook |
+| arm_near_upper | 50x110 | 30,420 | 25,15 | near shoulder |
+| arm_near_fore | 46x100 | 120,420 | 23,12 | near elbow |
+| arm_near_hand | 48x48 | 206,420 | 24,8 | near wrist |
+| arm_far_upper / fore / hand | 50x110 / 46x100 / 48x48 | 300,420 / 390,420 / 476,420 | as near | far side |
+| binding_1 (shoulder), _2 (chest), _3 (hip) | 70x26 each | 600,420 / 600,486 / 600,552 | 35,13 | torso, over the cloak |
+| thigh_near / shin_near / foot_near | 60x120 / 54x120 / 96x44 | 30,640 / 130,640 / 224,640 | 30,15 / 27,12 / 20,12 | hips, knee, ankle |
+| thigh_far / shin_far / foot_far | same | 400,640 / 500,640 / 594,640 | as near | far side |
+
+21 parts. Bones: root/hips, spine, head, 2x (upper arm, forearm, hand), 2x (thigh, shin, foot), cloak_front, cloak_back, book, lantern, binding_1..3.
+
+Draw order, back to front: cloak_back, far arm (upper, fore, hand), far leg (thigh, shin, foot), torso, head_hood, near leg, binding_1..3, lantern, cloak_front, near arm, book (held at the near hand).
+
+Proportion choice: about 5 heads, head not inflated, with the hood and the book as the big shapes. Reason: the hood reads as a flat black mass at 270 px, the book needs a hand-sized grip and the torso needs room for three cords. Not validated: no assembled figure exists.
+
+## Template
+
+`template.png` (1024 x 896): every part blocked as a flat colour shape (ellipses for round parts, rectangles for flat ones) on flat grey (205,205,205). Built only with `art-ops`: `contact --bg` for flat fields, `mask --rect/--ellipse` for each of the 21 shapes, `compose --mask` to place them. No generator input outside this task.
+
+## Renders (SDXL, `comfy-edit.py img2img`, `sd_xl_base_1.0`, 1024 x 896)
+
+Negative prompt, all four: `glasses, bald, cartoon nose, caricature, comic strip, chibi, cute, modern clothing, thin lines, sketch, realistic, photo, 3d render, gradient shading, soft airbrush, painterly texture, text, watermark, signature, full figure, connected figure, assembled body, scenery, multiple characters` (try 2 adds `, blank flat shape` and drops `connected figure`).
+
+| Try | Seeds | Denoise | Positive prompt | Result |
+|---|---|---|---|---|
+| 1 | 5101, 5102 | 0.65 | character parts sheet for a 2D puppet rig, every part separate and disconnected with wide empty gaps on a plain light grey background, stylised dark fantasy game art, bold thick uneven dark brown hand-inked outline, flat colour fills with a single hard-edged shadow tone, a deep crimson red hood with a dark shadowed face opening, a cream ink-stained scribe coat torso, a crimson red weathered cloak back panel, a crimson red cloak front panel, a thick leather contract book with torn pages and a chain, a brass lantern, arm pieces in cream sleeves with gloved hands, dark leather leg pieces and boots, three bright teal cord strips with knots | Parts stay in their cells and stay separate, but they remain flat colour blobs. No outline, no shading, no hood opening, no book pages. Some cells distorted (limb ends ragged; one cell turned into a big cream page; one seed made a chain and a spike instead of the lantern). Sheet: `candidates/sheet_a_try1.png`. |
+| 2 | 5201, 5202 | 0.75 (the tool maximum) | character design sheet of separate game art pieces on a plain light grey background, each piece detailed with a bold thick uneven dark brown ink outline and flat cel colours with one hard shadow tone: a deep crimson hood with a shadowed face opening, a cream coat torso with ink stains and buttons, a long tattered crimson cloak back panel with torn hem, a tattered crimson cloak front panel, a big thick leather book with page edges, brass buckles and a chain, a brass hanging lantern, sleeve pieces and leather gloves, leather trousers, boots, three teal cord straps with knots, stylised dark fantasy | Worse. Shapes turned into plain boxes with thin corner marks (hood became an octagon, torso a framed rectangle). Parts drifted and merged: seed 5201 lost the arms and cords and moved legs into a row with stray leather loops; seed 5202 lost the arms, placed a lantern-like piece in the empty area, and replaced feet with a red box and a black box. Still no hood, face, hands or book detail. Sheet: `candidates/sheet_a_try2.png`. |
+
+Signature/text check: the four sheets were opened at full size; no letters or marks. None is kept as art.
+
+## Verdict (parts test)
+
+Failed, within the budget and the tool limits:
+1. **Flat blocks carry no form.** img2img keeps the shape and colour of a flat block. At 0.65 it adds nothing; at 0.75 (the tool maximum) it starts to invent, but invents boxes, ornament and drift instead of a hood, a hand or a book. The outline, the one hard shadow tone and the hood opening, which the style needs, never appear.
+2. **Fixing it needs a richer template**, not more seeds: for each part an outline, the hood opening, finger and cuff marks, the book's page edge, the cord knots. Each is a shape to draw with `art-ops` (about 60 more mask and compose steps per template), and it is still uncertain that SDXL will render them as clean, same-weight parts.
+3. **Round-trip risk.** Cell consistency across parts (line weight, tone, palette) did hold in try 1 (the style was uniformly flat), but only because nothing was drawn.
+
+No assembled preview, no `vN_sil270`, no `vN_context`, no `parts_rotate_check.png` exist. The round-1 `v1`-`v3` files are in `candidates/round1/` as a record of what failed. The hero look is therefore still undecided. The only round-2 images with dark-fantasy form are the whole-figure SDXL tests `hero_r2a` and `hero_r2b` (sheets `candidates/r2a.png`, `r2b.png`): hooded, weathered cloak, flat inked look, but they have a sword or nothing in the hand, no book, no lantern and scattered teal. The Board told me not to generate full figures, so I did not continue them.
+
+## Options for the Board (one choice needed)
+
+A. **Richer template** (outline, hood opening, hands, book, knots drawn with `art-ops`), then 1 to 2 renders at denoise 0.7 to 0.75. Cost: many commands, about 4 to 8 images. Uncertain.
+B. **Part-by-part txt2img on the grey backdrop** (one generation per part with the same style words and a fixed seed family), then `matte` and `art-ops` assembly. About 21 images for one variant: over budget for three variants, and joints and line weight may not match.
+C. **Design the look from whole-figure tests first** (the Board's "design variants"), then make the parts from the chosen design by method B. This reverses the Board's REDO 2 order, so I need your decision.
+D. Stop the generated-parts route and plan the hero as a hand-built (vector or paint-over) rig.
+
+## Bible
+
+§16 and §11 (parts principle) are as in round 1. I did **not** change §15 or add the "parts sheet from a blocked-in template" line to §11: the recipe did not work, so writing it into the Bible would state something untested. Say if you still want them added.
+
