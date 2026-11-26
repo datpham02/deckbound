@@ -202,6 +202,7 @@ Principles, all actors:
 - A telegraphed action's anticipation is clearly longer than other idles, so the telegraph and the body agree.
 - Idle is a small, slow loop (a breath or a sway) of about 2 to 3 seconds **(proposed)**. It never moves the silhouette enough to disturb the shape test.
 - Timing on twos or threes (about 8 to 12 poses per second) suits the flat cel look **(proposed)**. Keep key poses clear and tween the rest.
+- Rigged actors are designed and produced as parts sheets from the start, not cut from a whole figure; related enemies share a rig and swap parts.
 - All motion stays within the actor's size class box, so layout never shifts.
 - Hit reaction: a quick squash and a brief light flash **(proposed)**, not a screen shake over gameplay information.
 - Animation events (impact frame, effect spawn) are named markers, so the programmer can hook damage numbers and effects to them.
@@ -300,13 +301,15 @@ Written new for v2. It names no other game, studio, artist or character. It is a
 - Use deterministic scripted operations for icons, frames and repeated variants, not generation.
 - Test whether outline weight and proportions stay constant over candidates. If they do not, record which words or settings fail and propose a change.
 
-## 16. Open questions for the Board
+## 16. Board answers (2026-11-26)
 
-1. **Hero proportion.** Is about 3.5 heads right, or should the head be larger still (closer to 3)? The next task shows both.
-2. **Rig from generated art.** Skeleton2D needs separated parts. Generating a whole figure, then splitting it, may lose consistency. Does the Board accept hand or scripted part cleanup, or a part-by-part generation test first?
-3. **Outline consistency.** Generated outlines vary in weight. Does the Board accept an outline-normalisation step (scripted) or require regeneration until consistent?
-4. **Rest and map mood.** The rest area is the only warm stage in M1. Confirm, or keep the whole floor cold?
-5. **Card categories.** The page set has no categories yet, so the frame colour code in §8 has nothing to code. Ask `game-designer` for page categories, or use one frame for M1?
-6. **Font.** M1 uses Godot's default font. Choose a licensed font at the style test?
-7. **Stale references in kept documents.** Several kept docs still point to the old Art Bible section numbers and the old house style name: `concept.md`, `vision.md`, `docs/design/enemies.md`, `docs/design/pages.md`, `docs/art/COMFYUI-WORKFLOW.md` and `docs/art/TOOL-DECISIONS.md`. Those edits were outside this task. Which Task fixes them?
-8. **Ground line and sizes.** The 60 % ground line and the size classes are proposed and untested at phone size. The next task checks them in a Godot frame.
+Answers to the open questions of v2, given by the Board on 2026-11-26.
+
+1. **Hero proportion.** The team decides, not the Board. Pick the proportion that balances the hero's design (read at 270 px, room for the book, lantern and three binding positions) and justify it in the style test notes. The Board judges the result, not the number.
+2. **Rig from generated art.** Build part by part. Do not generate one whole figure and cut it apart.
+3. **Outline consistency.** Decided by the team. Default: keep the outline weight in the prompt, select the most even results, and use a scripted normalisation step (`art-ops`) where needed. Regenerate only when a part's outline is broken or missing. Record which was used.
+4. **Warm rest area.** Confirmed. The rest area is the only warm stage in M1.
+5. **Card categories.** `game-designer` defines page categories in a separate task.
+6. **Font.** Use Godot's default font for now; it is replaced later.
+7. **Stale references in kept documents.** Fix them as they are touched. Any kept doc a task touches gets its old Art Bible references updated.
+8. **Ground line and sizes.** Approved as proposed for now. Check them in context images.
