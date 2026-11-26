@@ -84,3 +84,34 @@
 
 ## Out of scope
 Animation logic, scenes, scripts, telegraph icon and line, final enemy name.
+
+## Rig parts (F6 T1)
+
+Source: `art_src/enemies/enemy_frayer/key_pose/enemy_frayer_idle_keypose_512.png`. All parts are 512 x 512 transparent PNGs at the key pose position, in `art_src/enemies/enemy_frayer/parts/`; each has `<part>_mask.png`. Cut with art-ops only: `crop` + `canvas` (transparent base `_base.png`), `mask --rect/--polygon`, `compose --mask`. Boxes are `x y w h` in pixels. Pivots are joint points estimated by eye from the key pose (not measured).
+
+| Part | File | Box / polygon | Pivot (x, y) |
+|---|---|---|---|
+| head | head.png | rect 258 88 62 62 | 292, 146 (neck base) |
+| torso_robe | torso_robe.png | polygon 270,142 328,142 328,200 330,260 334,320 340,402 268,402 270,330 272,250 274,190 | 300, 385 (hips) |
+| arm_reach_upper | arm_reach_upper.png | rect 212 150 72 78 | 284, 168 (shoulder) |
+| arm_reach_fore | arm_reach_fore.png | rect 182 195 38 45 | 215, 205 (elbow) |
+| hand_reach | hand_reach.png | rect 156 205 36 52 | 190, 222 (wrist) |
+| arm_hang | arm_hang.png | polygon 324,150 354,150 354,345 337,345 337,275 324,275 | 332, 160 (shoulder) |
+| leg_left | leg_left.png | rect 252 385 50 127 | 290, 388 (hip) |
+| leg_right | leg_right.png | rect 300 385 40 127 | 316, 388 (hip) |
+
+Overlaps: upper/fore 2-6 px at the elbow, fore/hand a few px at the wrist, legs 2 px at x 300-302, torso hem covers leg tops (y 385-402). Stack order bottom to top: leg_left, leg_right, torso_robe, arm_hang, head, arm_reach_upper, arm_reach_fore, hand_reach.
+
+### Inpaints (comfy-edit.py inpaint, SDXL, `--asset enemy_frayer`)
+Fill: the robe under the reaching arm's root (shoulder). Prompt for all: "stone-grey ragged robe fabric, flat cel shading, bold black ink outline". Input: `torso_robe` before filling (kept as `_torso_robe_prefill.png`), sha256 `0c9547fb09a5b4b823c677b633ec366f2c3549abec8d3f3ec14c6bdd0a38b8a2`. Denoise 0.8, 30 steps, euler/normal, cfg 7.0, `outside_mask_changed: 0`. Used 2 runs (3 candidates), within the limit of 4.
+
+1. Run 1, mask `fill_torso_shoulder_mask.png` (rect 274 155 16 45, feather 1) sha256 `f643e68ca4df2c6499c5776c163cd376a1af7759eaf45830e27b168f6c034529`, seeds 1101 and 1102: both REJECTED, the mask reached outside the robe outline and a grey backdrop box leaked in (`assets/slice/review/enemy_frayer_parts/inpaint_torso_candidates.png`).
+2. Run 2, mask `fill_torso_shoulder_mask2.png` (the same rect, kept inside the robe alpha, 531 px) sha256 `1689ea8e5945c20c8ba81f501522cd45d39a587e8b6cb968b301d7ba8234f107`, seed 1103: ACCEPTED, now `torso_robe.png` (`inpaint_torso_round2.png` shows before/after). Run id 63490d0b0886, workflow `enemy_frayer_inpaint_sdxl_20261126-200916_s1103.workflow.json` in staging.
+
+### Restack check
+Parts composed in the stack order above, `diff` against the key pose: 2104 of 262144 px differ in total; outside the fill mask 1652 px (0.63%) differ, all on part edges (semi-transparent seam pixels composited twice or missing at seams), none inside part interiors. Evidence in `assets/slice/review/enemy_frayer_parts/`: `restack_filled.png`, `diff_filled.png`, `diff_outside_fill.png`, `parts_contact_stone.png` (Stone mid 58 67 75), `exploded_vs_restack_vs_keypose.png`.
+
+### Known limitations
+- Only the shoulder fill was made. The neck bottom, leg tops under the hem and the hang-arm shoulder were not filled (the robe covers them in the key pose and stays still in the planned rig).
+- The torso hem fragments overlap the leg tops; a leg swing needs the leg drawn under the torso.
+- Seam pixels may need a 1 px feather in the render step.
