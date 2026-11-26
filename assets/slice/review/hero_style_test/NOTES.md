@@ -195,9 +195,53 @@ Honest verdict on c2_final:
 - **Outline weight** (Board answer 3) is not yet measured or normalised.
 - At 345 px in `c2_final_context.png` the figure reads: hooded column, lantern, book and teal bars are all visible.
 
-## Step 2b (layered parts): NOT done, stopped
+## Step 2b: parts cut from c2_final, assembled and rotated (Director's cheaper route)
 
-Why: 4 images remain in the round-3 allowance. Per-part crop and inpaint of hidden areas needs about 12 inpaints for the 21 blueprint parts, and my one-in-five hit rate for inpaint (book worked, lantern never) means more. Starting it would spend the last 4 images and leave no `parts/`, no `parts_assembled.png`, no rotate check. Also the Bible §15 and §11 lines are unchanged, as they must describe a recipe that has not worked end to end.
+Images generated in this step: **0**. Round 3 stays at 16 of 20. (No txt2img for the lantern and cords: they are already separate, clean `art-ops` shapes, and the standalone txt2img rebuild is the upgrade that remains open.) Hidden joint areas were **not** repainted; all parts are **FLAT CUTS, FLAT PLACEHOLDER for the hidden areas** (see verdict).
+
+### Blueprint fit (reduced, 10 parts instead of 21)
+
+Working frame: the 832 x 1216 canvas of `c2_final_src.png` (all pivots and positions are in it; the figure is about 1100 px tall there, 345 px on screen, scale 0.31). Draw order, back to front: legs, cloak, torso, head_hood, arm_front, binding_1, binding_2, binding_3, book, lantern.
+
+| Part | Cut (canvas px) | Pivot (canvas px) | Joins |
+|---|---|---|---|
+| legs | rect 255,975 310x235 (trousers, boots) | hips (400, 990) | torso |
+| cloak | polygon 232,250 300,185 330,300 400,330 412,400 408,640 392,1000 300,1075 190,1115 115,968 240,830 240,640 115,545 235,330 (the large left mass, back arm, rope) | shoulder (330, 320) | torso |
+| torso | polygon 380,300 530,300 545,470 590,650 650,1000 560,1060 380,1000 | root (416, 700) | legs |
+| head_hood | polygon 298,185 300,70 350,18 440,12 498,45 522,200 526,335 330,335 | neck (440, 335) | torso |
+| arm_front | polygon 515,350 580,375 632,492 605,545 560,500 525,430 (sleeve only) | shoulder (548, 362) | torso |
+| book (with chain, gloved hand) | rect 546,462 210x316 | wrist (600, 560) | arm_front |
+| lantern (cord, ring, body) | rect 86,604 86x220 | hook (130, 612) | cloak (back hand) |
+| binding_1 / _2 / _3 | rect 512,346 70x70 / 390,398 120x36 / 335,474 186x42 | centres | torso |
+
+Not in this reduced set (they remain in the 21-part blueprint above): separate upper arm, forearm, hand, thigh, shin and foot, the far arm, cloak front/back split. They need hidden-area paint, which this run did not do.
+
+Method: `art-ops` only. A fully transparent 832 x 1216 base (grey `contact --bg` from a transparent pixel, then `key`), `mask --rect/--polygon` per part, `compose --mask` of the matte of `c2_final_src` through each mask for one full-canvas layer per part, `trim --pad 2` for `parts/*.png`, `compose` in draw order for the assembly. Part PNGs are trimmed, so their placement offsets in the 832 x 1216 frame are **not recorded** (the tool prints only the size); for the rig they follow from the cut rectangles in the table, and a proper export needs the offsets (note for `gameplay-programmer`).
+
+Files: `parts/head_hood.png`, `torso.png`, `cloak.png`, `arm_front.png`, `book.png`, `lantern.png`, `legs.png`, `binding_1.png`, `binding_2.png`, `binding_3.png`; `parts_sheet.png` (all ten on one sheet); `parts_assembled.png` (c2_final left, assembled parts right); `parts_rotate_check.png`.
+
+### Verdict
+
+**Match to the design target (`parts_assembled.png`):** close. The assembled parts reproduce c2_final at full size, with no visible seam or colour change, because they are cuts of the same pixels. My first cut left a vertical seam at the torso/cloak join and a wedge at the neck; both fixed by widening the polygons. One tiny white sliver remains at the left edge of the cloak near y 740 (one pixel wide).
+
+**Rotate check (`parts_rotate_check.png`, ±15° each, pivots above):**
+- **Head: mostly passes.** +15° is clean. -15° shows a small lighter-grey notch at the hood's left edge where the cut polygon ends (`FLAT PLACEHOLDER`: the cloak behind it was never painted).
+- **Front arm: small gaps.** A thin slit appears between the sleeve and the book/torso at both angles; the book is a separate part, so the sleeve turns away from it. Acceptable for a first rig, needs a painted sleeve end.
+- **Cloak: fails.** At -15° a large transparent wedge opens between the cloak and the torso (the cloak's cut is straight at x about 400 and at y 975, and the area behind it was never painted), and the cloak's straight bottom edge shows. At +15° the cloak edges and legs show hard straight cuts. The cloak cannot swing 15° without hidden-area paint behind it and a shaped hem.
+
+Why it fails, exactly: no hidden area was painted. The parts only exist where pixels exist in the single concept. Anything behind another part is missing, so any rotation that moves a part off its neighbour shows a hole. This confirms the lesson: **a flat cut of a whole figure does not rotate**; only repainted parts with hidden areas will. The inpaint route for that (about 12 or more images, with a poor hit rate on small areas) is the open cost.
+
+**Outline weight (Board answer 3): not measured with a tool, no normalisation applied.** Estimate by eye: the outline is about 5 to 8 px in the 832 x 1216 frame and about 2 px at the 345 px on-screen height, under the Bible's 5 px minimum at on-screen size. UNVERIFIED as a number. Normalisation (a scripted thickening of the outline layer) is still to be done.
+
+**Other carried items from the Director:**
+- The chain hangs loose from the book; it should attach to the hip cord (`binding_3`). Not done.
+- The cord and lantern shapes are flat `art-ops` geometry (placeholders).
+
+### Bible changes in this step
+§11: the rigged-actor line replaced with the concept-then-layered-parts principle plus the clause on small-part inpaint. §15: a "Hero recipe that worked" block with the SDXL words and negative that produced c1 to c3, and a note not to use the cartoon words for the hero. §16 unchanged (answers already recorded).
+
+### Remaining budget and what is still open
+Image count this round: 16 of 20 (4 left). Open: standalone txt2img for lantern, book and cords (3 to 4 images); hidden-area paint for the cloak, hood, sleeve and torso (about 8 to 12 inpaints, with the risk seen above); outline normalisation; recorded part offsets.
 
 ## Bible
 
