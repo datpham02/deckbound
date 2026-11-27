@@ -1,7 +1,7 @@
 # Art Tool Decisions (Art Phase 0)
 
 Status: **proposed** (SOU-33). Every row marked "Board" needs Board approval. Nothing here is installed, purchased or adopted.
-Companions: [ART-PIPELINE.md](ART-PIPELINE.md), [ART-PIPELINE-AUDIT.md](ART-PIPELINE-AUDIT.md), [ART-BIBLE.md](ART-BIBLE.md), [../concept.md](../concept.md).
+Companions: [ART-PIPELINE.md](ART-PIPELINE.md), [ART-BIBLE.md](ART-BIBLE.md), [../concept.md](../concept.md).
 
 ## How to read this
 
