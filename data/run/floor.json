@@ -1,0 +1,30 @@
+{
+  "schema_version": 1,
+  "seed_offset": 173,
+  "layout": {
+    "left_margin_fraction": 0.06,
+    "right_margin_fraction": 0.06,
+    "top_margin_fraction": 0.08,
+    "bottom_margin_fraction": 0.08,
+    "row_spacing_fraction": 1.0,
+    "slot_spacing_fraction": 0.32
+  },
+  "touch": {
+    "node_diameter": 128,
+    "line_width": 4
+  },
+  "branching": {
+    "extra_connection_chance_percent": 45
+  },
+  "rows": [
+    { "type": "start", "node_count": 1 },
+    { "type": "fight", "node_count": 2 },
+    { "type": "fight", "node_count": 3 },
+    { "type": "fight", "node_count": 2 },
+    { "type": "rest", "node_count": 2 },
+    { "type": "fight", "node_count": 2 },
+    { "type": "warden", "node_count": 1 },
+    { "type": "rest", "node_count": 1 },
+    { "type": "boss", "node_count": 1 }
+  ]
+}
