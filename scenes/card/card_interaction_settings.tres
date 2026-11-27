@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="CardInteractionSettings" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/combat/ui/card_interaction_settings.gd" id="1_settings"]
+
+[resource]
+script = ExtResource("1_settings")
+tap_slop_px = 24.0
+long_press_seconds = 0.6
+drag_direction_threshold_px = 48.0
+drag_ghost_scale = 0.85
+refusal_message_seconds = 1.6
+play_highlight_color = Color(0.98, 0.8, 0.35, 1)
+bind_highlight_color = Color(0.45, 0.88, 0.8, 1)
+idle_highlight_alpha = 0.45
+hover_fill_alpha = 0.3
+highlight_border_px = 6.0
