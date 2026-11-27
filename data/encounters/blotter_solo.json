@@ -1,0 +1,9 @@
+{
+  "id": "blotter_solo",
+  "node": "fight",
+  "pool": "intro_3",
+  "weight": 1,
+  "enemies": [
+    { "id": "blotter", "start_offset": 0 }
+  ]
+}

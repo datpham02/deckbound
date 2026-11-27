@@ -1,0 +1,14 @@
+{
+  "id": "blotter",
+  "name": "Blotter",
+  "size_class": "common",
+  "stats": {
+    "health": 22
+  },
+  "actions": [
+    { "id": "file", "type": "foul", "value": 1 },
+    { "id": "smear", "type": "attack", "value": 4 },
+    { "id": "brace", "type": "guard", "value": 6 }
+  ],
+  "telegraph_pattern": ["file", "smear", "smear", "brace"]
+}

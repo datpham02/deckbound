@@ -1,0 +1,20 @@
+{
+  "id": "registrar",
+  "name": "Registrar",
+  "size_class": "warden",
+  "stats": {
+    "health": 58
+  },
+  "actions": [
+    { "id": "strike", "type": "attack", "value": 8 },
+    {
+      "id": "press",
+      "type": "fray",
+      "value": 6,
+      "fallback": { "type": "attack", "value": 7 }
+    },
+    { "id": "brace", "type": "guard", "value": 10 },
+    { "id": "seal_press", "type": "attack", "value": 6, "hits": 2 }
+  ],
+  "telegraph_pattern": ["strike", "press", "strike", "brace", "seal_press"]
+}

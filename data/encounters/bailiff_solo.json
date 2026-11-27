@@ -1,0 +1,9 @@
+{
+  "id": "bailiff_solo",
+  "node": "fight",
+  "pool": "intro_1",
+  "weight": 1,
+  "enemies": [
+    { "id": "bailiff", "start_offset": 0 }
+  ]
+}

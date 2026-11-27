@@ -1,0 +1,11 @@
+{
+  "id": "clerks_three",
+  "node": "fight",
+  "pool": "mixed",
+  "weight": 1,
+  "enemies": [
+    { "id": "bookmoth", "start_offset": 0 },
+    { "id": "blotter", "start_offset": 0 },
+    { "id": "bailiff", "start_offset": 1 }
+  ]
+}

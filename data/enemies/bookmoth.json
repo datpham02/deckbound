@@ -1,0 +1,18 @@
+{
+  "id": "bookmoth",
+  "name": "Bookmoth",
+  "size_class": "common",
+  "stats": {
+    "health": 12
+  },
+  "actions": [
+    {
+      "id": "unpick",
+      "type": "fray",
+      "value": 4,
+      "fallback": { "type": "attack", "value": 5 }
+    },
+    { "id": "nibble", "type": "attack", "value": 3 }
+  ],
+  "telegraph_pattern": ["unpick", "nibble", "nibble"]
+}

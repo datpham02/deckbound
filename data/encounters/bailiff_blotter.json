@@ -1,0 +1,10 @@
+{
+  "id": "bailiff_blotter",
+  "node": "fight",
+  "pool": "mixed",
+  "weight": 2,
+  "enemies": [
+    { "id": "blotter", "start_offset": 0 },
+    { "id": "bailiff", "start_offset": 1 }
+  ]
+}

@@ -1,0 +1,10 @@
+{
+  "id": "bookmoth_pair",
+  "node": "fight",
+  "pool": "intro_2",
+  "weight": 1,
+  "enemies": [
+    { "id": "bookmoth", "start_offset": 0 },
+    { "id": "bookmoth", "start_offset": 1 }
+  ]
+}
