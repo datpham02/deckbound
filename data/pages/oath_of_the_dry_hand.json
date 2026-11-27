@@ -1,0 +1,19 @@
+{
+  "id": "oath_of_the_dry_hand",
+  "name": "Oath of the Dry Hand",
+  "cost": 3,
+  "compact": {
+    "play": "Gain 15 Guard",
+    "bind": "Attacks deal 1 less"
+  },
+  "play_text": "Gain 15 Guard.",
+  "bind_text": "Enemy attacks deal 1 less damage to you.",
+  "target": "none",
+  "pool": true,
+  "play_effects": [
+    { "id": "guard", "params": { "amount": 15 } }
+  ],
+  "bind_passives": [
+    { "id": "incoming_attack_reduction", "params": { "amount": 1 } }
+  ]
+}

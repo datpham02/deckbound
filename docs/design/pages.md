@@ -1,12 +1,13 @@
 # Deckbound — M1 Page Set (design note)
 
-Status: **proposed** (SOU-40, M1 plan §3 row T4, part a). Reviewer `director` (originality check E7), then Board approval. Part b (SOU-41 or successor, "T4b") turns §5 into `data/pages/*.json` once the data format from T3 exists; this note creates no data files.
-Sources: [M1-first-playable.md](../milestones/M1-first-playable.md) §1 E1–E3, E7, E9, E15 and §5 risks 1–3; [concept.md](../concept.md) "The distinctive mechanic: Binding", "Card layout in landscape", "Originality"; [vision.md](../vision.md) pillars 1, 2, 3, 5 and AC2; [ART-BIBLE.md](../art/ART-BIBLE.md) §4 text sizes and §6 compact face.
+Status: **proposed** (SOU-40, M1 plan §3 row T4, part a). Reviewer `director` (originality check E7), then Board approval. Part b (SOU-41 or successor, "T4b") turns §5 into `data/pages/*.json` once the data format from T3 exists; this note creates no data files. §5A (page categories and the M1 rarity decision) was added on 2026-11-26 (SOU-99) at the Board's request, answering Art Bible v2 open question 5; it changes no page text or number.
+Sources: [M1-first-playable.md](../milestones/M1-first-playable.md) §1 E1–E3, E7, E9, E15 and §5 risks 1–3; [concept.md](../concept.md) "The distinctive mechanic: Binding", "Card layout in landscape", "Originality"; [vision.md](../vision.md) pillars 1, 2, 3, 5 and AC2; [ART-BIBLE.md](../art/ART-BIBLE.md) v2 (SOU-97, deckbound PR #42): §7 text minimums, §8 card anatomy (the category-coded frame), §10 gameplay accents. (Before v2 these were v1 §4.4 and §6; the v1 numbers are no longer cited here.)
 
 ## 1. What this note fixes
 
 - The 20 pages of the first playable, plus the one foul page that the deck-fouler enemy adds (21 page ids in total).
 - For each page: id, name, Ink cost, the compact Play line and compact Bind line shown in hand (authored, never truncated), the full Play and Bind text shown in the spread, and the pillar 1 answer: when you play it, when you bind it, when you regret either.
+- The category of every page, for the card frame colour code of Art Bible v2 §8, and the M1 decision on rarity (§5A).
 - The starting deck (§6) and the reward pool (§6).
 - The caps on draw and Ink passives that close M1 risk 2, "degenerate thin decks" (§7).
 - The rule interactions that T6 (combat core) and T7 (binding) need to resolve page text without guessing (§3, §4).
@@ -73,35 +74,35 @@ Every page in M1 obeys all of these. They exist so that the compact face stays r
 
 ## 5. The pages
 
-Summary first (QA can check the compact lines and costs against this table alone), then one entry per page.
+Summary first (QA can check the compact lines, costs and categories against this table alone), then one entry per page.
 
-| # | id | Name | Ink | Compact Play line | Compact Bind line | Target | Pool |
-|---|---|---|---|---|---|---|---|
-| 1 | `nib_cut` | Nib Cut | 1 | Deal 6 | Strikes deal 1 more | enemy | no (starter) |
-| 2 | `inkwell_ward` | Inkwell Ward | 1 | Gain 5 Guard | Start with 5 Guard | none | no (starter) |
-| 3 | `torn_margin` | Torn Margin | 1 | Draw 2 | Draw 1 more each turn | none | yes |
-| 4 | `pressed_thorn` | Pressed Thorn | 1 | Deal 4 | Hit back for 3 | enemy | yes |
-| 5 | `tally_mark` | Tally Mark | 1 | Gain 2 Ink | 1 more Ink each turn | none | yes |
-| 6 | `candle_debt` | Candle Debt | 2 | Deal 14, add a stain | Fray gives 2 Ink | enemy | yes |
-| 7 | `wax_seal` | Wax Seal | 2 | Gain 8 Guard | Takes the fray instead | none | yes |
-| 8 | `lantern_oath` | Lantern Oath | 2 | Deal 5 to all enemies | 2 to all enemies a turn | none | yes |
-| 9 | `errata_slip` | Errata Slip | 1 | Purge Water-stains | Purge stains after wins | none | yes |
-| 10 | `footnote` | Footnote | 0 | Draw 1 | Keep highest-cost page | none | yes |
-| 11 | `docket_stamp` | Docket Stamp | 2 | Break Guard, deal 6 | Enemy Guard 3 less | enemy | yes |
-| 12 | `sealed_lien` | Sealed Lien | 2 | Deal 7, gain 4 Guard | Gain Guard: 1 to all | enemy | yes |
-| 13 | `drowned_codicil` | Drowned Codicil | 3 | Deal 20 | 6 to all at fight start | enemy | yes |
-| 14 | `salt_line` | Salt Line | 1 | Heal 4 | Heal 3 after each win | none | yes |
-| 15 | `knotted_thread` | Knotted Thread | 1 | 3 Guard per binding | Fray gives 6 Guard | none | yes |
-| 16 | `blank_folio` | Blank Folio | 1 | Deal 3 per empty slot | 2 Guard per empty slot | enemy | yes |
-| 17 | `ledger_of_debts` | Ledger of Debts | 2 | Deal 1 per discard page | Reshuffle: gain 5 Guard | enemy | yes |
-| 18 | `blotting_sheet` | Blotting Sheet | 1 | Deal 7, purge a stain | Stains hit all for 4 | enemy | yes |
-| 19 | `oath_of_the_dry_hand` | Oath of the Dry Hand | 3 | Gain 15 Guard | Attacks deal 1 less | none | yes |
-| 20 | `flooded_index` | Flooded Index | 0 | Draw 1, lose 2 health | Draw +1, lose 1 a turn | none | yes |
-| 21 | `water_stain` | Water-stain | 1 | Remove this page | No effect | none | no (foul page) |
+| # | id | Name | Ink | Compact Play line | Compact Bind line | Target | Pool | Category |
+|---|---|---|---|---|---|---|---|---|
+| 1 | `nib_cut` | Nib Cut | 1 | Deal 6 | Strikes deal 1 more | enemy | no (starter) | Writ |
+| 2 | `inkwell_ward` | Inkwell Ward | 1 | Gain 5 Guard | Start with 5 Guard | none | no (starter) | Seal |
+| 3 | `torn_margin` | Torn Margin | 1 | Draw 2 | Draw 1 more each turn | none | yes | Marginalia |
+| 4 | `pressed_thorn` | Pressed Thorn | 1 | Deal 4 | Hit back for 3 | enemy | yes | Writ |
+| 5 | `tally_mark` | Tally Mark | 1 | Gain 2 Ink | 1 more Ink each turn | none | yes | Marginalia |
+| 6 | `candle_debt` | Candle Debt | 2 | Deal 14, add a stain | Fray gives 2 Ink | enemy | yes | Writ |
+| 7 | `wax_seal` | Wax Seal | 2 | Gain 8 Guard | Takes the fray instead | none | yes | Seal |
+| 8 | `lantern_oath` | Lantern Oath | 2 | Deal 5 to all enemies | 2 to all enemies a turn | none | yes | Writ |
+| 9 | `errata_slip` | Errata Slip | 1 | Purge Water-stains | Purge stains after wins | none | yes | Marginalia |
+| 10 | `footnote` | Footnote | 0 | Draw 1 | Keep highest-cost page | none | yes | Marginalia |
+| 11 | `docket_stamp` | Docket Stamp | 2 | Break Guard, deal 6 | Enemy Guard 3 less | enemy | yes | Writ |
+| 12 | `sealed_lien` | Sealed Lien | 2 | Deal 7, gain 4 Guard | Gain Guard: 1 to all | enemy | yes | Writ |
+| 13 | `drowned_codicil` | Drowned Codicil | 3 | Deal 20 | 6 to all at fight start | enemy | yes | Writ |
+| 14 | `salt_line` | Salt Line | 1 | Heal 4 | Heal 3 after each win | none | yes | Seal |
+| 15 | `knotted_thread` | Knotted Thread | 1 | 3 Guard per binding | Fray gives 6 Guard | none | yes | Seal |
+| 16 | `blank_folio` | Blank Folio | 1 | Deal 3 per empty slot | 2 Guard per empty slot | enemy | yes | Writ |
+| 17 | `ledger_of_debts` | Ledger of Debts | 2 | Deal 1 per discard page | Reshuffle: gain 5 Guard | enemy | yes | Writ |
+| 18 | `blotting_sheet` | Blotting Sheet | 1 | Deal 7, purge a stain | Stains hit all for 4 | enemy | yes | Writ |
+| 19 | `oath_of_the_dry_hand` | Oath of the Dry Hand | 3 | Gain 15 Guard | Attacks deal 1 less | none | yes | Seal |
+| 20 | `flooded_index` | Flooded Index | 0 | Draw 1, lose 2 health | Draw +1, lose 1 a turn | none | yes | Marginalia |
+| 21 | `water_stain` | Water-stain | 1 | Remove this page | No effect | none | no (foul page) | Foul |
 
-"Pool" is whether the reward screen (T15) may offer the page. "Target" is the Play drop zone: *enemy* means the drag must end on an enemy; *none* means the play area.
+"Pool" is whether the reward screen (T15) may offer the page. "Target" is the Play drop zone: *enemy* means the drag must end on an enemy; *none* means the play area. "Category" is the page's frame category from §5A, derived from the Play text by the placement rule there; it is not a rule and no text refers to it.
 
-### 1. Nib Cut — 1 Ink
+### 1. Nib Cut — 1 Ink — Writ
 
 - **Play:** Deal 6 damage to an enemy.
 - **Bind:** Pages you play that deal damage deal 1 more.
@@ -109,7 +110,7 @@ Summary first (QA can check the compact lines and costs against this table alone
 - **When you bind it:** after two or three rewards, when the deck has six or more damage pages and a fourth Nib Cut is the weakest of them. Binding one removes a starter and gives every Lantern Oath, Blank Folio and Candle Debt a little more.
 - **When you regret it:** you bound it in a deck that drifted to Guard and draw, so a slot is spent on "deal 1 more" to two pages; or the frayer turns it off in the long warden fight you bound it for. Playing it is never regretted, which is why it is the starter.
 
-### 2. Inkwell Ward — 1 Ink
+### 2. Inkwell Ward — 1 Ink — Seal
 
 - **Play:** Gain 5 Guard.
 - **Bind:** Start each combat with 5 Guard.
@@ -117,7 +118,7 @@ Summary first (QA can check the compact lines and costs against this table alone
 - **When you bind it:** the map ahead is attackers and the warden, and the opening enemy turn keeps costing health. Binding a copy also thins a starter out of the deck.
 - **When you regret it:** you bound it before meeting the frayer, whose first telegraph is a fray, so the next fight opens with no Guard and a dead slot; or you played it on a turn the enemy was guarding, not attacking, and the Guard vanished at your next turn.
 
-### 3. Torn Margin — 1 Ink
+### 3. Torn Margin — 1 Ink — Marginalia
 
 - **Play:** Draw 2 pages.
 - **Bind:** Draw 1 more page at the start of each turn.
@@ -125,7 +126,7 @@ Summary first (QA can check the compact lines and costs against this table alone
 - **When you bind it:** the deck is eight pages or fewer and cycles every two turns; one more draw means seeing the whole deck most turns. It is the first draw passive and is capped by §7.
 - **When you regret it:** the deck is fifteen pages with three Water-stains in it, so the extra draw is a stain as often as not; or the frayer takes it in the fight you planned around a six-page hand.
 
-### 4. Pressed Thorn — 1 Ink
+### 4. Pressed Thorn — 1 Ink — Writ
 
 - **Play:** Deal 4 damage to an enemy.
 - **Bind:** Whenever an enemy attacks you, deal 3 damage to it.
@@ -133,7 +134,7 @@ Summary first (QA can check the compact lines and costs against this table alone
 - **When you bind it:** fights with two or three attackers, where it returns 6 to 9 damage per enemy turn for nothing.
 - **When you regret it:** bound before a stretch of frayers and foulers, which attack rarely, so the slot sat idle; or the boss severs it and the deck has no 4-damage page left for finishing.
 
-### 5. Tally Mark — 1 Ink
+### 5. Tally Mark — 1 Ink — Marginalia
 
 - **Play:** Gain 2 Ink.
 - **Bind:** Gain 1 more Ink at the start of each turn.
@@ -141,7 +142,7 @@ Summary first (QA can check the compact lines and costs against this table alone
 - **When you bind it:** early, in most runs: 4 Ink a turn turns a 2-page turn into a 3-page turn for the whole floor. It is the "bound too early" page the vision statement talks about.
 - **When you regret it:** the frayer turns it off and the hand is three 2-cost pages on 3 Ink; or the warden's fray telegraph points at it and the only Guard page is in the discard. Playing it the turn before you could have bound it is the small regret.
 
-### 6. Candle Debt — 2 Ink
+### 6. Candle Debt — 2 Ink — Writ
 
 - **Play:** Deal 14 damage to an enemy. Add a Water-stain to your discard.
 - **Bind:** Whenever another binding of yours is frayed, gain 2 Ink at the start of your next turn.
@@ -149,7 +150,7 @@ Summary first (QA can check the compact lines and costs against this table alone
 - **When you bind it:** the map ahead is fray-heavy (warden, frayers) and you wear Wax Seal, so every fray that lands pays 2 Ink the next turn.
 - **When you regret it:** played three times in one fight, it leaves three Water-stains in a ten-page deck; bound on a floor with one frayer, it is a dead slot that cost 2 Ink; frayed itself, it pays nothing.
 
-### 7. Wax Seal — 2 Ink
+### 7. Wax Seal — 2 Ink — Seal
 
 - **Play:** Gain 8 Guard.
 - **Bind:** When an enemy would fray another binding of yours, this binding is frayed instead.
@@ -157,7 +158,7 @@ Summary first (QA can check the compact lines and costs against this table alone
 - **When you bind it:** you have one binding you cannot afford to lose (Tally Mark, Torn Margin) and a fray is coming. Once Wax Seal is frayed it applies nothing until end of combat, so it takes exactly one fray per fight.
 - **When you regret it:** the boss severs instead of fraying, and Wax Seal does nothing against a sever; or it cost 2 Ink and a slot to protect a binding the enemies never targeted.
 
-### 8. Lantern Oath — 2 Ink
+### 8. Lantern Oath — 2 Ink — Writ
 
 - **Play:** Deal 5 damage to each enemy.
 - **Bind:** At the end of each of your turns, deal 2 damage to each enemy.
@@ -165,7 +166,7 @@ Summary first (QA can check the compact lines and costs against this table alone
 - **When you bind it:** a floor of two- and three-enemy fights, where 4 to 6 damage every turn for no Ink adds up.
 - **When you regret it:** the warden and the boss are alone, and 2 damage a turn is a slow slot against 50 or 90 health; or you played it into a single enemy for 5.
 
-### 9. Errata Slip — 1 Ink
+### 9. Errata Slip — 1 Ink — Marginalia
 
 - **Play:** Remove every Water-stain in your hand and discard from the run.
 - **Bind:** After each combat you win, remove every Water-stain in your deck from the run.
@@ -173,7 +174,7 @@ Summary first (QA can check the compact lines and costs against this table alone
 - **When you bind it:** the map has more than one fouler ahead. Stains still hurt during a fight, but never carry between fights. The passive fires at the end of the fight, so a fray during the fight stops it (pillar 2).
 - **When you regret it:** no fouler on the chosen path, so both faces do nothing; or the frayer turns it off in the fouler fight, the stains stay, and the slot could have held Pressed Thorn.
 
-### 10. Footnote — 0 Ink
+### 10. Footnote — 0 Ink — Marginalia
 
 - **Play:** Draw a page.
 - **Bind:** At the end of your turn, your highest-cost page stays in your hand instead of being discarded (leftmost if tied).
@@ -181,7 +182,7 @@ Summary first (QA can check the compact lines and costs against this table alone
 - **When you bind it:** the deck has Drowned Codicil or Oath of the Dry Hand, so a 3-cost page drawn with 1 Ink left is held for the next turn instead of lost. Binding costs 0 Ink, so it is also the cheapest way to thin a page.
 - **When you regret it:** the highest-cost page in hand is a Water-stain and it keeps coming back; or a slot holding a 0-cost page is a slot not holding Tally Mark.
 
-### 11. Docket Stamp — 2 Ink
+### 11. Docket Stamp — 2 Ink — Writ
 
 - **Play:** Remove all Guard from an enemy, then deal 6 damage to it.
 - **Bind:** Enemies gain 3 less Guard.
@@ -189,7 +190,7 @@ Summary first (QA can check the compact lines and costs against this table alone
 - **When you bind it:** the floor has guarding enemies on most nodes (T5 gives the plain attacker a guard action), so every strike lands fuller.
 - **When you regret it:** fights of frayers and foulers that never guard; or played on an enemy with no Guard for 6 damage at 2 Ink, when Nib Cut did 6 for 1.
 
-### 12. Sealed Lien — 2 Ink
+### 12. Sealed Lien — 2 Ink — Writ
 
 - **Play:** Deal 7 damage to an enemy and gain 4 Guard.
 - **Bind:** Whenever you gain Guard, deal 1 damage to each enemy.
@@ -197,7 +198,7 @@ Summary first (QA can check the compact lines and costs against this table alone
 - **When you bind it:** the deck leans on Guard (three Inkwell Wards, Wax Seal, Knotted Thread), so each Guard page also chips every enemy.
 - **When you regret it:** a damage-and-draw deck where the only Guard gain is Inkwell Ward's start of combat; or the slot was needed for Lantern Oath, which does the same job better in three-enemy fights.
 
-### 13. Drowned Codicil — 3 Ink
+### 13. Drowned Codicil — 3 Ink — Writ
 
 - **Play:** Deal 20 damage to an enemy.
 - **Bind:** At the start of each combat, deal 6 damage to each enemy.
@@ -205,7 +206,7 @@ Summary first (QA can check the compact lines and costs against this table alone
 - **When you bind it:** a long floor of common fights with 20-health enemies, where 6 to every enemy before the first turn shortens every fight by a turn.
 - **When you regret it:** binding costs 3 Ink, a whole turn of doing nothing else; and the boss severs it in the fight where you wanted the 20. Held in hand with 2 Ink, it is a dead draw unless Footnote is bound.
 
-### 14. Salt Line — 1 Ink
+### 14. Salt Line — 1 Ink — Seal
 
 - **Play:** Heal 4.
 - **Bind:** After each combat you win, heal 3.
@@ -213,7 +214,7 @@ Summary first (QA can check the compact lines and costs against this table alone
 - **When you bind it:** early on the floor with five or more fights ahead. Rests in M1 unbind, they do not heal, so this is the only steady healing.
 - **When you regret it:** bound with two fights left before the boss, 6 health for a slot; or played at full health because nothing else was in hand.
 
-### 15. Knotted Thread — 1 Ink
+### 15. Knotted Thread — 1 Ink — Seal
 
 - **Play:** Gain 3 Guard for each binding you have.
 - **Bind:** Whenever another binding of yours is frayed, gain 6 Guard.
@@ -221,7 +222,7 @@ Summary first (QA can check the compact lines and costs against this table alone
 - **When you bind it:** the warden is next and you wear bindings you expect to lose; each fray that lands pays Guard against the attack that comes with it.
 - **When you regret it:** played with no bindings for 0 Guard; bound as your only binding, so there is nothing else to be frayed and it never triggers.
 
-### 16. Blank Folio — 1 Ink
+### 16. Blank Folio — 1 Ink — Writ
 
 - **Play:** Deal 3 damage to an enemy for each empty bind slot.
 - **Bind:** At the start of each turn, gain 2 Guard for each empty bind slot.
@@ -229,7 +230,7 @@ Summary first (QA can check the compact lines and costs against this table alone
 - **When you bind it:** a cautious run with one other binding; it fills a slot and the two empty ones left give 4 Guard a turn for nothing.
 - **When you regret it:** every binding you add shrinks both faces; with three bindings worn it is a 1-Ink page that does nothing. A sever, oddly, makes it stronger, which is the only consolation a sever offers.
 
-### 17. Ledger of Debts — 2 Ink
+### 17. Ledger of Debts — 2 Ink — Writ
 
 - **Play:** Deal 1 damage to an enemy for each page in your discard.
 - **Bind:** Whenever your discard is shuffled into your deck, gain 5 Guard.
@@ -237,7 +238,7 @@ Summary first (QA can check the compact lines and costs against this table alone
 - **When you bind it:** a thin deck that reshuffles every two turns, so the Guard arrives every other turn.
 - **When you regret it:** played on turn 1 with an empty discard for 0; bound in a fifteen-page deck that reshuffles once a fight.
 
-### 18. Blotting Sheet — 1 Ink
+### 18. Blotting Sheet — 1 Ink — Writ
 
 - **Play:** Deal 7 damage to an enemy. Remove a Water-stain from your hand from the run.
 - **Bind:** Whenever a Water-stain is added to your discard, deal 4 damage to each enemy.
@@ -245,7 +246,7 @@ Summary first (QA can check the compact lines and costs against this table alone
 - **When you bind it:** the path has foulers, so every foul action costs the enemies 4 each and the fouler's own plan hurts it.
 - **When you regret it:** no fouler ahead, so the bind face never fires and the 7-damage play is gone from the deck.
 
-### 19. Oath of the Dry Hand — 3 Ink
+### 19. Oath of the Dry Hand — 3 Ink — Seal
 
 - **Play:** Gain 15 Guard.
 - **Bind:** Enemy attacks deal 1 less damage to you.
@@ -253,7 +254,7 @@ Summary first (QA can check the compact lines and costs against this table alone
 - **When you bind it:** fights of many small attacks (three attackers, two hits each) where 1 less per hit is 6 health a turn.
 - **When you regret it:** 3 Ink to bind is a turn lost; against one enemy that hits once for 12, the bind saves 1. Played when the telegraph was a fray, the 15 Guard did nothing for the binding.
 
-### 20. Flooded Index — 0 Ink
+### 20. Flooded Index — 0 Ink — Marginalia
 
 - **Play:** Draw a page. Lose 2 health.
 - **Bind:** At the start of each turn, draw 1 more page and lose 1 health.
@@ -261,7 +262,7 @@ Summary first (QA can check the compact lines and costs against this table alone
 - **When you bind it:** a thin, fast deck with Salt Line bound to pay the health back; the second draw passive, capped by §7.
 - **When you regret it:** a long boss fight bleeds 1 a turn for twelve turns; a stain-filled deck draws stains. When the frayer turns it off, the bleeding stops with the drawing, which is the only fray a player may be glad of.
 
-### 21. Water-stain — 1 Ink (foul page)
+### 21. Water-stain — 1 Ink — Foul (foul page)
 
 - **Play:** Remove this page from the run.
 - **Bind:** No effect. The page fills the slot until you unbind it at a rest.
@@ -270,6 +271,49 @@ Summary first (QA can check the compact lines and costs against this table alone
 - **When you regret it:** the 1 Ink was the Nib Cut that would have ended the fight; the slot it fills is the one the next reward wanted.
 
 Water-stain is added by the deck-fouler's foul action (T5) and by Candle Debt's Play. It is never offered as a reward. It is a page like any other for E1, E2, E5 and E9: it shows both faces, both can be used, it fills a slot when bound, and it returns when unbound.
+
+## 5A. Page categories
+
+Status: **proposed** (SOU-99, 2026-11-26). The Board asked for categories on 2026-11-26 in answer to Art Bible v2 open question 5, so that the card frame can code them (Art Bible v2 §8: frame colour and frame ornament differ per category; v2 is proposed in SOU-97, deckbound PR #42). Categories exist for the player's eye and for the frame. They are **not a rule**: no page text, cost or effect refers to a category, and no category gives a bonus. T6 and T7 ignore them.
+
+### Why four, and how a page is placed
+
+A page is one card with two faces, so it has one category for the whole card, and the **Play face decides it**. Play is the face the player reads first and drags, so the frame must help with that decision; the Bind face is read in the spread, where the full text is available. The categories follow the three things a torn-out page can do (hurt an enemy, keep the Scrivener whole, change what the hand holds) plus the page the enemies add. Four is the count because art tints a few neutral frame pieces by shader rather than drawing one frame per card (Art Bible v2 §8), and every extra category is one more ornament to draw and one more colour for the player to learn.
+
+Placement rule, applied in this order, so every page lands in exactly one category:
+
+1. A page that an enemy adds to the deck and that is never offered as a reward is **Foul**, whatever its text.
+2. Otherwise, if the Play text deals damage (to one enemy or to each enemy), the page is a **Writ**.
+3. Otherwise, if the Play text gains Guard or heals, the page is a **Seal**.
+4. Otherwise (the Play text draws, gives Ink or removes Water-stains), the page is **Marginalia**.
+
+Consequences of the order, so nobody has to guess: Sealed Lien deals 7 and gains 4 Guard, so it is a Writ (rule 2 before rule 3). Blotting Sheet deals 7 and purges a stain, so it is a Writ; Errata Slip only purges, so it is Marginalia. Candle Debt is a Writ although its Play adds a stain: the stain is the price, not the page's job. Lantern Oath is a Writ with target *none*, because it hits every enemy from the play area; the other nine Writs drop on an enemy. Blank Folio and Ledger of Debts are Writs although their Bind faces give Guard, because the Bind face never moves a page.
+
+### The categories
+
+| Category | Rule: what belongs | Why the player wants it at a glance | Suggested hue family (Art decides) | Pages |
+|---|---|---|---|---|
+| **Writ** | A page whose Play deals damage, to one enemy or to each. | With telegraphs showing, the first question each turn is whether the hand can kill before the enemy acts. Writ frames let the player sum the damage in hand before reading a line, and because nine of the ten drop on an enemy, the frame also says where the drag will end. | **Warm red-orange to copper**: the Attack accent family of Art Bible v2 §10, so the frame agrees with the attack telegraph. Ornament suggestion: pointed corners (§10 pairs Attack with a sharp shape). | 10: Nib Cut, Pressed Thorn, Candle Debt, Lantern Oath, Docket Stamp, Sealed Lien, Drowned Codicil, Blank Folio, Ledger of Debts, Blotting Sheet |
+| **Seal** | A page whose Play gains Guard or heals, and deals no damage. | When an attack is telegraphed, the player needs the answer now. Seal frames are the pages that stop or undo damage, so the eye finds them before the numbers. | **Cool blue**: the Guard accent family of §10, so Guard on a card and Guard on the telegraph share a hue. Ornament suggestion: rounded corners with a clasp (§10 pairs Guard with a rounded shield). | 5: Inkwell Ward, Wax Seal, Salt Line, Knotted Thread, Oath of the Dry Hand |
+| **Marginalia** | A page whose Play changes what the hand holds: draws, gives Ink, keeps a page, or clears Water-stains. It neither deals damage nor guards. | These are played first: a draw or an Ink gain changes the rest of the turn, so a frame that says "play me before you decide" lets the player order the turn. Their Bind faces are also the draw and Ink passives that §7 caps, so the frame marks the bindings the thin-deck rules watch. | **Ochre to sepia-gold**: the map's parchment family of §4, lifted above the stage. Warm but lighter and less saturated than Writ, so in greyscale a Writ and a Marginalia still differ in value. Not green: §4 forbids red against green for any meaning, and Writ is red-orange. Ornament suggestion: a ruled margin line or bracket along one edge. | 5: Torn Margin, Tally Mark, Errata Slip, Footnote, Flooded Index |
+| **Foul** | A page an enemy adds to the deck. It is never offered as a reward. | The fouler's whole plan is to clog the hand. A stain the player spots at once is a stain they can pay away or bind before it costs a turn, and the frame stops it being mistaken for a 1-Ink page worth dragging onto an enemy. | **Muted violet**: the Foul accent of §10, so the fouler's telegraph, its action and the page it leaves behind share one family. Ornament suggestion: a blotted, dripping edge (§10 pairs Foul with a drip shape). | 1: Water-stain |
+
+Counts: 10 + 5 + 5 + 1 = 21, every page in §5 once. The starting deck (§6) is 5 Writs, 3 Seals and 2 Marginalia; the reward pool is 9 Writs, 4 Seals and 5 Marginalia. The pool offers three distinct pages at equal weight (§6), so categories do not weight rewards in M1; if T19 ever wants per-category reward weights, that is a tuning-sheet change, not a change here.
+
+Notes for Art and UI (`game-artist`, `ui-designer`):
+
+- Colour is never the only cue (Art Bible v2 pillar 7): each category has an ornament shape as well as a hue, and the four hue families must survive the greyscale and deuteranopia checks of v2 §4 and §14. The suggestions above are starting points; Art makes the final colour call.
+- The category word is **not printed on the compact face**: the compact lines are capped at 24 characters (§3 rule 1) and there is no room. The frame carries the category. The spread may show the word on the spine or name ribbon if `ui-designer` finds room; that is optional.
+- The bind slot icon also uses a seal mark for its four states (v2 §9). The Seal frame ornament must stay distinct from the slot's seal, so a frame is never read as a slot state. Wax Seal the page is a Seal; the overlap is intended, it is the category's plainest example.
+- The category names are the Chancery's own words. None is a category name used by the five reference games of §3 rule 11 (which use, for example, Attack, Skill, Power, Status, Curse, Unit and Spell). This keeps E7 and §8's banned-word list intact: "Status" as a card type stays unused.
+
+### Rarity in M1: none
+
+Every M1 page is one tier; there is no rarity, so no per-page list. Reasons: the reward screen offers three distinct pool pages at equal weight (§6, T15), so a tier would have no rule to serve; 18 pool pages are too few to split into tiers the player would notice across a one-floor run; and Art Bible v2 §8 adds rarity frame variants only when the game has rarity, so M1 needs one tint per category and nothing more. When a larger pool with weighted rewards arrives (M2 or later), rarity becomes a per-page field with its own design note. This note does not pre-assign tiers.
+
+### Data and code: not in this task
+
+No `category` key is added to `data/pages/*.json`, and `data/README.md`, `scripts/data/data_loader.gd` and the card scenes are unchanged by SOU-99. **`gameplay-programmer` owns the follow-up**: a later task adds `category` to the page schema with the values `writ`, `seal`, `marginalia` and `foul`, validates it in the loader, and exposes it to the card scene for the frame tint. Until that task lands, QA checks categories against the §5 table and this section only (§10 criterion 12).
 
 ## 6. Starting deck and reward pool
 
@@ -340,11 +384,11 @@ Suggested effect ids, one per distinct effect in §5, so the T3 schema's `play` 
 
 - Play effects: `damage` (target, amount), `damage_all` (amount), `guard` (amount), `draw` (count), `ink` (amount), `heal` (amount), `lose_health` (amount), `add_page_to_discard` (page id), `remove_this_page`, `remove_stains_hand_and_discard`, `remove_stain_from_hand` (count 1), `remove_enemy_guard` (target), `damage_per_empty_slot` (target, per), `damage_per_discard_page` (target, per), `guard_per_binding` (per).
 - Bind passives: `played_damage_bonus` (1), `start_combat_guard` (5), `turn_draw` (1), `thorns` (3), `turn_ink` (1), `on_other_fray_next_turn_ink` (2), `absorb_fray`, `end_turn_damage_all` (2), `after_win_remove_stains`, `retain_highest_cost`, `enemy_guard_reduction` (3), `on_guard_gain_damage_all` (1), `start_combat_damage_all` (6), `after_win_heal` (3), `on_other_fray_guard` (6), `turn_guard_per_empty_slot` (2), `on_reshuffle_guard` (5), `on_stain_added_damage_all` (4), `incoming_attack_reduction` (1), `turn_draw_lose_health` (1, 1), `none`.
-- Per-page fields this note fixes: `id`, `name`, `cost`, `compact_play`, `compact_bind`, `play_text`, `bind_text`, `target` (`enemy` | `none`), `pool` (bool). Everything else (illustration id, rarity) is out of M1 scope.
+- Per-page fields this note fixes: `id`, `name`, `cost`, `compact_play`, `compact_bind`, `play_text`, `bind_text`, `target` (`enemy` | `none`), `pool` (bool). `category` (§5A) is fixed by this note but is **not** a data field yet; `gameplay-programmer` adds it in a later task. Illustration id is out of M1 scope; rarity is not used in M1 (§5A).
 
 ## 10. Acceptance criteria
 
-QA checks 1–7 against this document and the T4b data files; 8–10 on the build (headless test or device). Criteria 1–7 can be checked today by reading; `director` checks 11.
+QA checks 1–7 and 12 against this document and the T4b data files; 8–10 on the build (headless test or device). Criteria 1–7 and 12 can be checked today by reading; `director` checks 11.
 
 1. The note lists exactly 21 page ids (20 pages plus Water-stain), and T4b's `data/pages/` contains exactly those ids, no more, no fewer.
 2. Every page has a name of at most 20 characters, an Ink cost of 0 to 3, a compact Play line and a compact Bind line of at most 24 characters each, a full Play text and a full Bind text. The compact lines in §5's table match the per-page entries character for character.
@@ -357,6 +401,7 @@ QA checks 1–7 against this document and the T4b data files; 8–10 on the buil
 9. E15 on device: because the starting deck (10) minus the slot count (3) never reaches the floor of 5, QA's test plan sets `deck_floor` to 8 in a test copy of `data/run/rules.json` (or uses a build flag T3 provides) so the third bind of a run is refused with the deck at 8; and separately plays a Water-stain to confirm removal from the run is not refused by the floor.
 10. In the build, every one of the 21 pages shows its compact face in hand with the exact lines from §5, and the spread shows the full Play text left and full Bind text right (E1, E9).
 11. `director`: the §8 table is complete and every row passes; no name, text line or signature combination matches Slay the Spire, Slay the Spire 2, Monster Train, Inscryption or Griftlands (E7).
+12. Categories (§5A): every page in §5 shows exactly one of Writ, Seal, Marginalia or Foul, in both the table's Category column and its heading, and the two agree. Applying §5A's placement rule to each page's full Play text reproduces the column (QA can re-derive it). The §5A page lists count 10 + 5 + 5 + 1 = 21 with no page missing or repeated. No `category` or `rarity` key exists in `data/pages/` until `gameplay-programmer`'s follow-up task lands.
 
 ## 11. Open points for the reviewer
 

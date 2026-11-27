@@ -1,7 +1,7 @@
 # Art Tool Decisions (Art Phase 0)
 
 Status: **proposed** (SOU-33). Every row marked "Board" needs Board approval. Nothing here is installed, purchased or adopted.
-Companions: [ART-PIPELINE.md](ART-PIPELINE.md), [ART-PIPELINE-AUDIT.md](ART-PIPELINE-AUDIT.md), [ART-BIBLE.md](ART-BIBLE.md), [../concept.md](../concept.md).
+Companions: [ART-PIPELINE.md](ART-PIPELINE.md), [ART-BIBLE.md](ART-BIBLE.md), [../concept.md](../concept.md).
 
 ## How to read this
 
@@ -78,11 +78,11 @@ Pipeline §1 says adopt Spine only after a proof of concept in the real Godot pr
 
 | Tool | Role | Decision | Notes |
 |---|---|---|---|
-| Krita | Primary 2D editor: paintover, cleanup, layered `.kra` sources | Keep (pipeline). Free and open source. *Verify* the installed version | Sources go to `art_src/`, binary in git per `.gitattributes` |
+| Krita | Optional editor for hand fixes (deckbound PR #20); not part of the default pipeline | Keep as optional. Free and open source. *Verify* the installed version | Sources go to `art_src/`, binary in git per `.gitattributes` |
 | Blender | Optional blockouts and pose references | Keep as optional, no install pre-approved | Reference only; never shipped as 3D |
 | Python 3 | Validators: dimensions, naming, atlas sizes, alpha | Keep. **present**, 3.12.10. Validators belong to `gameplay-programmer` (pipeline tooling) | `game-artist` supplies the art-side rules (Art Bible) |
 | Git LFS | Large binary art | **Defer.** Not configured. Source `.kra` files can grow; revisit when `art_src/` passes a size threshold the Board sets (suggest 500 MB total) | Needs approval to initialise |
-| PixelFX | Pixel-art VFX sprites | Approval status not checked (no repository document records a Board decision); use only if approved and installed. The visual direction is painterly, so use only where the Art Bible's VFX rules allow it | Provenance must record its use |
+| PixelFX | Pixel-art VFX sprites | Approval status not checked (no repository document records a Board decision); use only if approved and installed. The house style is A Ink Cel (Art Bible §3A), so use only where the Art Bible's VFX rules allow it | Provenance must record its use |
 | Texture packing / atlas tool | Packing sprites into atlases | **Open.** Godot's import plus a validator script may be enough; choose in Phase 1 | `gameplay-programmer` |
 | Godot 4.6.3 | Runtime | Keep. Android export needs the items in audit §3 | |
 

@@ -8,6 +8,7 @@ func test() -> void:
   _test_unknown_effect_error_contains_file_and_field()
   _test_wrong_type_error_contains_file_and_field()
   _test_invalid_page_target_error_contains_file_and_field()
+  _test_enemy_hits_accepts_integer_valued_json_numbers()
   _test_fray_action_without_fallback_error_contains_file_and_field()
   _test_unknown_telegraph_reference_error_contains_file_and_field()
   _test_invalid_enemy_size_class_error_contains_file_and_field()
@@ -79,6 +80,31 @@ func _test_invalid_page_target_error_contains_file_and_field() -> void:
   assert_true(page == null, "Page with invalid target should fail.")
   assert_true(_array_contains_substring(errors, "$.target"), "Error should include target field path.")
   assert_true(_array_contains_substring(errors, "Unknown target"), "Error should explain invalid target enum.")
+
+func _test_enemy_hits_accepts_integer_valued_json_numbers() -> void:
+  var root: String = _create_fixture_root("enemy_hits_float_json_number")
+  var file_path: String = "%s/enemies/registrar.json" % root
+  var payload: Dictionary = _create_valid_enemy_payload("registrar", "Registrar")
+  payload["actions"] = [
+    {"id": "double_rap", "type": "attack", "value": 3, "hits": 2},
+    {
+      "id": "fray_press",
+      "type": "fray",
+      "value": 1,
+      "fallback": {"type": "attack", "value": 4, "hits": 2}
+    }
+  ]
+  payload["telegraph_pattern"] = ["double_rap", "fray_press"]
+  _write_json(file_path, payload)
+
+  var errors: Array[String] = []
+  var enemy: Variant = DATA_LOADER.load_enemy_file(file_path, errors)
+  assert_true(enemy != null, "Enemy with integer-valued hits should load.")
+  assert_equal(errors.size(), 0, "Expected no errors for integer-valued hits JSON numbers.")
+  assert_equal(typeof(enemy.actions[0]["hits"]), TYPE_INT, "Action hits should be stored as an int.")
+  assert_equal(enemy.actions[0]["hits"], 2, "Expected attack action to keep hits.")
+  assert_equal(typeof(enemy.actions[1]["fallback"]["hits"]), TYPE_INT, "Fallback hits should be stored as an int.")
+  assert_equal(enemy.actions[1]["fallback"]["hits"], 2, "Expected fallback action to keep hits.")
 
 func _test_fray_action_without_fallback_error_contains_file_and_field() -> void:
   var root: String = _create_fixture_root("missing_fallback")

@@ -1,0 +1,20 @@
+{
+  "id": "candle_debt",
+  "name": "Candle Debt",
+  "cost": 2,
+  "compact": {
+    "play": "Deal 14, add a stain",
+    "bind": "Fray gives 2 Ink"
+  },
+  "play_text": "Deal 14 damage to an enemy. Add a Water-stain to your discard.",
+  "bind_text": "Whenever another binding of yours is frayed, gain 2 Ink at the start of your next turn.",
+  "target": "enemy",
+  "pool": true,
+  "play_effects": [
+    { "id": "damage", "params": { "amount": 14, "target": "enemy" } },
+    { "id": "add_page_to_discard", "params": { "page_id": "water_stain" } }
+  ],
+  "bind_passives": [
+    { "id": "on_other_fray_next_turn_ink", "params": { "amount": 2 } }
+  ]
+}

@@ -1,0 +1,19 @@
+{
+  "id": "wax_seal",
+  "name": "Wax Seal",
+  "cost": 2,
+  "compact": {
+    "play": "Gain 8 Guard",
+    "bind": "Takes the fray instead"
+  },
+  "play_text": "Gain 8 Guard.",
+  "bind_text": "When an enemy would fray another binding of yours, this binding is frayed instead.",
+  "target": "none",
+  "pool": true,
+  "play_effects": [
+    { "id": "guard", "params": { "amount": 8 } }
+  ],
+  "bind_passives": [
+    { "id": "absorb_fray" }
+  ]
+}

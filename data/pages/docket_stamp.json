@@ -1,0 +1,20 @@
+{
+  "id": "docket_stamp",
+  "name": "Docket Stamp",
+  "cost": 2,
+  "compact": {
+    "play": "Break Guard, deal 6",
+    "bind": "Enemy Guard 3 less"
+  },
+  "play_text": "Remove all Guard from an enemy, then deal 6 damage to it.",
+  "bind_text": "Enemies gain 3 less Guard.",
+  "target": "enemy",
+  "pool": true,
+  "play_effects": [
+    { "id": "remove_enemy_guard", "params": { "target": "enemy" } },
+    { "id": "damage", "params": { "amount": 6, "target": "enemy" } }
+  ],
+  "bind_passives": [
+    { "id": "enemy_guard_reduction", "params": { "amount": 3 } }
+  ]
+}

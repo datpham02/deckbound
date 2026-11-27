@@ -1,0 +1,19 @@
+{
+  "id": "salt_line",
+  "name": "Salt Line",
+  "cost": 1,
+  "compact": {
+    "play": "Heal 4",
+    "bind": "Heal 3 after each win"
+  },
+  "play_text": "Heal 4.",
+  "bind_text": "After each combat you win, heal 3.",
+  "target": "none",
+  "pool": true,
+  "play_effects": [
+    { "id": "heal", "params": { "amount": 4 } }
+  ],
+  "bind_passives": [
+    { "id": "after_win_heal", "params": { "amount": 3 } }
+  ]
+}

@@ -1,0 +1,19 @@
+{
+  "id": "nib_cut",
+  "name": "Nib Cut",
+  "cost": 1,
+  "compact": {
+    "play": "Deal 6",
+    "bind": "Strikes deal 1 more"
+  },
+  "play_text": "Deal 6 damage to an enemy.",
+  "bind_text": "Pages you play that deal damage deal 1 more.",
+  "target": "enemy",
+  "pool": false,
+  "play_effects": [
+    { "id": "damage", "params": { "amount": 6, "target": "enemy" } }
+  ],
+  "bind_passives": [
+    { "id": "played_damage_bonus", "params": { "amount": 1 } }
+  ]
+}

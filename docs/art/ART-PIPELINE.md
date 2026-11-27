@@ -17,7 +17,7 @@
 | Tool | Purpose | Policy |
 |---|---|---|
 | Godot 4.x | Game runtime, scenes, UI, animation playback, particles, shaders, asset integration | Primary engine; verify exact project version before configuring |
-| Krita | Paintovers, cleanup, masks, texture edits, card art and background corrections | Primary 2D art editor |
+| Krita | Optional hand fixes: cleanup, masks, corrections | Optional editor (deckbound PR #20); not part of the default pipeline |
 | Blender | Optional 3D blockouts, pose references, turnarounds and controlled renders | Use only where it saves time or improves consistency |
 | Spine 2D | Optional skeletal rigging/animation for recurring characters and enemies | Adopt only after a short import/export proof of concept in the actual Godot project |
 | Git + Git LFS (if needed) | Versioning source art and large binary assets | Follow existing repository conventions; do not initialize or reconfigure without approval |
@@ -25,7 +25,7 @@
 
 ### Image generation
 
-Use an image-generation model/service for original concept exploration and draft illustrations, then refine/approve in Krita. The selected provider is **TBD** and must be chosen based on licensing, commercial-use terms, privacy, consistency, cost and the user's available subscriptions.
+**Board decision 2026-11-22: AI makes the final art.** The local ComfyUI (D1: FLUX.1 schnell and SDXL) produces final illustrations as well as concepts: new images through `comfy-draft.py` (text prompts only), edits of Deckbound's own art through `comfy-edit.py` (deckbound PR #27). A generated image becomes final art through selection, regeneration for consistency and scripted operations (colour-key, trim, resize, grade, sprite sheets: `art-ops`), not through a required human paintover in Krita. Krita stays available for optional hand fixes. Every asset still passes the review stages its Task names (at least `qa`, and Director review for originality and the Art Bible) and Board approval by eye. Known trade-off accepted by the Board: purely AI-generated images may get no copyright protection in some jurisdictions.
 
 Do not assume Claude Code itself is the image generator. Claude Code should orchestrate prompts, files, validation and integration around a separately selected image-generation tool.
 
@@ -44,7 +44,7 @@ If the integration or license cost is not justified, use Godot's built-in 2D ske
 
 Aim for these high-level qualities:
 - Dark fantasy atmosphere with readable silhouettes.
-- Painterly, hand-illustrated character and card art.
+- House style per [Art Bible v2](ART-BIBLE.md) (§2 to §3): bold uneven outline on characters only, flat cel shading with one shadow tone, exaggerated cartoon proportions, actors lighter and more saturated than the stage, for character, enemy and card art.
 - Restrained, coherent palette and deliberate value contrast.
 - Distinctive shapes and silhouettes for enemies, heroes and relics.
 - Clear focal hierarchy: gameplay information first, decoration second.
@@ -74,6 +74,7 @@ Referencing Slay the Spire 2 (and other games) for visual study **is allowed and
 - Tracing, paintover or photo-bashing on top of reference images.
 - Feeding reference images into image-generation tools as input, style reference or training data.
 - Reusing names, card text, character designs, icons, symbols or UI layouts one-to-one.
+- Using images, renders or data from sites or repositories that redistribute files extracted from a game (for example spire-codex.com), even when they are publicly reachable.
 
 Each moodboard/reference sheet records its sources (URL or "own capture, legally owned copy, date") in `design/assets/references/`.
 
@@ -84,8 +85,8 @@ Each moodboard/reference sheet records its sources (URL or "own capture, legally
 | Player character | Original layered illustration; selective 2D rig | Idle, attack, hit, defend, death/defeat as required |
 | Common enemies | Original illustration; rig only for recurring/high-visibility enemies | Idle, intent/telegraph, attack, hit, death |
 | Bosses | Higher-detail original illustration; selective rig or limited frame animation | Telegraph, major attack, hit, phase transition, defeat |
-| Card illustrations | Original generated concept + human paintover/cleanup | Static; use Godot for hover, play and combat feedback |
-| Relics, potions, icons | Consistent icon family, paintover and cleanup | Static with lightweight UI feedback |
+| Card illustrations | Original generated illustration, selected and cleaned up by script (Board 2026-11-22) | Static; use Godot for hover, play and combat feedback |
+| Relics, potions, icons | Consistent icon family, generated or drawn, cleaned up by script | Static with lightweight UI feedback |
 | Environments | Layered painted backgrounds and props | Parallax only where it adds value |
 | VFX | Godot particles, shaders, procedural effects, small hand-authored sprites | Runtime effects |
 | UI frames and panels | Godot Control nodes + original decorative textures | Runtime layout and state transitions |
@@ -133,7 +134,7 @@ Claude must:
 3. Report missing tools, extensions, runtimes or licensing dependencies.
 4. Avoid installing tools, changing global configuration, changing project settings or modifying runtime code without explicit approval.
 
-Deliverable: `ART-PIPELINE-AUDIT.md`.
+Deliverable: an audit note (the earlier audit file was removed in the SOU-97 art reset; `TOOL-DECISIONS.md` keeps the tool decisions).
 
 ### Step 1 — Establish visual direction
 
@@ -180,7 +181,7 @@ For each asset:
 2. Prepare a prompt using original design details, not copied game content.
 3. Generate concept candidates using the selected image tool.
 4. Compare candidates against silhouette, palette, composition and readability requirements.
-5. Refine in Krita or the chosen art tool.
+5. Refine: regenerate for consistency and clean up with `art-ops` (optional hand fixes in Krita).
 6. Separate layers and prepare rigging only if needed.
 7. Export to a staging directory.
 8. Run validation scripts.
