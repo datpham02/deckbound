@@ -1,6 +1,6 @@
 # Hero style test v2 (SOU-98): notes
 
-Status (2026-11-28): round 4 delivered a gBot-style layered parts set, assembled and rotate-checked; two joints pass, three show defects. See "Round 4" at the end. The round-1 text below is kept as the record of what failed. Self-check is not an approval.
+Status (2026-11-28, round 5): the parts set is assembled and rotate-checked at ±20° on all five joints with **no transparent gap** at any joint; the remaining defects are style defects in the repainted regions (flat, un-inked fills). See "Round 5" at the end; "Round 4" is kept as the record of the previous state. The round-1 text below is kept as the record of what failed. Self-check is not an approval.
 
 ## Image count, whole task, and the Board overrides of the cap
 
@@ -13,7 +13,8 @@ Status (2026-11-28): round 4 delivered a gBot-style layered parts set, assembled
 | 3 step 2b | 0 | | flat cuts |
 | 4 run 1 (2026-11-27) | 28 (by sheet count) | Board comment 2026-11-27 17:11: "Yes, gBot-style, 30" (30 images, 3 runs) | parts inpaints and props; UNVERIFIED exact count, see Round 4 |
 | 4 run 2 (2026-11-28) | 2 | same | front-arm inpaint |
-| **Total** | **74 to 77** | | above the original cap of 40 under the three dated Board overrides above |
+| 5 run 1 (2026-11-28) | 14 | Board comment 2026-11-28 02:20 "Small fix round", 15 images, 2 runs | five defect fixes plus the torso lining; see Round 5 |
+| **Total** | **88 to 91** | | above the original cap of 40 under the four dated Board overrides above |
 
 ## Proportion choice (Board answer 1)
 
@@ -349,4 +350,53 @@ Method: `resize` `c2_final_src.png` to 261 x 381 (the figure at 345 px, its on-s
 - Not made this round: `_sil270` and `_context` of the assembled figure (the concept's `c2_final_sil270.png` and `c2_final_context.png` stand).
 
 Tools: `art-ops.py` (info, crop, resize, key, trim, mask, compose, rotate, grade, contact, diff) and `comfy-edit.py inpaint` only. No input image from outside this task; no prompt names a game, studio, artist or character. Working files were kept outside the commit; only the candidate sheets in `candidates/r4/` are committed as evidence.
+
+## Round 5: small fix round (Board, 2026-11-28; five defects, 15 images, 2 runs)
+
+Status: **all five joints rotate ±20° with no transparent gap** (head, front arm with chain and book, cloak front, cloak back, front leg). The Board's five defects are addressed; the repainted regions are flat, un-inked fills (see verdict). Images: **14 of 15**, run 1 of 2. Candidate sheets: `candidates/r5_book.png`, `r5_head.png` (head tries and the two retries), `r5_seam.png`, `r5_sleeve.png`, `r5_leg.png`, `r5_torso.png`; every cell after the first (the seed image) is one generated image.
+
+### Method (all fixes)
+Build the input with `art-ops`: the current part composed on flat grey (200,200,200), a flat colour block where the hidden area must be painted (slate 62,82,86 for cloth under the coat, ochre 186,134,38 for cloak and sleeve, dark 48,38,34 for the glove), upscale 2x, SDXL `comfy-edit inpaint` through a mask grown 8–10 px and feathered 10–12 px, downscale, `key --color 200 200 200 --tolerance 45`, crop the part box. Where the fill region overlapped already-painted (visible) pixels of the round-4 part, the round-4 part is composed back over the result, so the new paint survives only where the old part was transparent (the real gap). All inpaints report `outside_mask_changed: 0`. Negative prompt is the tool default `text, watermark, logo, signature`; model `sd_xl_base_1.0`, 30 steps, cfg 7, euler/normal.
+
+| Fix | Asset | Input (2x) | Mask (2x) | Prompt | Seeds / denoise | Kept | Result |
+|---|---|---|---|---|---|---|---|
+| 4 book | hero_r5_book | `parts/book.png` padded to 256 and upscaled to 512x512, img2img with `--backdrop 200 200 200` | none (img2img) | a thick closed leather-bound contract book with a metal clasp and torn page edges, stylised dark fantasy game prop, bold thick uneven dark brown hand-inked outline, flat colour fills with a single hard-edged shadow tone, muted dark brown and ochre, no texture, clean simple shapes, plain flat light grey background | 9401, 9402 / 0.5 | **9402** | flat fills, one hard shadow, dark outline, clasp; the old sticker rim became short dark "speed" strokes around the book |
+| 2 head | hero_r5_head | head part on grey, 576x832 | polygon 40,440 210,440 236,690 40,710 (cape extension at the hood's lower left) | the lower edge of an ochre hooded cape hanging down over the shoulders, weathered ochre cloth, flat colour fills with a single hard-edged shadow tone, bold uneven dark brown hand-inked outline, plain flat light grey background | 9501, 9502 / 0.6; retry 9503 / 0.9 (prompt adds "with folds and a torn hem") | **9502** | the model kept the flat ochre block at 0.6 and gave soft gradient folds at 0.9; the flat one is used, and only where the old part was transparent |
+| 5 seam | hero_r5_seam | cloak-front part region (part box 224,8 224x224) on grey, 448x448 | polygon 86,96 154,96 236,318 164,334 (the collar crack strip) | ochre weathered cloak collar cloth, continuous folds, flat colour fills with a single hard-edged shadow tone, bold uneven dark brown hand-inked outline | 9601, 9602 / 0.6; retry 9603 / 0.85 ("cloak cloth over the shoulder, continuous folds joining the collar") | **9602** | 9601 painted a tongue shape, 9603 a glossy rendered strip; 9602 is a flat ochre strip, composed into the crack only |
+| 3 sleeve | hero_r5_sleeve | flat seed on grey 320x576: cap ellipse 100,20 120x120, sleeve polygon 110,80 210,80 228,470 92,470, glove ellipse 105,430 110x110 | polygon around the whole seed, grow 8 feather 10 | a long ochre weathered coat sleeve hanging straight down from a round shoulder, ending in a dark leather gloved hand, stylised dark fantasy game art, flat colour fills with a single hard-edged shadow tone, bold thick uneven dark brown hand-inked outline, plain flat light grey background | 9701, 9702 / 0.65 | **9702** | 9701 spiky edges and a hairy glove; 9702 a clean flat sleeve with a belt band and a pointed dark glove, faceted (not round) cap, no ink outline |
+| 1 leg | hero_r5_leg | leg part on grey 416x1216 with slate thigh polygon 100,120 250,120 312,362 142,362 and cap ellipse 84,50 180x180 | polygon 84,70 264,70 290,140 312,362 142,362 100,140, grow 10 feather 12 | trouser thigh, dark slate cloth, flat colour, one hard shadow tone, dark brown outline | 9801, 9802 / 0.55 | **9802** | 9801 added two eye-like dots; 9802 a flat slate thigh and round cap with slight shading |
+| extra: torso lining | hero_r5_torso | torso part on grey 480x1472 with slate rect 80,932 210x510 (the coat's leg window) | same rect, grow 10 feather 12 | dark slate coat lining inside the open coat, flat colour, one hard shadow tone, dark brown outline | 9901, 9902 / 0.55 | **9901** | flat slate lining; needed because the leg check empties the window when the leg swings, which the Board's five items did not cover |
+
+### Parts table (changes from Round 4; frame 832 x 1216)
+
+| File | Size | Origin | Pivot frame | Pivot in part | Note |
+|---|---|---|---|---|---|
+| `head_hood.png` | 248x404 | (290, 12) | neck (430, 335) | (140, 323) | cape extended under the collar |
+| `torso.png` | 234x726 | (368, 284) | root (450, 650) | (82, 366) | leg window now a painted slate lining |
+| `cloak_front.png` | 551x950 | (96, 168) | collar (400, 300) | (304, 132) | collar crack filled |
+| `arm_front.png` | 88x282 | (506, 311) | shoulder (545, 345) | (39, 34) | ochre sleeve with cap and glove |
+| `arm_back.png` | 88x282 | (256, 296) | shoulder (300, 330) | (44, 34) | graded copy |
+| `leg_front.png` | 168x575 | (382, 583) | hip (455, 620) | (73, 37) | thigh and round hip cap; pivot now inside the part |
+| `leg_back.png` | 168x575 | (282, 593) | hip (355, 630) | (73, 37) | graded copy |
+| `book.png` | 208x218 | (548, 458) | hand (600, 575), child of arm_front | (52, 117) | restyled |
+| others | | | | | as in Round 4 |
+
+### Checks (`parts_assembled.png`, `parts_rotate_check.png`: rest pose, then head, arm, cloak front, cloak back, leg at -20/+20)
+
+| Joint | -20° | +20° | Verdict |
+|---|---|---|---|
+| Head | no gap: the extended cape fills the old notch; a hairline (under 3 px) along the cloak collar edge | no gap | **passes** |
+| Front arm + chain + book | no gap; the sleeve is a flat ochre bar with a soft shadow and no ink line where it shows beside the shoulder cord | no gap | **passes for gaps**; style defect |
+| Cloak front | no gap: torso and lining painted behind; the flat lining block shows below the hem | no gap | **passes** |
+| Cloak back | no gap | no gap | **passes** |
+| Front leg | no gap: the coat window shows the slate lining, not background | no gap | **passes** |
+
+Assembly against `c2_final`: hood, cloak, lantern side, cord positions, book position match; the sleeve now reads ochre like the concept but flat; the book is flat with a hard shadow and outline; the torso lining shows as a flat slate strip at the lower left of the window where the trousers are narrower than the window.
+
+### Remaining defects (honest)
+- Every repainted region is a flat fill that SDXL inpaint at denoise 0.5–0.65 left almost untouched: sleeve, cape extension, collar strip, thigh and cap, lining. They carry the right colour but not the hand-inked line of the figure. Higher denoise (0.85–0.9) produced rendered gradients or invented shapes instead of ink (head 9503, seam 9603, `candidates/r5_head.png`).
+- The sleeve's shoulder cap is faceted, not round; the glove is a dark wedge.
+- The book keeps dark strokes around it where the sticker rim was.
+- Outline weight unchanged from Round 4 (1 to 2 px at 345 px; no normalisation tool).
+- UNVERIFIED: the Round 4 run-1 provenance (unchanged, Board check).
 
