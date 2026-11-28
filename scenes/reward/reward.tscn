@@ -1,0 +1,90 @@
+[gd_scene load_steps=4 format=3]
+
+[ext_resource type="Theme" path="res://themes/placeholder_theme.tres" id="1_theme"]
+[ext_resource type="Script" path="res://scripts/screens/reward_screen.gd" id="2_script"]
+[ext_resource type="Script" path="res://scenes/combat/safe_area_margin.gd" id="3_safe"]
+
+[node name="Reward" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_theme")
+script = ExtResource("2_script")
+
+[node name="Background" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0.08, 0.1, 0.15, 1)
+
+[node name="SafeArea" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("3_safe")
+
+[node name="Layout" type="VBoxContainer" parent="SafeArea"]
+layout_mode = 2
+theme_override_constants/separation = 20
+
+[node name="Header" type="Label" parent="SafeArea/Layout"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 52
+horizontal_alignment = 1
+text = "Reward"
+
+[node name="Subtitle" type="Label" parent="SafeArea/Layout"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 30
+horizontal_alignment = 1
+text = "Choose one page for your deck, or take none."
+
+[node name="Offer" type="HBoxContainer" parent="SafeArea/Layout"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/separation = 48
+alignment = 1
+
+[node name="Detail" type="Label" parent="SafeArea/Layout"]
+custom_minimum_size = Vector2(0, 150)
+layout_mode = 2
+theme_override_font_sizes/font_size = 30
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
+text = "Tap a page to read it."
+
+[node name="Footer" type="HBoxContainer" parent="SafeArea/Layout"]
+layout_mode = 2
+theme_override_constants/separation = 60
+alignment = 1
+
+[node name="Take" type="Button" parent="SafeArea/Layout/Footer"]
+custom_minimum_size = Vector2(380, 130)
+layout_mode = 2
+focus_mode = 0
+disabled = true
+text = "Take page"
+
+[node name="TakeNone" type="Button" parent="SafeArea/Layout/Footer"]
+custom_minimum_size = Vector2(380, 130)
+layout_mode = 2
+focus_mode = 0
+text = "Take none"
+
+[node name="Status" type="Label" parent="SafeArea/Layout"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 26
+horizontal_alignment = 1
+text = "Deck: 0 pages"
