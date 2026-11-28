@@ -2,9 +2,22 @@
 
 Status (2026-11-28): round 4 delivered a gBot-style layered parts set, assembled and rotate-checked; two joints pass, three show defects. See "Round 4" at the end. The round-1 text below is kept as the record of what failed. Self-check is not an approval.
 
-Image count, whole task: rounds 1 and 2 = 28 to 31; round 3 = 16 (Board allowance 20); round 4 = 30 (Board allowance 30, see "Round 4"). Total 74 to 77 generated images, above the original cap of 40 under the Board's round-3 and round-4 allowances.
+## Image count, whole task, and the Board overrides of the cap
 
-Proportion (Board answer 1): the hero is about 5.5 heads tall in `c2_final` (hood 200 px of 1100 px). Chosen because at 345 px on screen the hood, the book at the hip, the lantern at knee height and three cord positions need vertical room; a 3.5-head figure would stack the book, cords and lantern into the same 100 px. Bible §5 says 3 to 4 heads: this is a deviation for the Board to confirm or reject.
+| Round | Images | Allowance in force | Note |
+|---|---|---|---|
+| 1 (2026-11-26) | 19 | task cap 40 | FLUX schnell, three variants |
+| 2 (2026-11-26) | 9 to 12 | cap 40, Board comment 2026-11-26 15:38 "up to 21 more (40 total)" | 4 SDXL figures stopped by the Board, 4 parts-sheet renders, and a cut-off FLUX call that made 0 or 3 (not inspectable) |
+| 3 step 1 (2026-11-26) | 8 | Board comment 2026-11-26 15:50, REDO 3: "up to 20 images in round 3" | SDXL concepts c1 to c3 |
+| 3 step 2a (2026-11-26) | 8 | Board pick 2026-11-26 16:03: "the round-3 allowance of 20 images overrides the old cap of 40" | book and lantern inpaints |
+| 3 step 2b | 0 | | flat cuts |
+| 4 run 1 (2026-11-27) | 28 (by sheet count) | Board comment 2026-11-27 17:11: "Yes, gBot-style, 30" (30 images, 3 runs) | parts inpaints and props; UNVERIFIED exact count, see Round 4 |
+| 4 run 2 (2026-11-28) | 2 | same | front-arm inpaint |
+| **Total** | **74 to 77** | | above the original cap of 40 under the three dated Board overrides above |
+
+## Proportion choice (Board answer 1)
+
+`c2_final` is about **5.5 heads tall** (hood 200 px of a 1100 px figure in the 832 x 1216 frame). I keep it because at the 270 px silhouette and the 345 px on-screen size the identity needs vertical room: the hood (top 18 %), the shoulder cord, the chest cord, the hip cord with the book beside it, and the lantern at knee height each occupy their own band, and `c2_final_sil270.png` shows all of them as separate bumps on the outline. At 3.5 heads the book, the hip cord and the lantern would share the same 60 px of a 270 px silhouette and merge into one blob. The cost is that the figure is slimmer than Bible §5's 3 to 4 heads; the stylised, big-shape read comes from the hood and cloak hem instead of the head. This is a deviation from §5 for the Board to confirm or reject; the Bible is not changed here.
 
 ## Generated images: 19 of 40 (budget)
 
