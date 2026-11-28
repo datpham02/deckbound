@@ -22,6 +22,9 @@ const CARD_COMPACT_SCENE: PackedScene = preload("res://scenes/card/card_compact.
 const SELECTED_CARD_COLOR: Color = Color(1.0, 0.9, 0.55)
 const UNSELECTED_CARD_COLOR: Color = Color.WHITE
 const RESOLVED_CARD_COLOR: Color = Color(0.72, 0.72, 0.76)
+const OFFER_CARD_WIDTH: float = 400.0
+const CARD_COMPACT_MIN_HEIGHT: float = 290.0 # card_compact.tscn custom_minimum_size.y
+const CARD_FIT_PADDING: float = 16.0
 const PREVIEW_NODE_ID: String = "fight_01"
 
 @export var preview_state: String = ""
@@ -129,7 +132,25 @@ func _rebuild_offer() -> void:
     view.set_card(COMBAT_CARD_SCRIPT.from_page_data(page), page, index)
     view.tapped.connect(_on_card_tapped)
     _offer_row.add_child(view)
+    # After add_child: the face's own _ready resets its minimum size.
+    view.custom_minimum_size = Vector2(OFFER_CARD_WIDTH, CARD_COMPACT_MIN_HEIGHT)
     _card_views.append(view)
+  _fit_offer_cards.call_deferred()
+
+## The compact face lays its rows out inside a Button, which does not grow with
+## its children. Once the rows have wrapped at the offer width, size every card
+## to the tallest face (never below the face's own minimum) so cost, name, Play
+## line and Bind line all stay inside the frame.
+func _fit_offer_cards() -> void:
+  await get_tree().process_frame
+  var height: float = CARD_COMPACT_MIN_HEIGHT
+  for view: Control in _card_views:
+    if not is_instance_valid(view):
+      return
+    var margin: Control = view.get_node("Margin") as Control
+    height = maxf(height, margin.get_combined_minimum_size().y)
+  for view: Control in _card_views:
+    view.custom_minimum_size = Vector2(OFFER_CARD_WIDTH, height + CARD_FIT_PADDING)
 
 func _refresh() -> void:
   for view: Control in _card_views:
