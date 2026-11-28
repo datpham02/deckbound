@@ -1,6 +1,10 @@
 # Hero style test v2 (SOU-98): notes
 
-Status: **partial.** Part 1 (three variants) is done. Part 2 (parts test) is **not done**: blocked by two missing `art-ops` operations (see "Parts verdict"). Self-check is not an approval.
+Status (2026-11-28): round 4 delivered a gBot-style layered parts set, assembled and rotate-checked; two joints pass, three show defects. See "Round 4" at the end. The round-1 text below is kept as the record of what failed. Self-check is not an approval.
+
+Image count, whole task: rounds 1 and 2 = 28 to 31; round 3 = 16 (Board allowance 20); round 4 = 30 (Board allowance 30, see "Round 4"). Total 74 to 77 generated images, above the original cap of 40 under the Board's round-3 and round-4 allowances.
+
+Proportion (Board answer 1): the hero is about 5.5 heads tall in `c2_final` (hood 200 px of 1100 px). Chosen because at 345 px on screen the hood, the book at the hip, the lantern at knee height and three cord positions need vertical room; a 3.5-head figure would stack the book, cords and lantern into the same 100 px. Bible §5 says 3 to 4 heads: this is a deviation for the Board to confirm or reject.
 
 ## Generated images: 19 of 40 (budget)
 
@@ -246,4 +250,90 @@ Image count this round: 16 of 20 (4 left). Open: standalone txt2img for lantern,
 ## Bible
 
 §16 and §11 (parts principle) are as in round 1. I did **not** change §15 or add the "parts sheet from a blocked-in template" line to §11: the recipe did not work, so writing it into the Bible would state something untested. Say if you still want them added.
+
+## Round 4: gBot-style layered parts (Board, 2026-11-28; "Yes, gBot-style, 30")
+
+Status: **delivered with defects.** 14 parts painted or generated, assembled at the pivots, rotated at ±20°. The arm, both cloak panels and the head at +20° show no transparent gap at the joint; the head at -20° and the front leg at both angles do. Details in "Rotate check". The front arm does not match the concept (see "Honest defects"). Bible §11 now carries the Board's wording of the parts principle; nothing else in the Bible changed this round.
+
+### Image count and provenance
+
+Round 4 used **30 of 30**. Run 1 (2026-11-27, interrupted by the shared usage limit before it wrote any notes) generated **28 images by candidate-sheet count**: 13 calls, each cell of a sheet in `candidates/r4/` being one generated image: `cand_p1` and `cand_p1b` (head, 2 + 2), `cand_p2` (torso, 2), `cand_p3` and `cand_p3b` (cloak front, 2 + 2), `cand_p4` (cloak back, 2), `cand_p5` (front arm, 2), `cand_p6` (small hidden part, 2), `cand_p7` (legs, 2), `cand_book` (2), `cand_lantern` (2), `cand_cord` (2), `cand_limbs` (txt2img limbs, 4). **UNVERIFIED: the prompts, seeds, denoise and masks of those 28 images.** They are in the provenance JSONs under `~/game-studio-workspace/staging/art/hero_r4_*/` and in the run log of run `25c0782a`, neither of which this workspace can read. The method was the one in the plan comment: crop with margin from `c2_final_src`, mask the neighbours to flat grey, upscale 2x, SDXL `comfy-edit inpaint` of the hidden area plus a round cap, downscale, key, trim. The Board can paste the run log if the exact words are needed.
+
+Run 2 (this run) generated **2 images**, recorded in full:
+
+| Asset | Tool | Input | Mask | Prompt | Seeds / denoise | Result |
+|---|---|---|---|---|---|---|
+| hero_r4_arm | `comfy-edit.py inpaint`, SDXL `sd_xl_base_1.0`, 608 x 800, 30 steps, cfg 7, euler/normal, negative `text, watermark, logo, signature` (tool default) | the 2x crop of box 400,280 304x400 of `c2_final_src` (sha256 563775bf…) | round shoulder cap at frame (545,345), sleeve and forearm down to the book (sha256 933f6264…) | the front arm of a hooded scribe painted whole: a long brown ink-stained coat sleeve hanging straight down from a round shoulder, ending in a dark leather gloved hand, bold thick uneven dark brown hand-inked outline, flat colour fills with a single hard-edged shadow tone, muted dark fantasy game art, plain flat light grey background | **8101** kept, 8102 rejected / 1.0 | 8101: a bandaged grey forearm with a leather bracer and glove, shoulder painted as black shadow; 8102: a fist at the elbow and the shoulder painted as background. `outside_mask_changed: 0` on both. Sheet: `candidates/r4/cand_arm.png` |
+
+Crop boxes of run 1 (recovered exactly: a crop of each saved full-canvas mask at this box differs from the saved cropped mask by 0 px, `art-ops diff`): head (272,0) 288x416; torso (336,256) 304x784; cloak front (96,168) 576x960; cloak back (104,584) 336x544; legs (384,536) 176x616; front arm (400,280) 304x400. All boxes are x y w h in the 832 x 1216 frame of `c2_final_src.png`. `candidates/r4/check_inputs.png` shows the masked crops and their hidden-area masks; `check_keyed.png` the keyed results.
+
+### Which candidate became which part (run 1 images)
+
+- `head_hood`: `cand_p1b` left (rounded cape bottom painted under the hood).
+- `torso`: `cand_p2` left (collar and neck stump painted; the coat's leg window stays open, see defects).
+- `cloak_front`: `cand_p3b` left; the old chain column (crop x 460–576, y 0–590) is removed by cropping, the right flap below it kept.
+- `cloak_back`: `cand_p4` left.
+- `leg_front`: `cand_p7` left, cut below its failed hip region (the inpaint painted a bucket on the left candidate and a soldier's head on the right one, see `cand_p7`); the leg below is the inpainted trousers and boot. The coat strip at its right edge is cropped off.
+- `book`: `cand_book` left, cleaned crop, white sticker rim keyed (a faint rim remains).
+- `chain`: the strap-and-chain from `cand_book` left, rotated 40° to run from the hip cord to the book.
+- `lantern`: `cand_lantern` left; a 6 px dark rope line from the back hand to the ring is the only `art-ops` drawn element (polygon 198,596 206,602 142,646 134,640).
+- `binding_1..3`: `cand_cord` right (tied knot), scaled to 90x22 (rotated -40°), 120x30 and 186x46.
+- `arm_back`, `leg_back`: `grade --brightness 0.75 --saturation 0.8` copies of the front parts.
+- Not used: `cand_p5` (arm, both blobs), `cand_p6` (both blobs), `cand_limbs` (txt2img limbs: wrong palette and whole figures), `cand_p1`, `cand_p3` first tries.
+
+### Parts, offsets and pivots (frame 832 x 1216 of `c2_final_src`; on screen the figure is 345 px tall, scale 0.3136)
+
+Part files are `trim --pad 2` of the 1x working images. Origin = top-left of the PNG in the frame. Pivot given in frame px and in part px.
+
+| # | File | Size | Origin (x, y) | Pivot frame (x, y) | Pivot in part | Draw order (1 = back) |
+|---|---|---|---|---|---|---|
+| 1 | `leg_back.png` | 164x398 | (284, 746) | hip (355, 630) | (71, -116) | 1 |
+| 2 | `arm_back.png` | 256x381 | (155, 265) | shoulder (300, 330) | (145, 65) | 2 |
+| 3 | `cloak_back.png` | 269x489 | (134, 624) | (270, 640) | (136, 16) | 3 |
+| 4 | `leg_front.png` | 164x398 | (384, 736) | hip (455, 620) | (71, -116) | 4 |
+| 5 | `torso.png` | 234x726 | (368, 284) | root (450, 650) | (82, 366) | 5 |
+| 6 | `arm_front.png` | 256x381 | (400, 280) | shoulder (545, 345) | (145, 65) | 6 |
+| 7 | `head_hood.png` | 240x402 | (296, 14) | neck (430, 335) | (134, 321) | 7 |
+| 8 | `cloak_front.png` | 551x950 | (96, 168) | collar (400, 300) | (304, 132) | 8 |
+| 9 | `binding_2.png` | 120x30 | (390, 401) | centre | (60, 15) | 9 |
+| 10 | `binding_3.png` | 186x46 | (334, 472) | centre | (93, 23) | 10 |
+| 11 | `binding_1.png` | 79x68 | (504, 351) | centre | (40, 34) | 11 |
+| 12 | `chain.png` | 81x126 | (499, 499) | book end (578, 622) | (79, 123) | 12 |
+| 13 | `book.png` | 192x202 | (556, 466) | hand (600, 575), child of arm_front | (44, 109) | 13 |
+| 14 | `lantern.png` | 123x187 | (86, 594) | rope top at the back hand (198, 596) | (112, 2) | 14 |
+
+The hip pivots sit 116 px above the top of the leg parts because the thigh under the coat was never painted (the hip-cap inpaint failed twice, `cand_p7`). The rotate check uses these pivots as the brief asks, which is why the leg fails (below).
+
+### Assembly (`parts_assembled.png`: `c2_final.png` left, parts right)
+
+Same figure, same colours, same silhouette for hood, cloak, book position, lantern side and cord positions. Differences from the concept: the front arm is a bandaged grey forearm with a bracer instead of the ochre sleeve (the inpaint ignored "coat sleeve"); the three cords are tied knots, larger and more graphic than the flat bars; the book is the standalone closed book with a faint white rim, not the open book; the lantern is the standalone boxed lantern; the trousers are a lighter grey-teal (the 2x inpaint lightened them); the back boot is a graded copy, so both boots point right; the cloak collar piece crosses the hood's left edge as a hard seam at (400–440, 230–300).
+
+### Rotate check (`parts_rotate_check.png`: rest pose, then head -20/+20, arm -20/+20, cloak front -20/+20, cloak back -20/+20, leg -20/+20; all at the pivots above)
+
+| Joint | -20° | +20° | Verdict |
+|---|---|---|---|
+| Head (430,335) | small transparent gap at the left of the neck, (300–350, 240–300): the hood's painted cape turns away from the cloak collar and nothing is painted behind it | no gap; the cloak collar's hard cut edge shows across the hood's left edge | **fails at -20°** (gap about 40 px) |
+| Front arm + chain + book (545,345) | no gap at the shoulder (the cloak covers it); the keyed grey fringe around the forearm shows; the book overlaps the hip cord | no gap; the black shoulder shadow of the arm part peeks from under the cloak | **passes for gaps**, with the fringe and the wrong sleeve as defects |
+| Cloak front (400,300) | no transparent gap: the torso is painted whole behind it; the cloak collar's torn seam against the hood | no gap; a hard straight top edge on the shoulder cape at (270–330, 230–250), the crop boundary of the collar paint | **passes for gaps**, one hard straight edge |
+| Cloak back (270,640) | no gap, no straight edge | no gap, no straight edge | **passes** |
+| Front leg (455,620) | the coat's leg window (405–510, 745–1000) empties to background where the leg moved | same | **fails**: the torso's inner coat and the thigh were never painted, so the window shows background |
+
+Head and leg failures were not fixed because the round-4 allowance was spent (30 of 30) before they were found; the fix for both is one more inpaint each (hood collar region painted into the cloak_front, and a painted thigh plus coat lining in the torso window).
+
+### Outline weight, measured
+
+Method: `resize` `c2_final_src.png` to 261 x 381 (the figure at 345 px, its on-screen height), `mask --from-color 40 30 25 --tolerance 45` for dark-line pixels, then the same mask with `--shrink 1`, `2`, `3`. A line of width w survives a shrink of s only if w > 2s. Counts: 11593 px at shrink 0, 5235 at shrink 1, 3087 at shrink 2, 1835 at shrink 3. More than half of the dark pixels vanish at a 1 px shrink, and `candidates/r4/outline_view.png` shows that what survives shrink 1 is the cloth-shadow blobs, not contour lines. **The contour outline at 345 px is 1 to 2 px, under the Bible §2 minimum of 5 px.** At working scale (832 x 1216) the same masks give 115086 / 46712 (shrink 3) / 31107 (shrink 5), so the generator's line is about 4 to 6 px there. No normalisation was applied in this round; `art-ops` has no outline-thickening operation, so Board answer 3's "scripted normalisation" is still open.
+
+### Honest defects and what is UNVERIFIED
+
+- Front arm: wrong garment (bandaged forearm, not the ochre sleeve); its shoulder cap is a black shadow, not a rounded darker sleeve end; a grey fringe remains after keying. Only visible where the cloak does not cover it.
+- Leg front: no thigh, no hip cap (two failed inpaints); straight top edge hidden under the coat only in the rest pose.
+- Torso: the coat's leg window is a straight-edged hole, not a painted lining.
+- Head: hood under the cloak collar leaves a 40 px gap at -20°.
+- Cloak front: collar paint ends in a hard straight edge at its crop top.
+- Book, cords and lantern are standalone generations in a cleaner, more "sticker" style than the inked figure.
+- UNVERIFIED: prompts and seeds of the 28 run-1 images (see above); whether run 1 made any image beyond the 13 sheets (if the arm-context inpaint it had prepared also ran, the count is 32, not 30).
+- Not made this round: `_sil270` and `_context` of the assembled figure (the concept's `c2_final_sil270.png` and `c2_final_context.png` stand).
+
+Tools: `art-ops.py` (info, crop, resize, key, trim, mask, compose, rotate, grade, contact, diff) and `comfy-edit.py inpaint` only. No input image from outside this task; no prompt names a game, studio, artist or character. Working files were kept outside the commit; only the candidate sheets in `candidates/r4/` are committed as evidence.
 

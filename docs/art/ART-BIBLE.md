@@ -202,7 +202,7 @@ Principles, all actors:
 - A telegraphed action's anticipation is clearly longer than other idles, so the telegraph and the body agree.
 - Idle is a small, slow loop (a breath or a sway) of about 2 to 3 seconds **(proposed)**. It never moves the silhouette enough to disturb the shape test.
 - Timing on twos or threes (about 8 to 12 poses per second) suits the flat cel look **(proposed)**. Keep key poses clear and tween the rest.
-- Rigged actors: whole-figure concept in a rig-ready rest pose first, then each part repainted on its own layer (crop, inpaint hidden areas, clean), then assembled on the rig. Per-part inpaint is unreliable for small parts (SOU-98: a book worked once in four tries, a lantern failed four times); make small parts as standalone images on a plain backdrop instead. Related enemies share a rig and swap parts.
+- Rigged actors: concept in a rig-ready pose, then each part painted whole as its own layer with round joint caps and front/back copies (crop → upscale → inpaint hidden areas → downscale), props generated standalone; assembled on the rig. Related enemies share a rig and swap parts.
 - All motion stays within the actor's size class box, so layout never shifts.
 - Hit reaction: a quick squash and a brief light flash **(proposed)**, not a screen shake over gameplay information.
 - Animation events (impact frame, effect spawn) are named markers, so the programmer can hook damage numbers and effects to them.
