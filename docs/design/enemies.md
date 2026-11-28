@@ -43,7 +43,7 @@ Every enemy action is one of five kinds. The five placeholder telegraph icons in
 | **Attack** | attack | Damage to the Scrivener. "6 ×2" means two hits of 6. | no | "Deals N damage to you. Guard absorbs it first." |
 | **Guard** | guard | Guard the enemy gains when it acts. | no | "Gains N guard. Your damage must get through it before it acts again." |
 | **Fray** | fray | Strength of the fray. | yes, to the threatened slot | "Frays the marked binding unless you have N guard when it lands. Spends N of your guard. A frayed binding stops working until the end of this fight." |
-| **Foul** | foul | Number of Blot pages added to the discard. | no | "Puts N Blot pages into your discard pile." |
+| **Foul** | foul | Number of Water-stain pages added to the discard. | no | "Puts N Water-stain pages into your discard pile." |
 | **Sever** | sever | Strength of the sever. | yes, to the threatened slot | "Severs the marked binding unless you have N guard when it lands. Spends N of your guard. A severed page is gone from this run." |
 
 ### 3.1 Telegraph timing
@@ -69,7 +69,7 @@ Fray and sever never deal health damage, even when guard is 0. Guard is the one 
 - **Fray** targets a slot holding an **intact** binding, chosen uniformly at random among them. A fray that lands on a binding that was frayed earlier in the same enemy phase does nothing further.
 - **Sever** targets any slot holding a binding, intact or frayed, chosen uniformly at random. Severing a frayed binding removes it like any other.
 - When two enemies telegraph fray in the same phase they pick different slots where possible.
-- A bound Blot (see §5.3) is a binding and can be targeted. Binding junk to draw fire costs a slot; that is the trade.
+- A bound Water-stain (see §5.3) is a binding and can be targeted. Binding junk to draw fire costs a slot; that is the trade.
 
 ### 3.4 Fallbacks
 
@@ -121,19 +121,19 @@ Sizing: one starter strike and one Ink of guard beats a single moth's fray on tu
 
 ### 4.3 Blotter (common, fouler)
 
-*A clerk who drowned at the desk and kept filing. Everything it touches comes back blotted, and it files the blots into your book.*
+*A clerk who drowned at the desk and kept filing. Everything it touches comes back water-stained, and it files the stains into your book.*
 
 | | |
 |---|---|
 | id | `blotter` |
-| Role | Deck-fouler. Puts Blot pages into the discard; the pressure is on the deck, not on health. |
+| Role | Deck-fouler. Puts Water-stain pages into the discard; the pressure is on the deck, not on health. |
 | Health | 22 |
 | Size class | common, 25 % screen height |
 | Silhouette | Squat and slumped, like a seated figure under a sheet of wet paper, one arm ending in a flat stamp-shaped fist, ink dripping from the hem into a pool. The lowest and roundest of the commons. |
 | Pattern | 1. **Foul 1** (file) · 2. **Attack 4** (smear) · 3. **Attack 4** (smear) · 4. **Guard 6** (brace) |
 | Fallbacks | none needed |
 
-Sizing: alone it files one Blot before it dies on turn 2 or 3. Two Blotter fights on a floor add two to four Blots; see §5.3 for what a Blot is and why it is not harmless.
+Sizing: alone it files one Water-stain before it dies on turn 2 or 3. Two Blotter fights on a floor add two to four Water-stains; see §5.3 for what a Water-stain is and why it is not harmless.
 
 ### 4.4 Registrar (warden)
 
@@ -208,21 +208,20 @@ E6 requires that every run meets all three commons, the warden and the boss. The
 
 Pool draws are weighted and use the run seed, so a resumed run shows the same map. Enemy order within a composition puts the fragile frayer leftmost so it acts first and the player's "kill the moth or guard the binding" decision is about this turn, not next turn.
 
-### 5.3 The Blot page
+### 5.3 The Water-stain page
 
-Foul puts **Blot** pages into the discard. The Blot is a page and lives in `data/pages/` (T4) so that E1 holds for every page in the build; this note fixes only what T5 needs from it:
+Foul puts **Water-stain** pages (id `water_stain`) into the discard. The Water-stain is a page and lives in `data/pages/` (T4) so that E1 holds for every page in the build. Its name, Ink cost, faces, compact lines and category are fixed by `docs/design/pages.md` §5 page 21, which is the source of truth for the page; this note does not restate them and fixes only what the enemies need from it:
 
-- id `blot`, name "Blot", Ink cost 0, compact lines "Nothing happens" (Play) and "Takes a slot, does nothing" (Bind).
-- Play: no effect; the Blot goes to the discard. Bind: no passive; it occupies a slot and is a valid fray and sever target like any binding.
-- **Blots persist for the run** (`blot_persists_after_combat: true` in `rules.json`, tunable by T19). The deck does not heal any more than the Scrivener does. The ways out are the ones the game already has: bind it (costs a slot, removes it from the deck, draws fire from real bindings), or let the Redactor sever it. Blots count as pages for the deck floor (E15), which is consistent with the floor's purpose: a Blot in the deck prevents a thin-deck loop exactly as any other dead page does.
+- A bound Water-stain has no passive; it occupies a slot and is a valid fray and sever target like any binding (`pages.md` §4, "Water-stain in slots").
+- **Water-stains persist for the run** (`stains_persist_after_combat: true` in `data/run/rules.json`, tunable by T19). The deck does not heal any more than the Scrivener does. The ways out are the ones the pages note already gives: the page's own faces (page 21), the pages that purge stains (`pages.md` §4, "Deck floor and removal"), binding it to draw fire from real bindings at the cost of a slot, or letting the Redactor sever it. Water-stains count as pages for the deck floor (E15), which is consistent with the floor's purpose: a stain in the deck prevents a thin-deck loop exactly as any other dead page does.
 
-If T19 finds Blots too punishing, the first lever is the flag above, the second is the Blotter's pattern (fewer foul steps), both in `data/`.
+If T19 finds Water-stains too punishing, the first lever is the flag above, the second is the Blotter's pattern (fewer foul steps), both in `data/`.
 
 ### 5.4 Damage budget per node (for T19)
 
 Unmitigated damage a median run takes, assuming baseline output and that the player kills enemies in the order they stand. Fray and sever counts assume three intact bindings.
 
-| Node | Composition | Turns | Attack damage | Fray / sever telegraphs | Blots |
+| Node | Composition | Turns | Attack damage | Fray / sever telegraphs | Water-stains |
 |---|---|---|---|---|---|
 | fight 1 | `bailiff_solo` | 3 | 5–10 | 0 | 0 |
 | fight 2 | `bookmoth_pair` | 3 | 6–9 | 2 fray | 0 |
@@ -261,10 +260,10 @@ Checked against the concept's named references (Slay the Spire and Slay the Spir
 |---|---|---|---|
 | Bailiff | drowned debt-collector | generic word; no enemy of that name or shape in the references | original |
 | Bookmoth | paper-winged pest that frays bindings | none; "Book of Stabbing" (Slay the Spire) is a book, not a moth, and attacks health | original |
-| Blotter | drowned filing clerk that adds Blots | none; status-card enemies exist in the genre, the clerk is ours | original |
+| Blotter | drowned filing clerk that adds Water-stains | none; status-card enemies exist in the genre, the clerk is ours | original |
 | Registrar | warden with a seal-press | none | original |
 | The Redactor | boss that strikes out bindings | none; the "strike-through" figure is ours | original |
-| Blot | worthless page | junk cards are a genre convention; name and faces are ours | original |
+| Water-stain | worthless page | junk cards are a genre convention; name and faces are ours (originality row in `docs/design/pages.md`) | original |
 | fray / foul / sever | action names | our own verbs from the concept | original |
 
 No enemy reuses another game's name, pattern signature, pose or icon. `director` re-checks on review and again on T14's art.
@@ -283,7 +282,7 @@ QA derives test cases from these. 1 to 13 are headless (T8 tests) unless marked 
 8. Sever N behaves as 7 but removes the page from the run (slot empties, page in no pile) and can target a frayed binding.
 9. Fray targets only intact bindings; sever targets any binding; two frays telegraphed in one phase target different slots when two or more are eligible.
 10. With no eligible binding at telegraph time, Bookmoth telegraphs Attack 5, Registrar Attack 7, the Redactor Attack 10 (phase 1) or Attack 12 (phase 2); the pattern step still advances.
-11. Foul N puts N `blot` pages into the discard; Blots remain in the deck after combat while `blot_persists_after_combat` is true and are removed at end of combat when it is false.
+11. Foul N puts N `water_stain` pages into the discard; Water-stains remain in the deck after combat while `stains_persist_after_combat` is true and are removed at end of combat when it is false.
 12. The Redactor switches to the phase 2 pattern at step 1 on the first telegraph set while its health is 48 or below, and never switches back.
 13. Killing the app and reopening mid-combat restores every enemy's health, guard, phase, step index and telegraph, including the target slot of a fray or sever (E8).
 14. Device: every telegraph shows the icon and a number of at least 20 sp above the enemy's head; fray and sever draw a line to the threatened slot; long-press on a telegraph shows the inspect text from §3 (E4, E9).
@@ -292,4 +291,4 @@ QA derives test cases from these. 1 to 13 are headless (T8 tests) unless marked 
 
 ## 10. Open questions
 
-None blocking. Two values are flagged for the director on review rather than asked: the fray-versus-guard rule (3.2) is a new rule rather than one in the concept, and Blot persistence (5.3) is set to true on purpose. Both are reversible in `data/` without a code change.
+None blocking. Two values are flagged for the director on review rather than asked: the fray-versus-guard rule (3.2) is a new rule rather than one in the concept, and Water-stain persistence (5.3) is set to true on purpose. Both are reversible in `data/` without a code change.
