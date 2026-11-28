@@ -20,6 +20,10 @@ const ENEMIES_PATH: String = "SafeArea/Content/Enemies"
 const SLOTS_PATH: String = "SafeArea/Content/Scrivener/SlotColumn"
 const PLAY_AREA_PATH: String = "SafeArea/Content/PlayArea"
 
+const HAND_GAP: float = 12.0
+const HAND_MIN_SCALE: float = 0.7
+const HAND_SCALE_STEP: float = 0.05
+
 @export var settings: CardInteractionSettings
 ## The combat scene root holding T11's layout; defaults to this node's parent.
 @export var combat_root_path: NodePath = NodePath("..")
@@ -92,6 +96,8 @@ func _resolve_combat_nodes() -> void:
     push_error("CardInteractionController: combat root not found at '%s'." % String(combat_root_path))
     return
   _hand_container = combat_root.get_node_or_null(HAND_PATH) as Control
+  if _hand_container != null and not _hand_container.resized.is_connected(_on_hand_resized):
+    _hand_container.resized.connect(_on_hand_resized)
   _play_area = combat_root.get_node_or_null(PLAY_AREA_PATH) as Control
   _enemy_nodes = _control_children(combat_root.get_node_or_null(ENEMIES_PATH))
   _slot_nodes = _control_children(combat_root.get_node_or_null(SLOTS_PATH))
@@ -125,6 +131,36 @@ func _rebuild_hand() -> void:
     view.long_press_started.connect(_on_card_long_press_started)
     view.long_press_ended.connect(_on_card_long_press_ended)
     _hand_container.add_child(view)
+  _layout_hand()
+
+## Fits the hand into the container: a small gap first, then card scale down to
+## HAND_MIN_SCALE, and only then overlap. Each card is told how much of it stays
+## visible, so its name is fitted rather than cut.
+func _layout_hand() -> void:
+  if _hand_container == null:
+    return
+  var views: Array[CardView] = hand_views()
+  var count: int = views.size()
+  if count == 0:
+    return
+  var avail: float = _hand_container.size.x
+  if avail <= 0.0:
+    return
+  var base_w: float = CardView.BASE_SIZE.x
+  var card_scale: float = 1.0
+  var separation: float = HAND_GAP
+  while card_scale > HAND_MIN_SCALE and base_w * card_scale * count + HAND_GAP * (count - 1) > avail:
+    card_scale = maxf(card_scale - HAND_SCALE_STEP, HAND_MIN_SCALE)
+  var card_w: float = base_w * card_scale
+  if card_w * count + HAND_GAP * (count - 1) > avail and count > 1:
+    separation = (avail - card_w * count) / float(count - 1)
+  _hand_container.add_theme_constant_override("separation", int(floor(separation)))
+  var revealed: float = card_w + separation
+  for index: int in range(count):
+    views[index].set_hand_layout(card_scale, card_w if index == count - 1 else revealed)
+
+func _on_hand_resized() -> void:
+  _layout_hand()
 
 func _sync_target_nodes() -> void:
   if _state == null:
@@ -247,6 +283,10 @@ func _zone_at(global_position: Vector2, phase: int, zones: Array[Dictionary] = [
   return {}
 
 func _show_message(text: String) -> void:
+  if _spread.visible:
+    # The open spread has its own message row; the top label would cover its title.
+    _spread.show_message(text)
+    return
   _message.text = text
   _message.visible = true
   _message_seconds_left = settings.refusal_message_seconds if settings != null else 1.6

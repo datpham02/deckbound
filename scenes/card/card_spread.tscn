@@ -1,9 +1,41 @@
-[gd_scene load_steps=5 format=3]
+[gd_scene load_steps=7 format=3]
 
 [ext_resource type="Theme" path="res://themes/placeholder_theme.tres" id="1_theme"]
 [ext_resource type="Script" path="res://scripts/combat/ui/card_spread_view.gd" id="2_view"]
 [ext_resource type="Resource" path="res://scenes/card/card_interaction_settings.tres" id="3_settings"]
 [ext_resource type="PackedScene" path="res://scenes/card/card_compact.tscn" id="4_card"]
+
+[sub_resource type="StyleBoxFlat" id="page_padded"]
+bg_color = Color(0.13, 0.15, 0.2, 0.92)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(0.45, 0.5, 0.62, 1)
+corner_radius_top_left = 14
+corner_radius_top_right = 14
+corner_radius_bottom_right = 14
+corner_radius_bottom_left = 14
+content_margin_left = 32.0
+content_margin_top = 20.0
+content_margin_right = 32.0
+content_margin_bottom = 24.0
+
+[sub_resource type="StyleBoxFlat" id="plate"]
+bg_color = Color(0.07, 0.08, 0.11, 0.96)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.45, 0.5, 0.62, 1)
+corner_radius_top_left = 12
+corner_radius_top_right = 12
+corner_radius_bottom_right = 12
+corner_radius_bottom_left = 12
+content_margin_left = 24.0
+content_margin_top = 8.0
+content_margin_right = 24.0
+content_margin_bottom = 8.0
 
 [node name="CardSpread" type="Control"]
 layout_mode = 3
@@ -43,9 +75,9 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 offset_left = -560.0
-offset_top = -400.0
+offset_top = -390.0
 offset_right = 560.0
-offset_bottom = 400.0
+offset_bottom = 330.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
@@ -55,6 +87,7 @@ theme_override_constants/separation = 0
 layout_mode = 2
 size_flags_horizontal = 3
 mouse_filter = 2
+theme_override_styles/panel = SubResource("page_padded")
 
 [node name="Rows" type="VBoxContainer" parent="Book/PlayPage"]
 layout_mode = 2
@@ -98,6 +131,7 @@ horizontal_alignment = 1
 layout_mode = 2
 size_flags_horizontal = 3
 mouse_filter = 2
+theme_override_styles/panel = SubResource("page_padded")
 
 [node name="Rows" type="VBoxContainer" parent="Book/BindPage"]
 layout_mode = 2
@@ -128,9 +162,9 @@ anchor_top = 0.0
 anchor_right = 0.5
 anchor_bottom = 0.0
 offset_left = -560.0
-offset_top = 40.0
+offset_top = 16.0
 offset_right = 560.0
-offset_bottom = 110.0
+offset_bottom = 80.0
 grow_horizontal = 2
 theme_override_font_sizes/font_size = 48
 text = "Page name"
@@ -145,10 +179,11 @@ anchor_top = 0.0
 anchor_right = 0.5
 anchor_bottom = 0.0
 offset_left = -560.0
-offset_top = 110.0
+offset_top = 84.0
 offset_right = 560.0
-offset_bottom = 160.0
+offset_bottom = 140.0
 grow_horizontal = 2
+theme_override_styles/normal = SubResource("plate")
 theme_override_colors/font_color = Color(1, 0.75, 0.45, 1)
 text = "Not enough Ink"
 horizontal_alignment = 1
@@ -162,11 +197,12 @@ anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
 offset_left = -700.0
-offset_top = -140.0
+offset_top = -130.0
 offset_right = 700.0
 offset_bottom = -70.0
 grow_horizontal = 2
 grow_vertical = 0
+theme_override_styles/normal = SubResource("plate")
 text = "Drag right to Play, drag left to Bind. Tap outside to close."
 horizontal_alignment = 1
 
