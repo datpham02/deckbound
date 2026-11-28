@@ -1,7 +1,23 @@
-[gd_scene load_steps=3 format=3]
+[gd_scene load_steps=4 format=3]
 
 [ext_resource type="Theme" path="res://themes/placeholder_theme.tres" id="1_theme"]
 [ext_resource type="Script" path="res://scripts/combat/ui/card_inspect_view.gd" id="2_view"]
+
+[sub_resource type="StyleBoxFlat" id="page_padded"]
+bg_color = Color(0.13, 0.15, 0.2, 0.92)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(0.45, 0.5, 0.62, 1)
+corner_radius_top_left = 14
+corner_radius_top_right = 14
+corner_radius_bottom_right = 14
+corner_radius_bottom_left = 14
+content_margin_left = 32.0
+content_margin_top = 20.0
+content_margin_right = 32.0
+content_margin_bottom = 24.0
 
 [node name="CardInspect" type="Control"]
 layout_mode = 3
@@ -20,6 +36,7 @@ layout_mode = 0
 offset_right = 1100.0
 offset_bottom = 300.0
 mouse_filter = 2
+theme_override_styles/panel = SubResource("page_padded")
 
 [node name="Rows" type="VBoxContainer" parent="Panel"]
 layout_mode = 2

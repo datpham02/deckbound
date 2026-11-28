@@ -74,6 +74,11 @@ func open(card: Variant, page: Variant, message: String) -> void:
   visible = true
   _highlights.queue_redraw()
 
+## Shows a refusal in the spread's own message row (between title and pages).
+func show_message(text: String) -> void:
+  _message.text = text
+  _message.visible = text != ""
+
 func close() -> void:
   visible = false
   _phase = CardInteractionModel.Phase.IDLE
