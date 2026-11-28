@@ -1,6 +1,9 @@
-[gd_scene format=3]
+[gd_scene load_steps=5 format=3]
 
 [ext_resource type="Theme" path="res://themes/placeholder_theme.tres" id="1_theme"]
+[ext_resource type="Script" path="res://scripts/combat/ui/card_spread_view.gd" id="2_view"]
+[ext_resource type="Resource" path="res://scenes/card/card_interaction_settings.tres" id="3_settings"]
+[ext_resource type="PackedScene" path="res://scenes/card/card_compact.tscn" id="4_card"]
 
 [node name="CardSpread" type="Control"]
 layout_mode = 3
@@ -10,6 +13,8 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 theme = ExtResource("1_theme")
+script = ExtResource("2_view")
+settings = ExtResource("3_settings")
 
 [node name="Dim" type="Panel" parent="."]
 layout_mode = 1
@@ -18,7 +23,17 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 theme_type_variation = &"DimPanel"
+
+[node name="Highlights" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
 
 [node name="Book" type="HBoxContainer" parent="."]
 layout_mode = 1
@@ -33,14 +48,17 @@ offset_right = 560.0
 offset_bottom = 400.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 theme_override_constants/separation = 0
 
 [node name="PlayPage" type="PanelContainer" parent="Book"]
 layout_mode = 2
 size_flags_horizontal = 3
+mouse_filter = 2
 
 [node name="Rows" type="VBoxContainer" parent="Book/PlayPage"]
 layout_mode = 2
+mouse_filter = 2
 
 [node name="Heading" type="Label" parent="Book/PlayPage/Rows"]
 layout_mode = 2
@@ -50,6 +68,7 @@ horizontal_alignment = 1
 [node name="Art" type="ColorRect" parent="Book/PlayPage/Rows"]
 custom_minimum_size = Vector2(0, 280)
 layout_mode = 2
+mouse_filter = 2
 color = Color(0.3, 0.36, 0.5, 1)
 
 [node name="Text" type="Label" parent="Book/PlayPage/Rows"]
@@ -61,6 +80,7 @@ autowrap_mode = 3
 [node name="Spine" type="VBoxContainer" parent="Book"]
 custom_minimum_size = Vector2(150, 0)
 layout_mode = 2
+mouse_filter = 2
 alignment = 1
 
 [node name="Cost" type="Label" parent="Book/Spine"]
@@ -77,9 +97,11 @@ horizontal_alignment = 1
 [node name="BindPage" type="PanelContainer" parent="Book"]
 layout_mode = 2
 size_flags_horizontal = 3
+mouse_filter = 2
 
 [node name="Rows" type="VBoxContainer" parent="Book/BindPage"]
 layout_mode = 2
+mouse_filter = 2
 
 [node name="Heading" type="Label" parent="Book/BindPage/Rows"]
 layout_mode = 2
@@ -89,6 +111,7 @@ horizontal_alignment = 1
 [node name="Art" type="ColorRect" parent="Book/BindPage/Rows"]
 custom_minimum_size = Vector2(0, 280)
 layout_mode = 2
+mouse_filter = 2
 color = Color(0.5, 0.36, 0.3, 1)
 
 [node name="Text" type="Label" parent="Book/BindPage/Rows"]
@@ -97,6 +120,40 @@ size_flags_vertical = 3
 text = "While bound: deal 2 damage to any enemy that hits you."
 autowrap_mode = 3
 
+[node name="Title" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_top = 0.0
+anchor_right = 0.5
+anchor_bottom = 0.0
+offset_left = -560.0
+offset_top = 40.0
+offset_right = 560.0
+offset_bottom = 110.0
+grow_horizontal = 2
+theme_override_font_sizes/font_size = 48
+text = "Page name"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Message" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_top = 0.0
+anchor_right = 0.5
+anchor_bottom = 0.0
+offset_left = -560.0
+offset_top = 110.0
+offset_right = 560.0
+offset_bottom = 160.0
+grow_horizontal = 2
+theme_override_colors/font_color = Color(1, 0.75, 0.45, 1)
+text = "Not enough Ink"
+horizontal_alignment = 1
+vertical_alignment = 1
+
 [node name="Hint" type="Label" parent="."]
 layout_mode = 1
 anchors_preset = 7
@@ -104,11 +161,28 @@ anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
-offset_left = -500.0
+offset_left = -700.0
 offset_top = -140.0
-offset_right = 500.0
+offset_right = 700.0
 offset_bottom = -70.0
 grow_horizontal = 2
 grow_vertical = 0
-text = "Tap outside to close"
+text = "Drag right to Play, drag left to Bind. Tap outside to close."
 horizontal_alignment = 1
+
+[node name="Ghost" parent="." instance=ExtResource("4_card")]
+visible = false
+layout_mode = 0
+offset_right = 260.0
+offset_bottom = 290.0
+mouse_filter = 2
+
+[node name="GhostLabel" type="Label" parent="."]
+visible = false
+layout_mode = 0
+offset_right = 260.0
+offset_bottom = 50.0
+theme_override_font_sizes/font_size = 40
+text = "Play >>"
+horizontal_alignment = 1
+vertical_alignment = 1
